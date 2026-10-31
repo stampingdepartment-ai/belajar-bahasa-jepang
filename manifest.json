@@ -1,0 +1,27 @@
+{
+  "name": "Belajar Bahasa Jepang",
+  "short_name": "Belajar Jepang",
+  "description": "Aplikasi belajar bahasa Jepang lengkap — Hiragana, Katakana, Kanji, Kosakata, Tata Bahasa",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7f7f5",
+  "theme_color": "#e03535",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education"],
+  "screenshots": []
+}
