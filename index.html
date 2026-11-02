@@ -1,5 +1,5 @@
 <title>Belajar Bahasa Jepang</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="description" content="Aplikasi belajar bahasa Jepang lengkap — Hiragana, Katakana, Kanji, Kosakata, Tata Bahasa">
 <meta name="theme-color" content="#e03535">
 <meta name="mobile-web-app-capable" content="yes">
@@ -60,7 +60,7 @@ body::before {
   position: sticky; top: env(safe-area-inset-top,0px); z-index: 10;
 }
 .header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-.header-title { font-family:'Noto Sans JP',sans-serif; font-size:clamp(15px,3vw,20px); font-weight:700; }
+.header-title { font-family:'Noto Sans JP',sans-serif; font-size:clamp(16px,4vw,20px); font-weight:700; }
 .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; margin-left:auto; }
 .legend-item { display:flex; align-items:center; gap:4px; font-weight:500; }
 .dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
@@ -101,7 +101,7 @@ body::before {
 /* HAMBURGER (mobile) */
 .sb-toggle {
   display:none; background:none; border:none; cursor:pointer;
-  color:var(--fg); font-size:20px; padding:4px 8px; line-height:1;
+  color:var(--fg); font-size:24px; padding:6px 10px; line-height:1;
 }
 .sb-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:8; }
 
@@ -113,13 +113,29 @@ body::before {
 @media(max-width:768px){
   .sidebar {
     position:fixed; top:0; left:0; height:100vh; z-index:9;
-    transform:translateX(-100%); padding-top:60px;
+    width:260px;
+    transform:translateX(-100%); padding-top:64px;
   }
   .sidebar.open { transform:translateX(0); }
   .sb-overlay.open { display:block; }
   .sb-toggle { display:inline-flex; align-items:center; justify-content:center; }
+  .sb-group-label { font-size:11px; padding:12px 18px 5px; }
+  .tab-btn { font-size:15px; padding:11px 18px; gap:11px; }
+  .tab-btn .sb-icon { font-size:17px; width:22px; }
+  .sb-badge { font-size:10px; }
+  #global-search { width:110px; font-size:13px; }
+  #global-search:focus { width:140px; }
+  .header-title { font-size:15px; }
+  .user-chip { font-size:13px; }
+  .btn-keluar { font-size:13px; padding:5px 10px; }
   .app-body { display:block; }
-  .main { padding:20px 16px; }
+  .main { padding:16px; }
+  .section-intro h2 { font-size:22px; }
+  .section-intro p { font-size:14px; }
+  .char-grid { grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; }
+  .char-svg-wrap { width:80px; height:80px; }
+  .romaji { font-size:13px; }
+  .meaning { font-size:12px; }
 }
 
 /* SECTION INTRO */
@@ -244,6 +260,22 @@ body::before {
   .login-logo h1 { font-size:24px; }
   .login-field input { padding:14px 16px; font-size:16px; }
   .btn-masuk { padding:16px; font-size:16px; }
+}
+/* ── MOBILE FONT SCALE ── */
+@media(max-width:768px){
+  .romaji { font-size:13px; }
+  .meaning { font-size:12px; }
+  .prog-count,.prog-reset,.fc-info { font-size:13px; }
+  .qa-progress,.qa-hint { font-size:13px; }
+  .gdr-item { font-size:14px; }
+  .gdr-jp { font-size:17px; }
+  .phrase-reading,.vocab-reading,.ex-rd,.ono-rd,.angka-rd { font-size:12px; }
+  .phrase-id,.vocab-id,.ex-id,.ono-meaning,.angka-id { font-size:13px; }
+  .rule-card p,.pattern-meaning,.partikel-func { font-size:13px; }
+  .qa-question { font-size:22px; }
+  .qa-card h3 { font-size:18px; }
+  .dakuten-section p { font-size:13px; }
+  .tips-list li { font-size:13px; }
 }
 .login-logo { text-align:center; margin-bottom:28px; }
 .login-logo .lj { font-family:'Noto Sans JP',sans-serif; font-size:52px; line-height:1; display:block; }
