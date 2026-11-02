@@ -6064,7 +6064,7 @@ function updateN4Score(tab){ if(typeof tab==='string'){ const cfg=n4Config[tab],
 // ══════════════════════════════════════════════
 // ── N5 UJIAN ──
 // ══════════════════════════════════════════════
-const n5VocabData = [
+const n5ExamVocab = [
   // もんだい１ 漢字→ひらがな
   {mondai:1,num:1,text:'毎日学校へ行きます。',q:'「学校」の読み方は？',choices:['がっこう','がくこう','がっこ','がくしょ'],ans:0,explain:'「学校（がっこう）」は毎日通う場所。「学」は「がく・がっ」、「校」は「こう」と読みます。'},
   {mondai:1,num:2,text:'あの山はとても高いです。',q:'「山」の読み方は？',choices:['かわ','やま','うみ','そら'],ans:1,explain:'「山（やま）」は訓読み。音読みは「さん」で「富士山（ふじさん）」などに使います。'},
@@ -6107,7 +6107,7 @@ const n5VocabData = [
   {mondai:5,num:35,text:'「〜てください」を正しく使っている文は？',q:'「〜てください」の正しい使い方は？',choices:['はやくきてください','まどをあけてください','しずかにしてください','全部正しい'],ans:3,explain:'「〜てください（Please〜）」は丁寧なお願いの表現。①急いで来て、②窓を開けて、③静かにして、どれも正しい使い方です。'},
 ];
 
-const n5GrammarData = [
+const n5ExamGrammar = [
   {mondai:1,num:1,text:'これ（　）わたしのかばんです。',q:'（　）に入る言葉は？',choices:['が','は','を','に'],ans:1,explain:'「これは〜です」は主題を示す「は」。主語を「は」で提示し、「〜です」で説明します。'},
   {mondai:1,num:2,text:'きのう友達（　）えいがを見ました。',q:'（　）に入る言葉は？',choices:['に','が','と','で'],ans:2,explain:'「〜と（一緒に）」は誰かと一緒に何かをする時に使います。「友達と映画を見た」が正しい表現です。'},
   {mondai:1,num:3,text:'わたしは毎朝7時（　）おきます。',q:'（　）に入る言葉は？',choices:['で','に','を','が'],ans:1,explain:'時間の「に」は特定の時刻に使います。「7時に起きる」は「at 7 o\'clock wake up」の意味です。'},
@@ -6131,7 +6131,7 @@ const n5GrammarData = [
   {mondai:2,num:20,text:'もっと速く走れますか。',q:'★はどれ？「もっと ＿ ★ はしれますか」',choices:['はやく★はしれ','もっと★はやく','★もっとはやく','はやく★もっと'],ans:1,explain:'「もっと速く（faster）」は比較の表現。「もっと★はやく走れますか（Can you run faster？）」の語順です。'},
 ];
 
-const n5ReadingData = [
+const n5ExamReading = [
   {mondai:4,num:21,
    text:'たなかさんへ\n\nあしたのパーティーは6時からです。わたしのいえにきてください。じゅうしょは「さくらちょう3-2」です。でんわばんごうは090-1234-5678です。よろしくおねがいします。\n\nすずきより',
    q:'このてがみについて、ただしいものはどれですか。',
@@ -6219,9 +6219,9 @@ const n5Config = {
   grammar: { data:null, total:20, timeSec:50*60, scoreId:'n5g-score', pctId:'n5g-pct', barId:'n5g-bar', containerId:'n5-grammar-qs', timerId:'n5g-timer', navId:'n5g-nav', prevId:'n5g-prev', nextId:'n5g-next', counterId:'n5g-counter', singleBtnId:'n5g-single-btn', reviewBtnId:'n5g-review-btn', furiId:'n5g-furi-btn', section:'n5-grammar' },
   reading: { data:null, total:10, timeSec:50*60, scoreId:'n5r-score', pctId:'n5r-pct', barId:'n5r-bar', containerId:'n5-reading-qs', timerId:'n5r-timer', navId:'n5r-nav', prevId:'n5r-prev', nextId:'n5r-next', counterId:'n5r-counter', singleBtnId:'n5r-single-btn', reviewBtnId:'n5r-review-btn', furiId:'n5r-furi-btn', section:'n5-reading' },
 };
-n5Config.vocab.data   = n5VocabData;
-n5Config.grammar.data = n5GrammarData;
-n5Config.reading.data = n5ReadingData;
+n5Config.vocab.data   = n5ExamVocab;
+n5Config.grammar.data = n5ExamGrammar;
+n5Config.reading.data = n5ExamReading;
 
 let n5State = {
   vocab:   { answers:{}, score:0, timeLeft:25*60, timerRunning:false, singleMode:false, singleIdx:0, reviewMode:false, furiganaHidden:false },
