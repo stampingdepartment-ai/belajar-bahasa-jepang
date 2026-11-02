@@ -229,15 +229,21 @@ body::before {
   box-shadow:0 8px 40px rgba(0,0,0,.12);
 }
 @media (max-width:600px) {
-  #login-screen { padding:0; align-items:stretch; }
+  #login-screen { padding:0; align-items:stretch; background:var(--surface); }
   .login-card {
+    width:100%; max-width:100%;
     border-radius:0; border:none;
-    padding:60px 28px 40px;
+    padding:80px 32px 48px;
     min-height:100vh;
     min-height:100dvh;
     min-height:-webkit-fill-available;
+    box-shadow:none;
     display:flex; flex-direction:column; justify-content:center;
   }
+  .login-logo .lj { font-size:64px; }
+  .login-logo h1 { font-size:24px; }
+  .login-field input { padding:14px 16px; font-size:16px; }
+  .btn-masuk { padding:16px; font-size:16px; }
 }
 .login-logo { text-align:center; margin-bottom:28px; }
 .login-logo .lj { font-family:'Noto Sans JP',sans-serif; font-size:52px; line-height:1; display:block; }
