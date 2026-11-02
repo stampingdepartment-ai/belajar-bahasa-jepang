@@ -558,6 +558,82 @@ body::before {
 .btn-audio:hover { border-color:var(--s2); color:var(--s2); }
 .btn-audio.speaking { border-color:var(--s3); color:var(--s3); animation:pulse .6s infinite alternate; }
 
+/* ── NHK PELAJARAN ── */
+.nhk-filter { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center; }
+.nhk-filter input {
+  flex:1; min-width:180px; padding:10px 16px; font:500 14px 'Inter',sans-serif;
+  border:2px solid var(--border); border-radius:12px; background:var(--surface);
+  color:var(--fg); outline:none; transition:border-color .2s; box-sizing:border-box;
+}
+.nhk-filter input:focus { border-color:var(--s2); }
+.nhk-grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
+.nhk-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:14px;
+  overflow:hidden; transition:box-shadow .2s, transform .15s; cursor:pointer;
+}
+.nhk-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.12); transform:translateY(-2px); }
+.nhk-card-header {
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  padding:14px 16px; color:#fff;
+}
+.nhk-card-num { font:700 11px 'Inter',sans-serif; opacity:.8; letter-spacing:.05em; text-transform:uppercase; }
+.nhk-card-title { font-family:'Noto Sans JP',sans-serif; font-size:18px; font-weight:700; margin-top:2px; line-height:1.3; }
+.nhk-card-romaji { font-size:11px; opacity:.75; margin-top:2px; }
+.nhk-card-body { padding:14px 16px; }
+.nhk-card-preview { font-size:13px; color:var(--muted); line-height:1.5; }
+/* Detail modal */
+.nhk-modal-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:2000;
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:16px; overflow-y:auto;
+}
+.nhk-modal {
+  background:var(--bg); border-radius:18px; width:100%; max-width:640px;
+  max-height:90vh; overflow-y:auto; animation:nhkSlideIn .25s ease;
+  margin:auto;
+}
+@keyframes nhkSlideIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+.nhk-modal-head {
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  padding:20px 20px 16px; color:#fff; position:sticky; top:0; z-index:1;
+  border-radius:18px 18px 0 0;
+}
+.nhk-modal-head h3 { font-family:'Noto Sans JP',sans-serif; font-size:22px; margin:0; }
+.nhk-modal-head p { font-size:12px; opacity:.75; margin:4px 0 0; }
+.nhk-modal-close {
+  position:absolute; top:14px; right:14px;
+  background:rgba(255,255,255,.2); border:none; border-radius:99px;
+  color:#fff; font-size:18px; width:32px; height:32px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.nhk-modal-body { padding:20px; display:flex; flex-direction:column; gap:20px; }
+.nhk-section-label {
+  font:700 11px 'Inter',sans-serif; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--s2); margin-bottom:10px;
+}
+.nhk-dialog { display:flex; flex-direction:column; gap:10px; }
+.nhk-line {
+  display:grid; grid-template-columns:90px 1fr; gap:8px; align-items:start;
+}
+.nhk-speaker {
+  font:700 11px 'Noto Sans JP',sans-serif; color:var(--muted);
+  padding-top:3px; text-align:right;
+}
+.nhk-speech { display:flex; flex-direction:column; gap:2px; }
+.nhk-jp { font-family:'Noto Sans JP',sans-serif; font-size:16px; font-weight:600; }
+.nhk-romaji { font-size:11px; color:var(--muted); font-style:italic; }
+.nhk-id { font-size:13px; color:var(--fg); }
+.nhk-speak-btn {
+  background:none; border:1px solid var(--border); border-radius:99px;
+  font-size:11px; padding:2px 8px; cursor:pointer; color:var(--muted);
+  align-self:flex-start; transition:all .15s;
+}
+.nhk-speak-btn:hover { background:var(--s2); border-color:var(--s2); color:#fff; }
+.nhk-grammar { background:var(--tab-bg); border-radius:10px; padding:14px; font-size:13px; line-height:1.7; }
+.nhk-cultural { background:var(--tab-bg); border-radius:10px; padding:14px; }
+.nhk-cultural-title { font:700 14px 'Inter',sans-serif; margin-bottom:8px; }
+.nhk-cultural p { font-size:13px; line-height:1.7; color:var(--fg); margin:0; }
+
 /* ── KAMUS ── */
 .kamus-search-wrap { position:relative; margin-bottom:20px; }
 .kamus-search-wrap input {
@@ -783,6 +859,7 @@ body::before {
     <div class="sb-group-label">Lainnya</div>
     <button class="tab-btn" onclick="showTab('panduan',this)"><span class="sb-icon">📖</span>Panduan Belajar</button>
     <button class="tab-btn" onclick="showTab('kamus',this)"><span class="sb-icon">📖</span>Kamus JP↔ID</button>
+    <button class="tab-btn" onclick="showTab('nhk',this)"><span class="sb-icon">📚</span>Pelajaran NHK</button>
     <button class="tab-btn" onclick="showTab('statistik',this)"><span class="sb-icon">📊</span>Statistik Belajar</button>
     <button class="tab-btn" onclick="showTab('favorit',this)"><span class="sb-icon">⭐</span>Favorit Saya</button>
     <button class="tab-btn" id="sb-admin-btn" onclick="showTab('adminpanel',this)" style="display:none;"><span class="sb-icon">👥</span>Kelola User</button>
@@ -1104,6 +1181,18 @@ body::before {
     <p>Mnemonic dan trik visual untuk hafal hiragana, katakana, dan kanji lebih cepat.</p>
   </div>
   <div id="mnemonic-container"></div>
+</section>
+
+<!-- ===== NHK PELAJARAN ===== -->
+<section id="nhk" class="section">
+  <div class="section-intro">
+    <h2>📚 Pelajaran NHK</h2>
+    <p>50 pelajaran dari NHK World "Belajar Bahasa Jepang" — dialog, tata bahasa, dan catatan budaya.</p>
+  </div>
+  <div class="nhk-filter">
+    <input type="search" id="nhk-search" placeholder="🔍 Cari pelajaran, kata, atau topik..." oninput="renderNHK(this.value)">
+  </div>
+  <div class="nhk-grid" id="nhk-grid"></div>
 </section>
 
 <!-- ===== KAMUS ===== -->
@@ -4463,7 +4552,539 @@ showTab=function(id,btn){
   if(id==='statistik') renderStatistik();
   if(id==='favorit') renderFavorit();
   if(id==='kamus'){ renderKamusResult(''); setTimeout(()=>document.getElementById('kamus-input')?.focus(),200); }
+  if(id==='nhk'){ renderNHK(''); setTimeout(()=>document.getElementById('nhk-search')?.focus(),200); }
 };
+
+// ── NHK PELAJARAN ──
+const nhkData = [
+{n:1,jp:'はじめまして',romaji:'HAJIMEMASHITE',id:'Perkenalan',
+ dialog:[
+  {sp:'クオン/KUON',jp:'はじめまして。クオンと申します。',rm:'HAJIMEMASHITE. KUON TO MÔSHIMASU.',id:'Halo, perkenalkan. Saya Kuon.'},
+  {sp:'山田/YAMADA',jp:'はじめまして。山田です。どうぞよろしく。',rm:'HAJIMEMASHITE. YAMADA DESU. DÔZO YOROSHIKU.',id:'Halo, saya Yamada. Senang berkenalan.'},
+  {sp:'クオン/KUON',jp:'こちらこそ、どうぞよろしくお願いします。',rm:'KOCHIRAKOSO, DÔZO YOROSHIKU O-NEGAI SHIMASU.',id:'Saya juga, salam kenal.'}
+ ],
+ grammar:'Ungkapan "to môshimasu" adalah bentuk sopan dari "to iimasu" (saya bernama ___). "Hajimemashite" digunakan saat pertama kali bertemu.',
+ cultural:{title:'Membungkukkan Badan (Rei)',text:'Di Jepang, membungkukkan badan adalah cara menyapa. Semakin dalam membungkuk, semakin hormat. Membungkuk sekitar 15° biasa untuk salam sehari-hari.'}
+},
+{n:2,jp:'これは何ですか',romaji:'KORE WA NAN DESU KA',id:'Ini apa?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'これは何ですか？',rm:'KORE WA NAN DESU KA?',id:'Ini apa?'},
+  {sp:'山田/YAMADA',jp:'それは名刺です。',rm:'SORE WA MEISHI DESU.',id:'Itu kartu nama.'},
+  {sp:'クオン/KUON',jp:'あれは何ですか？',rm:'ARE WA NAN DESU KA?',id:'Yang itu (di sana) apa?'},
+  {sp:'山田/YAMADA',jp:'あれは富士山です。',rm:'ARE WA FUJISAN DESU.',id:'Itu Gunung Fuji.'}
+ ],
+ grammar:'"Kore" (ini, dekat pembicara), "sore" (itu, dekat lawan bicara), "are" (itu, jauh dari keduanya). Pola: [kata benda] wa [kata benda] desu.',
+ cultural:{title:'Meishi (Kartu Nama)',text:'Di Jepang, menukar kartu nama adalah ritual penting. Terima dan berikan kartu nama dengan dua tangan sambil membungkuk. Baca kartu nama dengan seksama — jangan langsung menyimpannya.'}
+},
+{n:3,jp:'どこですか',romaji:'DOKO DESU KA',id:'Di mana?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'すみません、駅はどこですか？',rm:'SUMIMASEN, EKI WA DOKO DESU KA?',id:'Permisi, stasiun di mana?'},
+  {sp:'人/ORANG',jp:'あそこです。',rm:'ASOKO DESU.',id:'Di sana.'},
+  {sp:'クオン/KUON',jp:'ありがとうございます。',rm:'ARIGATÔ GOZAIMASU.',id:'Terima kasih.'}
+ ],
+ grammar:'"Doko" = di mana. "Koko" (di sini), "soko" (di situ), "asoko" (di sana). "Sumimasen" digunakan untuk meminta maaf dan menarik perhatian.',
+ cultural:{title:'Bertanya Arah di Jepang',text:'Orang Jepang umumnya ramah membantu. Tunjukkan peta atau tulis nama tempat dalam bahasa Jepang untuk memudahkan. Stasiun-stasiun besar memiliki papan informasi dalam bahasa Inggris.'}
+},
+{n:4,jp:'いくらですか',romaji:'IKURA DESU KA',id:'Berapa harganya?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'これはいくらですか？',rm:'KORE WA IKURA DESU KA?',id:'Ini berapa harganya?'},
+  {sp:'店員/TENIN',jp:'それは300円です。',rm:'SORE WA SANBYAKU EN DESU.',id:'Itu 300 yen.'},
+  {sp:'クオン/KUON',jp:'じゃあ、これをください。',rm:'JÂ, KORE O KUDASAI.',id:'Kalau begitu, tolong yang ini.'}
+ ],
+ grammar:'"Ikura desu ka" = berapa harganya. "O kudasai" = tolong berikan (untuk memesan/membeli). Angka Jepang: 100=hyaku, 200=nihyaku, 300=sanbyaku.',
+ cultural:{title:'Uang di Jepang',text:'Jepang masih sangat bergantung pada uang tunai. Bawa uang tunai yang cukup. ATM di 7-Eleven dan kantor pos menerima kartu internasional.'}
+},
+{n:5,jp:'何時ですか',romaji:'NAN-JI DESU KA',id:'Jam berapa?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'すみません、今何時ですか？',rm:'SUMIMASEN, IMA NAN-JI DESU KA?',id:'Permisi, sekarang jam berapa?'},
+  {sp:'人/ORANG',jp:'3時半です。',rm:'SANJI HAN DESU.',id:'Jam setengah empat (3:30).'},
+  {sp:'クオン/KUON',jp:'ありがとうございます。',rm:'ARIGATÔ GOZAIMASU.',id:'Terima kasih.'}
+ ],
+ grammar:'"Nan-ji" = jam berapa. "Ji" = jam, "fun/pun" = menit, "han" = setengah. Pola: [angka] ji [angka] fun desu.',
+ cultural:{title:'Ketepatan Waktu di Jepang',text:'Orang Jepang sangat menghargai ketepatan waktu. Datang terlambat dianggap tidak sopan. Kereta Jepang terkenal tepat waktu hingga detik.'}
+},
+{n:6,jp:'銀行に行ってから',romaji:'GINKÔ NI ITTE KARA',id:'Setelah pergi ke bank',
+ dialog:[
+  {sp:'クオン/KUON',jp:'銀行に行ってから、デパートに行きます。',rm:'GINKÔ NI ITTE KARA, DEPÂTO NI IKIMASU.',id:'Setelah ke bank, saya pergi ke department store.'},
+  {sp:'山田/YAMADA',jp:'銀行は何時までですか？',rm:'GINKÔ WA NAN-JI MADE DESU KA?',id:'Bank tutup jam berapa?'},
+  {sp:'クオン/KUON',jp:'3時までです。',rm:'SANJI MADE DESU.',id:'Sampai jam 3.'}
+ ],
+ grammar:'"Te kara" = setelah melakukan ___. Hilangkan —masu dari kata kerja, tambahkan —te/—de, lalu kara. Contoh: ikimasu → itte kara.',
+ cultural:{title:'Jam Kerja di Jepang',text:'Bank di Jepang biasanya buka pukul 09.00–15.00 pada hari kerja. ATM buka lebih lama. Toko serba ada buka 24 jam, 7 hari seminggu.'}
+},
+{n:7,jp:'口座を開きたいんですが',romaji:'KÔZA O HIRAKITAI N DESU GA',id:'Ingin membuka rekening',
+ dialog:[
+  {sp:'クオン/KUON',jp:'口座を開きたいんですが…。',rm:'KÔZA O HIRAKITAI N DESU GA...',id:'Saya ingin membuka rekening...'},
+  {sp:'行員/KÔIN',jp:'どんな口座になさいますか？',rm:'DONNA KÔZA NI NASAIMASU KA?',id:'Rekening jenis apa yang Anda inginkan?'},
+  {sp:'クオン/KUON',jp:'普通預金をお願いします。',rm:'FUTSÛ YOKIN O O-NEGAI SHIMASU.',id:'Rekening tabungan biasa, tolong.'}
+ ],
+ grammar:'"Tai n desu ga" = ingin ___ (dengan nada sopan/mengharapkan respon). Bentuk: hilangkan —masu, tambahkan —tai n desu ga.',
+ cultural:{title:'Membuka Rekening Bank di Jepang',text:'Untuk membuka rekening bank di Jepang, Anda biasanya memerlukan paspor, kartu izin tinggal (zairyu card), dan hanko (stempel nama). Bank besar seperti Japan Post Bank mudah diakses oleh orang asing.'}
+},
+{n:8,jp:'どうしよう',romaji:'DÔ SHIYÔ',id:'Harus bagaimana?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'どうしよう。財布をなくしてしまいました。',rm:'DÔ SHIYÔ. SAIFU O NAKUSHITE SHIMAIMASHITA.',id:'Bagaimana ini. Dompet saya hilang.'},
+  {sp:'山田/YAMADA',jp:'大変！警察に行きましょう。',rm:'TAIHEN! KEISATSU NI IKIMASHÔ.',id:'Gawat! Mari pergi ke kantor polisi.'}
+ ],
+ grammar:'"Te shimaimashita" = telah melakukan ___ (tidak sengaja/menyesal). Hilangkan —masu, tambahkan —te shimaimashita. "Dô shiyô" = harus bagaimana (ekspresi kebingungan).',
+ cultural:{title:'Menemukan atau Kehilangan Barang di Jepang',text:'Jepang terkenal dengan tingkat kejujuran yang tinggi. Barang yang hilang sering dikembalikan. Laporkan kehilangan ke Koban (pos polisi kecil) terdekat. Ada kemungkinan barang Anda sudah diserahkan ke sana.'}
+},
+{n:9,jp:'山田さんはいらっしゃいますか',romaji:'YAMADA-SAN WA IRASSHAIMASU KA',id:'Apakah Yamada ada?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'山田さんはいらっしゃいますか？',rm:'YAMADA-SAN WA IRASSHAIMASU KA?',id:'Apakah Yamada ada?'},
+  {sp:'受付/UKETSUKE',jp:'少々お待ちください。',rm:'SHÔSHÔ O-MACHI KUDASAI.',id:'Mohon tunggu sebentar.'},
+  {sp:'山田/YAMADA',jp:'はい、山田です。',rm:'HAI, YAMADA DESU.',id:'Ya, saya Yamada.'}
+ ],
+ grammar:'"Irasshaimasu" adalah bentuk sangat sopan dari "imasu" (ada). Digunakan untuk menghormati orang lain. "Shôshô o-machi kudasai" = mohon tunggu sebentar.',
+ cultural:{title:'Etiket Telepon Bisnis di Jepang',text:'Saat menelepon perusahaan Jepang, sebutkan nama Anda dan perusahaan Anda terlebih dahulu. Gunakan bahasa yang sopan. Jangan menutup telepon sebelum lawan bicara menutupnya.'}
+},
+{n:10,jp:'いつもお世話になっております',romaji:'ITSUMO O-SEWA NI NATTE ORIMASU',id:'Terima kasih atas dukungannya selama ini',
+ dialog:[
+  {sp:'クオン/KUON',jp:'いつもお世話になっております。クオンと申します。',rm:'ITSUMO O-SEWA NI NATTE ORIMASU. KUON TO MÔSHIMASU.',id:'Terima kasih atas dukungannya selama ini. Saya Kuon.'},
+  {sp:'山田/YAMADA',jp:'こちらこそ、いつもありがとうございます。',rm:'KOCHIRAKOSO, ITSUMO ARIGATÔ GOZAIMASU.',id:'Sama-sama, terima kasih selalu.'}
+ ],
+ grammar:'"Itsumo o-sewa ni natte orimasu" adalah sapaan formal standar dalam bisnis Jepang, artinya "terima kasih atas dukungan/kerjasama Anda selama ini".',
+ cultural:{title:'Bulan dan Hari dalam Bahasa Jepang',text:'Bulan: Ichi-gatsu (Januari) s/d Jû-ni-gatsu (Desember). Hari: Nichi-yôbi (Minggu), Getsu-yôbi (Senin), Ka-yôbi (Selasa), Sui-yôbi (Rabu), Moku-yôbi (Kamis), Kin-yôbi (Jumat), Do-yôbi (Sabtu).'}
+},
+{n:11,jp:'誰と行くんですか',romaji:'DARE TO IKU N DESU KA',id:'Pergi dengan siapa?',
+ dialog:[
+  {sp:'山田/YAMADA',jp:'週末、誰と行くんですか？',rm:'SHÛMATSU, DARE TO IKU N DESU KA?',id:'Akhir pekan, pergi dengan siapa?'},
+  {sp:'クオン/KUON',jp:'友達と行きます。',rm:'TOMODACHI TO IKIMASU.',id:'Pergi dengan teman.'},
+  {sp:'山田/YAMADA',jp:'どこへ行くんですか？',rm:'DOKO E IKU N DESU KA?',id:'Ke mana perginya?'}
+ ],
+ grammar:'Kata tanya: dare (siapa), nani/nan (apa), doko (di mana), itsu (kapan), dôshite (mengapa), dôyatte (bagaimana). Partikel "to" = dengan (bersama).',
+ cultural:{title:'Konjugasi Kata Kerja Jepang',text:'Kata kerja Jepang dibagi 3 kelompok: Kelompok I (u-verbs): iku→ikimasu, Kelompok II (ru-verbs): taberu→tabemasu, Kelompok III (tidak beraturan): suru→shimasu, kuru→kimasu.'}
+},
+{n:12,jp:'それは便利ですね',romaji:'HÊ SORE WA BENRI DESU NE',id:'Itu memang praktis ya',
+ dialog:[
+  {sp:'クオン/KUON',jp:'へえ、それは便利ですね。',rm:'HÊ, SORE WA BENRI DESU NE.',id:'Wah, itu memang praktis ya.'},
+  {sp:'山田/YAMADA',jp:'でも、高くないですか？',rm:'DEMO, TAKAKU NAI DESU KA?',id:'Tapi, tidak mahal?'},
+  {sp:'クオン/KUON',jp:'そんなに高くないですよ。',rm:'SONNA NI TAKAKU NAI DESU YO.',id:'Tidak semahal itu.'}
+ ],
+ grammar:'Kata sifat negatif: tambahkan "ku nai" setelah akar kata sifat -i. Contoh: takai (mahal) → takaku nai (tidak mahal). "Ne" = konfirmasi/persetujuan, "yo" = penegasan.',
+ cultural:{title:'Teknologi di Jepang',text:'Jepang terkenal dengan inovasi teknologi. Toilet berteknologi tinggi, vending machine canggih, dan sistem transportasi yang sangat maju adalah beberapa contohnya.'}
+},
+{n:13,jp:'静かにしてください',romaji:'SHIZUKA NI SHITE KUDASAI',id:'Tolong diam',
+ dialog:[
+  {sp:'アナウンス/ANAUNSU',jp:'静かにしてください。',rm:'SHIZUKA NI SHITE KUDASAI.',id:'Tolong diam/tenang.'},
+  {sp:'クオン/KUON',jp:'すみません、ここは何階ですか？',rm:'SUMIMASEN, KOKO WA NANKAI DESU KA?',id:'Permisi, ini lantai berapa?'},
+  {sp:'人/ORANG',jp:'6階です。',rm:'ROKKAI DESU.',id:'Lantai 6.'}
+ ],
+ grammar:'"Shizuka ni shite kudasai" = tolong diam. Kata sifat-na + ni shite = menjadi [sifat]. Lantai: ikkai (1), nikai (2), sangai (3), yonkai (4), gokai (5), rokkai (6)..',
+ cultural:{title:'Etiket di Lift (Elevator)',text:'Di Jepang, ada etiket khusus di lift: diam, tidak menelepon, tombol ditahan untuk orang lain. Orang yang masuk mengucapkan "shitsurei shimasu" (permisi).'}
+},
+{n:14,jp:'ただいま戻りました',romaji:'TADAIMA MODORIMASHITA',id:'Saya sudah kembali',
+ dialog:[
+  {sp:'クオン/KUON',jp:'ただいま戻りました。',rm:'TADAIMA MODORIMASHITA.',id:'Saya sudah kembali.'},
+  {sp:'山田/YAMADA',jp:'お帰りなさい。お疲れ様でした。',rm:'O-KAERI NASAI. O-TSUKARE-SAMA DESHITA.',id:'Selamat datang kembali. Terima kasih sudah bekerja keras.'},
+  {sp:'クオン/KUON',jp:'行ってきます。',rm:'ITTE KIMASU.',id:'Saya pergi dulu (dan akan kembali).'}
+ ],
+ grammar:'"Tadaima" = saya pulang. "O-kaeri nasai" = selamat datang kembali. "Itte kimasu" = saya pergi (dan akan kembali). "Itte rasshai" = hati-hati di jalan.',
+ cultural:{title:'Salam Khas Jepang',text:'Jepang memiliki banyak salam situasional: "Itadakimasu" (sebelum makan), "Gochisôsama" (sesudah makan), "Oyasumi nasai" (selamat malam/tidur). Salam-salam ini mencerminkan nilai kesopanan.'}
+},
+{n:15,jp:'どうしてこの会社を選んだんですか',romaji:'DÔSHITE KONO KAISHA O ERANDA N DESU KA',id:'Mengapa memilih perusahaan ini?',
+ dialog:[
+  {sp:'面接官/MENSETSU',jp:'どうしてこの会社を選んだんですか？',rm:'DÔSHITE KONO KAISHA O ERANDA N DESU KA?',id:'Mengapa Anda memilih perusahaan ini?'},
+  {sp:'クオン/KUON',jp:'御社の製品が好きだからです。',rm:'ONSHA NO SEIHIN GA SUKI DAKARA DESU.',id:'Karena saya menyukai produk perusahaan Anda.'}
+ ],
+ grammar:'"Kara desu" = karena ___. Digunakan untuk memberikan alasan. "Dôshite" = mengapa. "Onsha" = perusahaan Anda (sangat sopan). "Heisha" = perusahaan kami (merendah).',
+ cultural:{title:'Wawancara Kerja di Jepang',text:'Wawancara kerja di Jepang sangat formal. Kenakan jas hitam/navy. Tunjukkan dedikasi dan semangat belajar. Penelitian tentang perusahaan sangat penting sebelum wawancara.'}
+},
+{n:16,jp:'料理の上手な人が好きです',romaji:'RYÔRI NO JÔZU NA HITO GA SUKI DESU',id:'Suka orang yang pandai memasak',
+ dialog:[
+  {sp:'山田/YAMADA',jp:'どんな人が好きですか？',rm:'DONNA HITO GA SUKI DESU KA?',id:'Suka orang seperti apa?'},
+  {sp:'クオン/KUON',jp:'料理の上手な人が好きです。',rm:'RYÔRI NO JÔZU NA HITO GA SUKI DESU.',id:'Suka orang yang pandai memasak.'},
+  {sp:'山田/YAMADA',jp:'今、何を食べていますか？',rm:'IMA, NANI O TABETE IMASU KA?',id:'Sekarang sedang makan apa?'}
+ ],
+ grammar:'Kata sifat-na yang memodifikasi kata benda: [kata sifat-na] + na + [kata benda]. Contoh: jôzu na hito (orang yang pandai). "-te imasu" = sedang melakukan ___.',
+ cultural:{title:'Memasak di Jepang',text:'Masakan Jepang (washoku) diakui UNESCO sebagai warisan budaya dunia. Nilai utama: kesegaran bahan, keseimbangan rasa, dan presentasi yang indah.'}
+},
+{n:17,jp:'パソコンが欲しいんです',romaji:'PASOKON GA HOSHII N DESU',id:'Saya ingin komputer',
+ dialog:[
+  {sp:'クオン/KUON',jp:'パソコンが欲しいんです。',rm:'PASOKON GA HOSHII N DESU.',id:'Saya ingin komputer.'},
+  {sp:'山田/YAMADA',jp:'一緒に買いに行きませんか？',rm:'ISSHO NI KAI NI IKIMASEN KA?',id:'Mau pergi beli sama-sama?'},
+  {sp:'クオン/KUON',jp:'ぜひ、お願いします。',rm:'ZEHI, O-NEGAI SHIMASU.',id:'Tentu, terima kasih.'}
+ ],
+ grammar:'"Hoshii n desu" = saya ingin/menginginkan [benda]. Untuk mengundang: [kata kerja bentuk dasar] + ni ikimasen ka (mau pergi ___ bersama-sama?).',
+ cultural:{title:'Belanja Elektronik di Jepang',text:'Akihabara di Tokyo adalah surga elektronik. Banyak toko menawarkan barang duty-free untuk wisatawan. Tunjukkan paspor Anda untuk mendapatkan diskon pajak.'}
+},
+{n:18,jp:'秋葉原にはどう行けばいいですか',romaji:'AKIHABARA NI WA DÔ IKEBA II DESU KA',id:'Bagaimana cara ke Akihabara?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'秋葉原にはどう行けばいいですか？',rm:'AKIHABARA NI WA DÔ IKEBA II DESU KA?',id:'Bagaimana cara pergi ke Akihabara?'},
+  {sp:'山田/YAMADA',jp:'山手線に乗れば行けますよ。',rm:'YAMANOTE-SEN NI NOREBA IKEMASU YO.',id:'Naik Yamanote Line bisa sampai.'}
+ ],
+ grammar:'"Eba ii desu ka" = bagaimana baiknya jika ___. Perubahan e-dan: ikimasu → ikeba. Digunakan untuk menanyakan cara terbaik melakukan sesuatu.',
+ cultural:{title:'Transportasi Umum di Tokyo',text:'Tokyo memiliki jaringan kereta terpadat di dunia. IC card (Suica/Pasmo) sangat nyaman untuk naik kereta dan bus. Beli IC card di mesin tiket stasiun besar.'}
+},
+{n:19,jp:'今来たところ',romaji:'IMA KITA TOKORO',id:'Baru saja tiba',
+ dialog:[
+  {sp:'山田/YAMADA',jp:'もう着きましたか？',rm:'MÔ TSUKIMASHITA KA?',id:'Sudah sampai?'},
+  {sp:'クオン/KUON',jp:'はい、今来たところです。',rm:'HAI, IMA KITA TOKORO DESU.',id:'Ya, baru saja tiba.'},
+  {sp:'山田/YAMADA',jp:'もうすぐ行くところです。',rm:'MÔSUGU IKU TOKORO DESU.',id:'Sebentar lagi saya akan berangkat.'}
+ ],
+ grammar:'"Kita tokoro" = baru saja datang. "[lampau] tokoro" = baru saja. "[sekarang] tokoro" = sedang dalam proses. "[akan] tokoro" = akan segera.',
+ cultural:{title:'Karaoke di Jepang',text:'Karaoke berasal dari Jepang. "Kara" = kosong, "oke" = orkestra. Biasanya dilakukan di booth pribadi (karaoke box). Ini aktivitas populer untuk teman, keluarga, dan rekan kerja.'}
+},
+{n:20,jp:'いらっしゃいませ',romaji:'IRASSHAIMASE',id:'Selamat datang (di toko)',
+ dialog:[
+  {sp:'店員/TENIN',jp:'いらっしゃいませ。',rm:'IRASSHAIMASE.',id:'Selamat datang.'},
+  {sp:'クオン/KUON',jp:'このシャツをください。',rm:'KONO SHATSU O KUDASAI.',id:'Tolong berikan kemeja ini.'},
+  {sp:'店員/TENIN',jp:'プレゼント用に包みましょうか？',rm:'PUREZENTO-YÔ NI TSUTSUMIMASHÔ KA?',id:'Dibungkus sebagai hadiah?'}
+ ],
+ grammar:'"Yô ni" = agar/supaya/untuk tujuan. "Tsutsumimashô ka" = boleh saya bungkus? "-mashô ka" = tawaran melakukan sesuatu untuk orang lain.',
+ cultural:{title:'Pelayanan di Toko Jepang',text:'"Omotenashi" adalah konsep keramahan tulus khas Jepang. Pelayan toko sangat sopan dan profesional. Tidak perlu memberi tip di Jepang — itu justru bisa dianggap tidak sopan.'}
+},
+{n:21,jp:'どちらがおすすめですか',romaji:'DOCHIRA GA O-SUSUME DESU KA',id:'Mana yang direkomendasikan?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'どちらがおすすめですか？',rm:'DOCHIRA GA O-SUSUME DESU KA?',id:'Mana yang lebih direkomendasikan?'},
+  {sp:'店員/TENIN',jp:'こちらのほうがいいと思います。',rm:'KOCHIRA NO HÔ GA II TO OMOIMASU.',id:'Saya pikir yang ini lebih baik.'},
+  {sp:'クオン/KUON',jp:'これのほうが安いですか？',rm:'KORE NO HÔ GA YASUI DESU KA?',id:'Yang ini lebih murah?'}
+ ],
+ grammar:'"[A] no hô ga [B] yori [adjective]" = A lebih [sifat] daripada B. "Dochira" = yang mana (dari dua pilihan). "To omoimasu" = saya pikir/rasa.',
+ cultural:{title:'Berbelanja di Jepang',text:'Toko-toko di Jepang sangat terorganisir dan bersih. Tawar-menawar tidak umum dilakukan. Cek tanda diskon khusus dan produk musiman yang sering berubah.'}
+},
+{n:22,jp:'お持ち帰りになりますか',romaji:'O-MOCHIKAERI NI NARIMASU KA',id:'Dibawa pulang atau makan di sini?',
+ dialog:[
+  {sp:'店員/TENIN',jp:'お持ち帰りになりますか？',rm:'O-MOCHIKAERI NI NARIMASU KA?',id:'Dibawa pulang?'},
+  {sp:'クオン/KUON',jp:'いいえ、ここで食べます。',rm:'IIE, KOKO DE TABEMASU.',id:'Tidak, makan di sini.'},
+  {sp:'店員/TENIN',jp:'ご注文はお決まりですか？',rm:'GO-CHÛMON WA O-KIMARI DESU KA?',id:'Sudah siap memesan?'}
+ ],
+ grammar:'"Nara" = kalau/jika (kondisional). "Tai nara" = kalau ingin. "O-mochikaeri" = dibawa pulang (bentuk sopan dari "mochikaeru").',
+ cultural:{title:'Makanan Cepat Saji di Jepang',text:'Jepang punya banyak rantai makanan cepat saji lokal: Yoshinoya (gyudon), Matsuya, Sukiya. Harganya terjangkau dan cepat. Mesin pemesan (tablet/mesin tiket) makin umum digunakan.'}
+},
+{n:23,jp:'ランチにはコーヒーか紅茶がつきます',romaji:'RANCHI NI WA KÔHÎ KA KÔCHA GA TSUKIMASU',id:'Makan siang sudah termasuk kopi atau teh',
+ dialog:[
+  {sp:'店員/TENIN',jp:'ランチにはコーヒーか紅茶がつきます。',rm:'RANCHI NI WA KÔHÎ KA KÔCHA GA TSUKIMASU.',id:'Makan siang sudah termasuk kopi atau teh.'},
+  {sp:'クオン/KUON',jp:'じゃ、コーヒーをお願いします。',rm:'JÂ, KÔHÎ O O-NEGAI SHIMASU.',id:'Kalau begitu, kopi saja.'},
+  {sp:'店員/TENIN',jp:'おひとつですか？',rm:'O-HITOTSU DESU KA?',id:'Satu saja?'}
+ ],
+ grammar:'Cara menghitung benda: hitotsu (1), futatsu (2), mittsu (3), yottsu (4), itsutsu (5), muttsu (6), nanatsu (7), yattsu (8), kokonotsu (9), tô (10). "Ka" = atau.',
+ cultural:{title:'Makan Siang di Jepang',text:'"Lunch set" atau "teishoku" adalah menu makan siang lengkap dengan harga terjangkau. Biasanya termasuk nasi, lauk, sup miso, dan acar. Waktu makan siang di Jepang biasanya pukul 12.00–13.00.'}
+},
+{n:24,jp:'アツアツでおいしかったね',romaji:'ATSUATSU DE OISHIKATTA NE',id:'Panas-panas enak ya',
+ dialog:[
+  {sp:'クオン/KUON',jp:'アツアツでおいしかったね。',rm:'ATSUATSU DE OISHIKATTA NE.',id:'Panas-panas enak ya.'},
+  {sp:'山田/YAMADA',jp:'お腹がいっぱいになった。',rm:'O-NAKA GA IPPAI NI NATTA.',id:'Sudah kenyang.'},
+  {sp:'クオン/KUON',jp:'ごちそうさまでした。',rm:'GOCHISÔSAMA DESHITA.',id:'Terima kasih atas makanannya (selesai makan).'}
+ ],
+ grammar:'Kata-kata onomatope (giongo/gitaigo): atsuatsu (panas sekali), pikapika (bersih berkilau), furafura (pusing/limbung), wakuwaku (bersemangat). Kata sifat lampau: oishii → oishikatta.',
+ cultural:{title:'Onomatope dalam Bahasa Jepang',text:'Bahasa Jepang kaya dengan kata-kata yang menirukan bunyi (giongo) dan menggambarkan perasaan/keadaan (gitaigo). Ini membuat komunikasi lebih ekspresif dan nuangsatif.'}
+},
+{n:25,jp:'駅前でもらったの',romaji:'EKIMAE DE MORATTA NO',id:'Dapat di depan stasiun',
+ dialog:[
+  {sp:'山田/YAMADA',jp:'これ、どこでもらったの？',rm:'KORE, DOKO DE MORATTA NO?',id:'Ini, dapatnya di mana?'},
+  {sp:'クオン/KUON',jp:'駅前でもらったの。',rm:'EKIMAE DE MORATTA NO.',id:'Dapat di depan stasiun.'},
+  {sp:'山田/YAMADA',jp:'あげましょうか？',rm:'AGEMASHÔ KA?',id:'Mau saya kasih?'}
+ ],
+ grammar:'Memberi/menerima: "morau" (saya terima dari orang lain), "ageru" (saya beri kepada orang lain), "kureru" (orang lain memberi kepada saya). Ini berbeda dari perspektif pembicara.',
+ cultural:{title:'Flyer dan Promosi di Jepang',text:'Di depan stasiun ramai sering ada orang membagi-bagi flyer, tisu dengan iklan, atau sampel produk. Ini adalah cara promosi yang masih umum di Jepang.'}
+},
+{n:26,jp:'おかげさまで',romaji:'OKAGE-SAMA DE',id:'Berkat Anda / Alhamdulillah',
+ dialog:[
+  {sp:'知人/CHIIJIN',jp:'最近、お元気ですか？',rm:'SAIKIN, O-GENKI DESU KA?',id:'Belakangan ini, apakah Anda sehat?'},
+  {sp:'クオン/KUON',jp:'おかげさまで、元気です。',rm:'OKAGE-SAMA DE, GENKI DESU.',id:'Berkat Anda, saya sehat.'},
+  {sp:'クオン/KUON',jp:'日本語を話すことができます。',rm:'NIHONGO O HANASU KOTO GA DEKIMASU.',id:'Saya bisa berbicara bahasa Jepang.'}
+ ],
+ grammar:'"Koto ga dekimasu" = bisa melakukan ___. Pola: [kata kerja bentuk dasar] + koto ga dekimasu. "Te kuremasu" = melakukan sesuatu untuk saya (orang lain memberi tindakan).',
+ cultural:{title:'Surat Terima Kasih di Jepang',text:'Mengirim surat atau kartu ucapan terima kasih setelah mendapat bantuan adalah kebiasaan yang dihargai di Jepang. "Tegatami" (surat tulisan tangan) lebih berkesan daripada email.'}
+},
+{n:27,jp:'風邪を引いたみたいです',romaji:'KAZE O HIITA MITAI DESU',id:'Sepertinya saya masuk angin',
+ dialog:[
+  {sp:'クオン/KUON',jp:'風邪を引いたみたいです。',rm:'KAZE O HIITA MITAI DESU.',id:'Sepertinya saya masuk angin.'},
+  {sp:'山田/YAMADA',jp:'薬を飲みなさい。',rm:'KUSURI O NOMI NASAI.',id:'Minumlah obat.'},
+  {sp:'クオン/KUON',jp:'無理しないようにします。',rm:'MURI SHINAI YÔ NI SHIMASU.',id:'Saya akan berusaha tidak memaksakan diri.'}
+ ],
+ grammar:'"Mitai desu" = tampaknya/sepertinya. "-nasai" = perintah/nasihat (digunakan oleh orang yang lebih tua/atasan). "Yô ni shimasu" = berusaha untuk ___.',
+ cultural:{title:'Menjaga Kesehatan di Jepang',text:'Di Jepang, mengenakan masker saat sakit adalah etika sosial untuk melindungi orang lain. Apotek (yakkyoku) banyak tersedia dan tidak memerlukan resep untuk obat-obatan umum.'}
+},
+{n:28,jp:'どうしましたか',romaji:'DÔ SHIMASHITA KA',id:'Ada apa? / Kenapa?',
+ dialog:[
+  {sp:'医者/ISHA',jp:'どうしましたか？',rm:'DÔ SHIMASHITA KA?',id:'Ada keluhan apa?'},
+  {sp:'クオン/KUON',jp:'お腹が痛いかもしれません。',rm:'O-NAKA GA ITAI KAMO SHIREMASEN.',id:'Mungkin perut saya sakit.'},
+  {sp:'医者/ISHA',jp:'ここで休んでいてもいいですか？',rm:'KOKO DE YASUNDE ITE MO II DESU KA?',id:'Boleh istirahat di sini?'}
+ ],
+ grammar:'"Kamo shiremasen" = mungkin/barangkali. "-te mo ii desu ka" = bolehkah saya ___? Digunakan untuk meminta izin. "Dô shimashita ka" = apa yang terjadi.',
+ cultural:{title:'Klinik dan Rumah Sakit di Jepang',text:'Jepang memiliki sistem kesehatan yang sangat baik. Anda memerlukan kartu asuransi (hoken). Klinik (klinikku) untuk penyakit ringan, rumah sakit (byôin) untuk yang serius. Bawa passport atau kartu izin tinggal.'}
+},
+{n:29,jp:'1日に3回飲んでください',romaji:'ICHINICHI NI SANKAI NONDE KUDASAI',id:'Minum 3 kali sehari',
+ dialog:[
+  {sp:'薬剤師/YAKUZAISHI',jp:'1日に3回飲んでください。',rm:'ICHINICHI NI SANKAI NONDE KUDASAI.',id:'Minum 3 kali sehari.'},
+  {sp:'クオン/KUON',jp:'食前と食後、どちらですか？',rm:'SHOKUZEN TO SHOKUGO, DOCHIRA DESU KA?',id:'Sebelum atau sesudah makan?'},
+  {sp:'薬剤師/YAKUZAISHI',jp:'食後に飲んでください。',rm:'SHOKUGO NI NONDE KUDASAI.',id:'Minum sesudah makan.'}
+ ],
+ grammar:'Cara menghitung frekuensi: ikkai (1x), nikai (2x), sankai (3x). "Ichinichi ni" = per hari. "Shokuzen" = sebelum makan, "shokugo" = sesudah makan, "shokuji-chû" = saat makan.',
+ cultural:{title:'Apotek di Jepang',text:'Apotek (yakkyoku atau kusuriya) mudah ditemukan. Staf apotek bisa memberi saran obat umum. Obat-obatan dijual sesuai dosis yang tertera dan tidak disarankan mengubahnya.'}
+},
+{n:30,jp:'面白いアイデアだと思いますよ',romaji:'OMOSHIROI AIDEA DA TO OMOIMASU YO',id:'Saya pikir itu ide yang menarik',
+ dialog:[
+  {sp:'部長/BUCHÔ',jp:'面白いアイデアだと思いますよ。',rm:'OMOSHIROI AIDEA DA TO OMOIMASU YO.',id:'Saya pikir itu ide yang menarik.'},
+  {sp:'クオン/KUON',jp:'手伝っていただけますか？',rm:'TETSUDATTE ITADAKEMASU KA?',id:'Bisakah Anda membantu saya?'},
+  {sp:'部長/BUCHÔ',jp:'いいですね。一緒にやりましょう。',rm:'II DESU NE. ISSHO NI YARIMASHÔ.',id:'Bagus. Mari kita kerjakan bersama.'}
+ ],
+ grammar:'"Te itadakemasu ka" = bisakah Anda melakukan ___ untuk saya (sangat sopan). "Mashô" = mari kita ___. "To omoimasu" = saya berpikir/rasa bahwa ___.',
+ cultural:{title:'Rapat Bisnis di Jepang',text:'"Nemawashi" adalah proses konsultasi informal sebelum rapat formal — membangun konsensus perlahan-lahan. Keputusan di Jepang sering diambil melalui "ringi" (persetujuan bertahap dari bawah ke atas).'}
+},
+{n:31,jp:'もう一度やってみます',romaji:'MÔ ICHIDO YATTE MIMASU',id:'Saya akan mencoba sekali lagi',
+ dialog:[
+  {sp:'クオン/KUON',jp:'もう一度やってみます。',rm:'MÔ ICHIDO YATTE MIMASU.',id:'Saya akan mencoba sekali lagi.'},
+  {sp:'山田/YAMADA',jp:'段々上手になりますよ。',rm:'DANDAN JÔZU NI NARIMASU YO.',id:'Lama-kelamaan pasti makin mahir.'},
+  {sp:'クオン/KUON',jp:'値段が安くなりましたね。',rm:'NEDAN GA YASUKU NARIMASHITA NE.',id:'Harganya sudah turun ya.'}
+ ],
+ grammar:'"Te miru" = mencoba melakukan ___. "Dandan" = lama-kelamaan/semakin. "[adjective] ni/ku narimasu" = menjadi [sifat]. Contoh: jôzu ni narimasu (menjadi mahir), yasuku narimasu (menjadi murah).',
+ cultural:{title:'Semangat Pantang Menyerah di Jepang',text:'"Gambaru" (berusaha keras/tidak menyerah) adalah nilai inti budaya Jepang. Kegagalan dilihat sebagai proses belajar. "Nana korobi ya oki" = jatuh 7 kali, bangkit 8 kali.'}
+},
+{n:32,jp:'モニター調査をしてはいかがでしょうか',romaji:'MONITÂ CHÔSA O SHITE WA IKAGA DESHÔ KA',id:'Bagaimana kalau kita lakukan survei?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'モニター調査をしてはいかがでしょうか？',rm:'MONITÂ CHÔSA O SHITE WA IKAGA DESHÔ KA?',id:'Bagaimana kalau kita lakukan survei?'},
+  {sp:'部長/BUCHÔ',jp:'それはいいですね。でも、使いすぎに注意ですね。',rm:'SORE WA II DESU NE. DEMO, TSUKAISUGINI CHÛI DESU NE.',id:'Itu bagus. Tapi, hati-hati jangan berlebihan.'}
+ ],
+ grammar:'"Te wa ikaga deshô ka" = bagaimana kalau ___? (saran sopan). "-sugimasu" = terlalu/berlebihan. Contoh: tabésugimasu (makan terlalu banyak), tsukaisugimasu (menggunakan berlebihan).',
+ cultural:{title:'Budaya Perusahaan Jepang',text:'Perusahaan Jepang terkenal dengan loyalitas karyawan jangka panjang. "Kaizen" (perbaikan berkelanjutan) adalah filosofi manajemen yang lahir dari Jepang dan kini diterapkan global.'}
+},
+{n:33,jp:'山田さんに見てもらってください',romaji:'YAMADA-SAN NI MITE MORATTE KUDASAI',id:'Tolong minta Yamada untuk melihatnya',
+ dialog:[
+  {sp:'部長/BUCHÔ',jp:'山田さんに見てもらってください。',rm:'YAMADA-SAN NI MITE MORATTE KUDASAI.',id:'Tolong minta Yamada untuk melihatnya.'},
+  {sp:'クオン/KUON',jp:'山田さんが資料を直してくれました。',rm:'YAMADA-SAN GA SHIRYÔ O NAOSHITE KUREMASHITA.',id:'Yamada sudah membenarkan dokumennya untuk saya.'}
+ ],
+ grammar:'"[orang] ni [kata kerja] te moratte kudasai" = tolong minta [orang] untuk melakukan ___. "Te kuremashita" = [orang lain] melakukan sesuatu untuk saya (saya yang diuntungkan).',
+ cultural:{title:'Hierarki di Tempat Kerja Jepang',text:'"Sempai" (senior) dan "kôhai" (junior) adalah sistem hierarki penting. Senior diharapkan membimbing junior. Gunakan nama + "san" untuk rekan kerja, dan untuk atasan gunakan gelar mereka.'}
+},
+{n:34,jp:'今日は燃えるごみの日ですよ',romaji:'KYÔ WA MOERU GOMI NO HI DESU YO',id:'Hari ini hari sampah yang bisa dibakar',
+ dialog:[
+  {sp:'隣人/RINJIN',jp:'今日は燃えるごみの日ですよ。',rm:'KYÔ WA MOERU GOMI NO HI DESU YO.',id:'Hari ini hari sampah yang bisa dibakar.'},
+  {sp:'クオン/KUON',jp:'雨が降ると、出さないほうがいいですか？',rm:'AME GA FURU TO, DASANAI HÔ GA II DESU KA?',id:'Kalau hujan, lebih baik tidak dikeluarkan?'},
+  {sp:'隣人/RINJIN',jp:'いいえ、雨でも出していいですよ。',rm:'IIE, AME DEMO DASHITE II DESU YO.',id:'Tidak, meski hujan tetap bisa dikeluarkan.'}
+ ],
+ grammar:'"To" = kalau/jika/ketika (kondisional alami). "[kata kerja bentuk dasar] to, [akibat alami]". Contoh: hidari ni magaru to, eki ga arimasu (kalau belok kiri, ada stasiun).',
+ cultural:{title:'Pemilahan Sampah di Jepang',text:'Jepang memiliki sistem pemilahan sampah yang ketat: moeru gomi (dapat dibakar), moenai gomi (tidak dapat dibakar), shigen gomi (daur ulang). Aturan berbeda-beda setiap kota.'}
+},
+{n:35,jp:'小学校に集合です',romaji:'SHÔGAKKÔ NI SHÛGÔ DESU',id:'Berkumpul di sekolah dasar',
+ dialog:[
+  {sp:'アナウンス/ANAUNSU',jp:'地域の清掃活動に参加するために、小学校に集合です。',rm:'CHIIKI NO SEISÔ KATSUDÔ NI SANKA SURU TAME NI, SHÔGAKKÔ NI SHÛGÔ DESU.',id:'Untuk berpartisipasi dalam kegiatan kebersihan lingkungan, berkumpul di sekolah dasar.'},
+  {sp:'クオン/KUON',jp:'ごみを捨てないように気をつけます。',rm:'GOMI O SUTENAI YÔ NI KI O TSUKEMASU.',id:'Saya akan berhati-hati agar tidak membuang sampah.'}
+ ],
+ grammar:'"Yô ni" (agar/supaya): [negatif] yô ni ki o tsukemasu = berhati-hati agar tidak ___. "Tame ni" = untuk tujuan/demi. Perbedaan: "tame ni" (tujuan), "yô ni" (cara/agar).',
+ cultural:{title:'Kegiatan Komunitas di Jepang',text:'"Chôkai" atau "jichikai" adalah organisasi warga lokal yang mengkoordinasikan kegiatan komunitas seperti bersih-bersih, festival lokal, dan pengumuman. Partisipasi aktif sangat dihargai.'}
+},
+{n:36,jp:'カットですね',romaji:'KATTO DESU NE',id:'Dipotong ya',
+ dialog:[
+  {sp:'美容師/PENATA RAMBUT',jp:'今日はどうしますか？',rm:'KYÔ WA DÔ SHIMASU KA?',id:'Hari ini mau diapakan?'},
+  {sp:'クオン/KUON',jp:'短くしてほしいんですけど…。',rm:'MIJIKAKU SHITE HOSHII N DESU KEDO...',id:'Saya mau rambut saya dipotong pendek...'},
+  {sp:'美容師/PENATA RAMBUT',jp:'カットですね。前髪は眉にかかる程度ですか？',rm:'KATTO DESU NE. MAEGAMI WA MAYU NI KAKARU TEIDO DESU KA?',id:'Dipotong ya. Bagian depannya mau sampai alis?'},
+  {sp:'クオン/KUON',jp:'もっと短くしてください。',rm:'MOTTO MIJIKAKU SHITE KUDASAI.',id:'Tolong lebih pendek lagi.'}
+ ],
+ grammar:'Bentuk —te dari kata kerja + hoshii n desu = ingin (orang lain melakukan) ___. Contoh: "issho ni itte hoshii n desu" artinya "ingin pergi bersama-sama".',
+ cultural:{title:'Salon Rambut di Jepang',text:'Salon rambut (biyôshitsu/heya) di Jepang terkenal profesional. Harganya lebih tinggi dari barbershop biasa. Banyak salon menggunakan majalah bergambar untuk menunjukkan model rambut yang diinginkan.'}
+},
+{n:37,jp:'いい天気になりましたね',romaji:'II TENKI NI NARIMASHITA NE',id:'Cuacanya sudah cerah ya',
+ dialog:[
+  {sp:'クオン/KUON',jp:'いい天気になりましたね。',rm:'II TENKI NI NARIMASHITA NE.',id:'Cuacanya sudah cerah ya.'},
+  {sp:'近所の人/TETANGGA',jp:'本当。雨が続いたから、久しぶりに気持ちいいわ。',rm:'HONTÔ. AME GA TSUZUITA KARA, HISASHIBURI NI KIMOCHI II WA.',id:'Ya betul! Karena belakangan ini hujan terus, baru kali ini saya merasa lebih nyaman.'},
+  {sp:'クオン/KUON',jp:'暖かくなったので、掃除するのも気持ちいいです。',rm:'ATATAKAKU NATTA NODE, SÔJI SURU NO MO KIMOCHI II DESU.',id:'Karena cuacanya lebih hangat, saya juga merasa nyaman untuk bersih-bersih.'}
+ ],
+ grammar:'Saat "narimasu" digunakan setelah kata benda, partikel "ni" diletakkan sebelum "narimasu". Saat kata sifat diikuti "narimasu", akhiran —i berubah menjadi ku. Contoh: atatakai → atatakaku narimasu.',
+ cultural:{title:'Musim di Jepang',text:'Jepang memiliki empat musim yang jelas. Percakapan tentang cuaca sering membuka obrolan karena orang Jepang sangat peka terhadap perubahan alam. "Hare-onna" (wanita pembawa cuaca cerah) dan "ame-otoko" (pria pembawa hujan) adalah ungkapan populer.'}
+},
+{n:38,jp:'地震が起きたら、どうしたらいいですか',romaji:'JISHIN GA OKITARA, DÔ SHITARA II DESU KA',id:'Jika terjadi gempa, harus bagaimana?',
+ dialog:[
+  {sp:'クオン/KUON',jp:'家にいる時、地震が起きたら、どうしたらいいですか？',rm:'IE NI IRU TOKI, JISHIN GA OKITARA, DÔ SHITARA II DESU KA?',id:'Apa yang harus saya lakukan jika terjadi gempa saat saya sedang ada di rumah?'},
+  {sp:'大家/IBU PEMILIK',jp:'まずテーブルの下に入ってね。',rm:'MAZU TÊBURU NO SHITA NI HAITTE NE.',id:'Pertama, masuklah ke kolong meja.'},
+  {sp:'近所の人/TETANGGA',jp:'倒れてくる家具に注意しなくちゃ。',rm:'TAORETE KURU KAGU NI CHÛI SHINAKUCHA.',id:'Waspadai perabot rumah yang berjatuhan.'},
+  {sp:'大家/IBU PEMILIK',jp:'コンロの火を消すのも忘れないで。',rm:'KONRO NO HI O KESU NO MO WASURENAI DE.',id:'Jangan lupa matikan gas.'}
+ ],
+ grammar:'Hilangkan akhiran —masu dari kata kerja + tara, dô shitara ii desu ka? = Apa yang harus saya lakukan jika ___? Contoh: taifu ga kitara, dô shita ii desu ka?',
+ cultural:{title:'Keselamatan saat Gempa Bumi',text:'Jepang adalah salah satu negara paling aktif secara seismik. Setiap rumah biasanya punya tas darurat (hijôyô bukuro). Latihan evakuasi gempa dilakukan rutin di sekolah dan kantor.'}
+},
+{n:39,jp:'おじゃまします',romaji:'O-JAMA SHIMASU',id:'Permisi (memasuki rumah orang)',
+ dialog:[
+  {sp:'クオン/KUON',jp:'おじゃまします。',rm:'O-JAMA SHIMASU.',id:'Permisi (saya masuk).'},
+  {sp:'大家/IBU PEMILIK',jp:'どうぞ。',rm:'DÔZO.',id:'Silakan.'},
+  {sp:'大家/IBU PEMILIK',jp:'夫もクオンさんと話すのを楽しみにしているの。',rm:'OTTO MO KUON-SAN TO HANASU NO O TANOSHIMI NI SHITE IRU NO.',id:'Suami saya juga menanti-nantikan untuk dapat bicara dengan Anda.'},
+  {sp:'クオン/KUON',jp:'あっ、畳がありますね。',rm:"A', TATAMI GA ARIMASU NE.",id:'Wah, itu tikar tatami, ya...'}
+ ],
+ grammar:'Bentuk pasif kata kerja: iu (ucapkan) → iwareru, kaku (tulis) → kakareru, nageru (lempar) → nagerareru. Bentuk pasif —masu: iimasu → iwaremasu.',
+ cultural:{title:'Tata Krama Berkunjung ke Rumah Jepang',text:'"O-jama shimasu" diucapkan saat memasuki rumah orang. Lepas sepatu di genkan (pintu masuk). Duduk di atas tatami dengan cara yang sopan. Bawa omiyage (oleh-oleh) saat berkunjung.'}
+},
+{n:40,jp:'休みの日は何をしているんですか',romaji:'YASUMI NO HI WA NANI O SHITEIRU N DESU KA',id:'Apa yang Anda lakukan di hari libur?',
+ dialog:[
+  {sp:'大家の夫/PEMILIK KONTRAKAN',jp:'休みの日は何をしているんですか？',rm:'YASUMI NO HI WA NANI O SHITEIRU N DESU KA?',id:'Apa yang Anda lakukan di saat liburan?'},
+  {sp:'クオン/KUON',jp:'映画を見たり、本を読んだりしています。',rm:'EIGA O MITARI, HON O YONDARI SHITEIMASU.',id:'Saya menonton film atau membaca buku.'},
+  {sp:'大家/IBU PEMILIK',jp:'ハイキングが好きで、月に1度は山に行くの。',rm:'HAIKINGU GA SUKI DE, TSUKI NI ICHIDO WA YAMA NI IKU NO.',id:'Karena kami suka hiking, kami pergi ke pegunungan setidaknya satu kali dalam sebulan.'}
+ ],
+ grammar:'"—tari" digunakan untuk menggambarkan sejumlah tindakan dan diikuti tindakan lainnya. Digunakan setelah kata kerja tanpa —masu. Contoh: "mitari, yondari shimasu" artinya "melihat atau membaca".',
+ cultural:{title:'Hidup yang Aktif di Masa Pensiun',text:'Orang Jepang aktif bahkan di masa pensiun. Hiking, berkebun, dan belajar hal baru sangat populer. Ada konsep "ikigai" (alasan untuk hidup) yang mendorong keterlibatan aktif sepanjang hayat.'}
+},
+{n:41,jp:'そろそろ',romaji:'SOROSORO',id:'Sudah waktunya...',
+ dialog:[
+  {sp:'クオン/KUON',jp:'すみません、僕、そろそろ…。',rm:'SUMIMASEN, BOKU, SOROSORO...',id:'Maaf, saya harus....'},
+  {sp:'大家/IBU PEMILIK',jp:'あっ、もうこんな時間。',rm:"A', MÔ KONNA JIKAN.",id:'Oh, sudah waktunya ya!'},
+  {sp:'クオン/KUON',jp:'今日はありがとうございました。楽しかったです。',rm:'KYÔ WA ARIGATÔ GOZAIMASHITA. TANOSHIKATTA DESU.',id:'Terima kasih banyak untuk hari ini. Saya senang sekali.'},
+  {sp:'大家の夫/PEMILIK',jp:'こちらこそ、来てくれてありがとう。お仕事がんばってね。',rm:'KOCHIRAKOSO, KITE KURETE ARIGATÔ. O-SHIGOTO GANBATTE NE.',id:'Kami juga, terima kasih sudah datang. Semoga sukses di pekerjaan Anda!'}
+ ],
+ grammar:'Kalimat lampau dari kata sifat: ubah —i menjadi —katta. Contoh: tanoshii desu (waktu yang menyenangkan) → tanoshikatta desu (telah menjalani waktu yang menyenangkan). "Sorosoro" = sudah waktunya/segera.',
+ cultural:{title:'Berpamitan di Jepang',text:'Berpamitan di Jepang bisa memakan waktu cukup lama karena tuan rumah biasanya mengantar tamu hingga ke pintu atau bahkan ke jalan. Ini tanda penghormatan dan keramahan yang tulus.'}
+},
+{n:42,jp:'申し訳ございません',romaji:'MÔSHIWAKE GOZAIMASEN',id:'Mohon maaf sekali',
+ dialog:[
+  {sp:'クオン/KUON',jp:'もう商品はお手元に届きましたか？',rm:'MÔ SHÔHIN WA O-TEMOTO NI TODOKIMASHITA KA?',id:'Apa barangnya sudah tiba di kantor Anda?'},
+  {sp:'取引先/KLIEN',jp:'それが、届いていません。どうなっているんですか？',rm:'SORE GA, TODOITE IMASEN. DÔ NATTE IRU N DESU KA?',id:'Hingga sekarang belum sampai. Apa yang terjadi?'},
+  {sp:'クオン/KUON',jp:'申し訳ございません。すぐに調べて、折り返しご連絡をさしあげます。',rm:'MÔSHIWAKE GOZAIMASEN. SUGU NI SHIRABETE, ORIKAESHI GO-RENRAKU O SASHIAGEMASU.',id:'Saya mohon maaf sekali. Akan segera saya periksa dan hubungi Anda kembali.'}
+ ],
+ grammar:'Bentuk —te dari kata kerja + imasen = belum ___ sampai sekarang. Tingkatan permintaan maaf: gomennasai < môshiwake arimasen < môshiwake gozaimasen (paling sopan).',
+ cultural:{title:'Mengubah Kegagalan Menjadi Nilai Tambah',text:'Di Jepang, cara meminta maaf sangat penting. Membungkuk saat meminta maaf adalah keharusan. Setelah meminta maaf, tindakan pemulihan yang cepat dan tulus adalah kunci membangun kembali kepercayaan.'}
+},
+{n:43,jp:'気を引き締めるように',romaji:'KI O HIKISHIMERU YÔ NI',id:'Tolong hati-hati',
+ dialog:[
+  {sp:'部長/BUCHÔ',jp:'発注ミスがあったそうだね。',rm:'HATCHÛ MISU GA ATTA SÔ DA NE.',id:'Saya dengar ada masalah dalam urusan pemesanan barang?'},
+  {sp:'クオン/KUON',jp:'申し訳ございません。',rm:'MÔSHIWAKE GOZAIMASEN.',id:'Mohon maaf sekali.'},
+  {sp:'山田/YAMADA',jp:'私がもう一度、確認するべきでした。',rm:'WATASHI GA MÔ ICHIDO, KAKUNIN SURUBEKI DESHITA.',id:'Harusnya saya memeriksa sekali lagi.'},
+  {sp:'部長/BUCHÔ',jp:'気を引き締めるように。任された仕事は、しっかり頼みますよ。',rm:'KI O HIKISHIMERU YÔ NI. MAKASARETA SHIGOTO WA, SHIKKARI TANOMIMASU YO.',id:'Tolong hati-hati. Saya mengandalkan Anda untuk mengerjakan tugas yang telah dipercayakan itu.'}
+ ],
+ grammar:'Untuk meminta seseorang melakukan sesuatu, tambahkan yô ni pada bentuk dasar kata kerja. Contoh: renrakusuru yô ni (tolong lapor). "—beki desu" berarti "seharusnya".',
+ cultural:{title:'Pengembangan Sumber Daya Manusia',text:'Perusahaan Jepang sangat mementingkan pelatihan karyawan. Senior mengajari junior secara langsung. Ada program pelatihan mental seperti Zazen atau jalan jarak jauh untuk membangun karakter.'}
+},
+{n:44,jp:'誠心誠意',romaji:'SEISHIN-SEII',id:'Dengan sepenuh hati',
+ dialog:[
+  {sp:'部長/BUCHÔ',jp:'遅くまでやっているね。',rm:'OSOKU MADE YATTE IRU NE.',id:'Anda kerja sampai malam ya...'},
+  {sp:'クオン/KUON',jp:'はい。先方におわびの手紙を書いています。',rm:'HAI. SENPÔ NI O-WABI NO TEGAMI O KAITE IMASU.',id:'Ya, pak! Saya sedang menulis surat permintaan maaf kepada klien.'},
+  {sp:'部長/BUCHÔ',jp:'わが社のモットーは誠心誠意。失敗しても、そのこころがけが大切です。',rm:'WAGASHA NO MOTTÔ WA SEISHIN-SEII. SHIPPAI SHITE MO, SONO KOKOROGAKE GA TAISETSU DESU.',id:'Semboyan perusahaan kita adalah "dengan segala ketulusan." Jadi meskipun Anda berbuat salah, sikap mental seperti itu penting.'}
+ ],
+ grammar:'Bentuk —te dari kata kerja + mo = meskipun ___. Contoh: "okurete mo daijôbu desu" artinya "meskipun Anda terlambat, tidak apa-apa".',
+ cultural:{title:'Etos Kerja Jepang',text:'"Seishin-seii" (誠心誠意) artinya "dengan sepenuh hati dan tulus". Ini mencerminkan etos kerja Jepang yang mengutamakan dedikasi total. "Shokunin" adalah istilah untuk pengrajin yang menguasai keahliannya sampai sempurna.'}
+},
+{n:45,jp:'元気ないね',romaji:'GENKI NAI NE',id:'Kelihatan lesu ya',
+ dialog:[
+  {sp:'山田/YAMADA',jp:'ねぇ、元気ないね。どうしたの？',rm:'NÊ, GENKI NAI NE. DÔ SHITA NO?',id:'Hei, Anda kelihatan gundah. Ada masalah apa?'},
+  {sp:'佐藤/SATO',jp:'ちょっと嫌なことがあってね。',rm:'CHOTTO IYA NA KOTO GA ATTE NE.',id:'Saya baru merasakan pengalaman yang agak tidak menyenangkan.'},
+  {sp:'山田/YAMADA',jp:'気分転換に何か食べに行かない？高橋さんも誘おうよ。まだ仕事しているはずよ。',rm:'KIBUN TENKAN NI NANI KA TABE NI IKANAI? TAKAHASHI-SAN MO SASOÔ YO. MADA SHIGOTO SHITE IRU HAZU YO.',id:'Bagaimana kalau kita keluar makan untuk mengganti suasana? Kita ajak Takahashi juga. Pasti dia masih kerja.'},
+  {sp:'クオン/KUON',jp:'僕も行きます！',rm:'BOKU MO IKIMASU!',id:'Saya juga ikut!'}
+ ],
+ grammar:'Bentuk dasar kata kerja + hazu desu = pasti ___. Contoh: "mada shigoto shite iru hazu yo" = pasti masih kerja.',
+ cultural:{title:'Keuangan Rumah Tangga di Jepang',text:'Sekitar 70% istri Jepang yang mengatur keuangan keluarga. Suami mendapat "uang saku" bulanan yang terbatas. Rata-rata uang saku pekerja Jepang sekitar 40.600 yen per bulan (data 2010).'}
+},
+{n:46,jp:'登ったことがある',romaji:'NOBOTTA KOTO GA ARU',id:'Pernah mendaki',
+ dialog:[
+  {sp:'クオン/KUON',jp:'うわぁ。あれが富士山ですか。きれいですね。',rm:'UWÂ. ARE GA FUJISAN DESU KA. KIREI DESU NE.',id:'Wah, itu Gunung Fuji! Indah sekali ya.'},
+  {sp:'山田/YAMADA',jp:'学生の時に登ったことがあるんだけど、頂上からの眺めはもっとすごいのよ。',rm:'GAKUSEI NO TOKI NI NOBOTTA KOTO GA ARU N DA KEDO, CHÔJÔ KARA NO NAGAME WA MOTTO SUGOI NO YO.',id:'Saya pernah mendaki gunung itu saat masih sekolah dulu, dan pemandangan dari puncaknya lebih mengesankan.'},
+  {sp:'クオン/KUON',jp:'いつか僕も登りたいなあ。',rm:'ITSUKA BOKU MO NOBORITAI NÂ.',id:'Saya juga ingin mendakinya suatu hari nanti.'}
+ ],
+ grammar:'Kalimat lampau dari bentuk dasar kata kerja + koto ga arimasu = pernah melakukan/pernah punya pengalaman ___. Contoh: "Kare ni atta koto ga arimasu" artinya "Saya pernah bertemu dengannya".',
+ cultural:{title:'Gunung Fuji',text:'Gunung Fuji (3.776 m) adalah gunung tertinggi di Jepang dan simbol nasional. Musim pendakian resmi adalah Juli-Agustus. Setiap tahun sekitar 300.000 orang mendaki Fuji. Ada empat jalur pendakian utama.'}
+},
+{n:47,jp:'お茶はよく飲まれています',romaji:'O-CHA WA YOKU NOMARETE IMASU',id:'Teh banyak diminum',
+ dialog:[
+  {sp:'クオン/KUON',jp:'あれは何ですか？',rm:'ARE WA NAN DESU KA?',id:'Apa itu?'},
+  {sp:'山田/YAMADA',jp:'茶畑よ。静岡はお茶が有名なの。',rm:'CHABATAKE YO. SHIZUOKA WA O-CHA GA YÛMEI NA NO.',id:'Perkebunan teh. Shizuoka terkenal dengan tehnya.'},
+  {sp:'クオン/KUON',jp:'ベトナムでも、お茶はよく飲まれています。懐かしいなあ。',rm:'BETONAMU DE MO, O-CHA WA YOKU NOMARETE IMASU. NATSUKASHII NÂ.',id:'Di Vietnam teh juga banyak diminum. Saya jadi ingat kampung halaman.'},
+  {sp:'高橋/TAKAHASHI',jp:'ホームシックでしょう？',rm:'HÔMUSHIKKU DESHÔ?',id:'Mungkin Anda rindu kampung halaman?'},
+  {sp:'クオン/KUON',jp:'違います！',rm:'CHIGAIMASU!',id:'Bukan begitu...'}
+ ],
+ grammar:'"___ ga yûmei" artinya "terkenal dengan ___". Contoh: "mikan ga yûmei" artinya "terkenal dengan jeruk mandarin". Bentuk pasif: nomu → nomareru → nomarete imasu (sedang diminum/banyak diminum).',
+ cultural:{title:'Produk Khas Daerah di Jepang',text:'Setiap daerah di Jepang terkenal dengan produk khasnya ("meibutsu"). Shizuoka terkenal dengan teh, Kyoto dengan kue wagashi, Hokkaido dengan produk susu. "Omiyage" (oleh-oleh) dari daerah sangat dihargai.'}
+},
+{n:48,jp:'海が見えます',romaji:'UMI GA MIEMASU',id:'Laut terlihat',
+ dialog:[
+  {sp:'クオン/KUON',jp:'あっ、海が見えます。',rm:"A', UMI GA MIEMASU.",id:'Ah, laut terlihat dari sini!'},
+  {sp:'高橋/TAKAHASHI',jp:'ここは、景色だけではなく料理も有名なんだって。',rm:'KOKO WA, KESHIKI DAKE DE WA NAKU RYÔRI MO YÛMEI NAN DATTE.',id:'Saya dengar penginapan ini terkenal tidak hanya karena pemandangannya tapi juga makanannya.'},
+  {sp:'山田/YAMADA',jp:'ところでクオンさん、お刺身は食べられる？',rm:'TOKORODE KUON-SAN, O-SASHIMI WA TABERARERU?',id:'Ngomong-ngomong, apa Anda bisa makan sashimi, Kuon?'},
+  {sp:'クオン/KUON',jp:'たぶん…。',rm:'TABUN...',id:'Mungkin...'}
+ ],
+ grammar:'"mimasu" (melihat) ↔ "miemasu" (terlihat). "kikimasu" (mendengar) ↔ "kikoemasu" (terdengar). Untuk menyatakan bahwa seseorang bisa melakukan sesuatu: gantilah —masu menjadi —raremasu. Contoh: tabemasu → taberaremasu.',
+ cultural:{title:'Ryokan (Penginapan Tradisional Jepang)',text:'Ryokan adalah penginapan tradisional dengan kamar bertatami, onsen (pemandian air panas), dan makan malam yang mewah (kaiseki). Pengalaman menginap di ryokan adalah cara terbaik merasakan keramahan Jepang.'}
+},
+{n:49,jp:'裸の付き合い',romaji:'HADAKA NO TSUKIAI',id:'Persahabatan di onsen',
+ dialog:[
+  {sp:'佐藤/SATO',jp:'さて、ひと風呂浴びてくるかな。',rm:'SATE, HITO-FURO ABITE KURU KA NA.',id:'Saya mandi dulu ya.'},
+  {sp:'山田/YAMADA',jp:'クオンさんも一緒に入っておいでよ。',rm:'KUON-SAN MO ISSHO NI HAITTE OIDE YO.',id:'Kuon, kenapa tidak ikut mandi sama-sama?'},
+  {sp:'クオン/KUON',jp:'え…。',rm:'E...',id:'Hah?'},
+  {sp:'高橋/TAKAHASHI',jp:'何事も挑戦よ。"裸の付き合い"っていうでしょう？',rm:'"HADAKA NO TSUKIAI" TTE IU DESHÔ?',id:'Setiap hal ada tantangannya! Bukankah ada ungkapan "persahabatan dimana tidak ada yang disembunyikan satu sama lain"?'},
+  {sp:'クオン/KUON',jp:'でも…。やっぱり無理です。',rm:'DEMO... YAPPARI MURI DESU.',id:'Tapi... Saya tidak bisa!'}
+ ],
+ grammar:'Bentuk —te dari kata kerja + kimasu = kembali setelah ___. Contoh: "katte kimasu" artinya "kembali setelah membeli". "Hadaka no tsukiai" digunakan di kalangan lelaki saja.',
+ cultural:{title:'Onsen (Pemandian Air Panas)',text:'Onsen adalah bagian penting budaya Jepang. Aturan onsen: cuci badan sebelum masuk, tidak pakai pakaian renang, handuk kecil tidak boleh masuk air. Onsen dipercaya menyehatkan badan dan pikiran.'}
+},
+{n:50,jp:'これで一人前ね',romaji:'KORE DE ICHININMAE NE',id:'Ini kamu sudah mandiri',
+ dialog:[
+  {sp:'部長/BUCHÔ',jp:'来週、大阪に出張してもらいます。海外から来られるお客様の対応をしてください。',rm:'RAISHÛ, ÔSAKA NI SHUTCHÔ SHITE MORAIMASU. KAIGAI KARA KORARERU O-KYAKU-SAMA NO TAIÔ O SHITE KUDASAI.',id:'Saya ingin Anda melakukan perjalanan bisnis ke Osaka, pekan depan. Tolong layani para pelanggan dari luar negeri.'},
+  {sp:'クオン/KUON',jp:'はい。ぜひ行かせていただきます。',rm:'HAI. ZEHI IKASETE ITADAKIMASU.',id:'Baik. Dengan senang hati saya pergi.'},
+  {sp:'山田/YAMADA',jp:'おめでとう。これで一人前ね。',rm:'OMEDETÔ. KORE DE ICHININMAE NE.',id:'Selamat! Anda telah menjadi seorang karyawan yang mandiri.'}
+ ],
+ grammar:'"Ikasete itadakimasu" terbentuk dari kata kerja "ikimasu" yang berarti "pergi" dan "itadakimasu" yang berarti "menerima kehormatan". Ungkapan ini digunakan sebagai bentuk kerendahan hati.',
+ cultural:{title:'Karyawan Mandiri di Jepang',text:'"Ichininmae" berarti seseorang yang sudah bisa bekerja secara mandiri. Ini pencapaian penting dalam budaya kerja Jepang. Perjalanan bisnis (shutchô) adalah kepercayaan besar yang diberikan kepada karyawan yang dinilai mampu.'}
+}
+];
+
+function renderNHK(q=''){
+  const grid=document.getElementById('nhk-grid');
+  if(!grid) return;
+  const kw=(q||'').toLowerCase().trim();
+  const items=kw ? nhkData.filter(l=>
+    l.jp.toLowerCase().includes(kw)||
+    l.romaji.toLowerCase().includes(kw)||
+    l.id.toLowerCase().includes(kw)||
+    l.dialog.some(d=>d.id.toLowerCase().includes(kw)||d.jp.toLowerCase().includes(kw))||
+    (l.grammar||'').toLowerCase().includes(kw)||
+    (l.cultural?.text||'').toLowerCase().includes(kw)
+  ) : nhkData;
+  grid.innerHTML=items.length===0
+    ? '<p style="color:var(--muted);text-align:center;padding:40px">Tidak ditemukan hasil untuk "'+q+'"</p>'
+    : items.map(l=>`
+  <div class="nhk-card" onclick="openNHK(${l.n})">
+    <div class="nhk-card-header">
+      <div class="nhk-card-num">Pelajaran ${l.n}</div>
+      <div class="nhk-card-title">${l.jp}</div>
+      <div class="nhk-card-romaji">${l.romaji}</div>
+    </div>
+    <div class="nhk-card-body">
+      <div class="nhk-card-preview">${l.id} · ${l.dialog[0]?.id||''}</div>
+    </div>
+  </div>`).join('');
+}
+
+function openNHK(n){
+  const l=nhkData.find(x=>x.n===n);
+  if(!l) return;
+  const overlay=document.createElement('div');
+  overlay.className='nhk-modal-overlay';
+  overlay.innerHTML=`
+  <div class="nhk-modal">
+    <div class="nhk-modal-head" style="position:relative">
+      <div style="font:700 11px Inter,sans-serif;opacity:.7;letter-spacing:.08em">PELAJARAN ${l.n}</div>
+      <h3>${l.jp}</h3>
+      <p>${l.romaji} · ${l.id}</p>
+      <button class="nhk-modal-close" onclick="this.closest('.nhk-modal-overlay').remove()">✕</button>
+    </div>
+    <div class="nhk-modal-body">
+      <div>
+        <div class="nhk-section-label">💬 Dialog</div>
+        <div class="nhk-dialog">
+          ${l.dialog.map(d=>`
+          <div class="nhk-line">
+            <div class="nhk-speaker">${d.sp}</div>
+            <div class="nhk-speech">
+              <div class="nhk-jp">${d.jp} <button class="nhk-speak-btn" onclick="event.stopPropagation();speakJP('${d.jp.replace(/'/g,"\\'")}',this)">🔊</button></div>
+              <div class="nhk-romaji">${d.rm}</div>
+              <div class="nhk-id">${d.id}</div>
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>
+      ${l.grammar?`<div>
+        <div class="nhk-section-label">📝 Tata Bahasa</div>
+        <div class="nhk-grammar">${l.grammar}</div>
+      </div>`:''}
+      ${l.cultural?`<div>
+        <div class="nhk-section-label">🌸 Jôtatsu no Kotsu</div>
+        <div class="nhk-cultural">
+          <div class="nhk-cultural-title">${l.cultural.title}</div>
+          <p>${l.cultural.text}</p>
+        </div>
+      </div>`:''}
+    </div>
+  </div>`;
+  overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
+  document.body.appendChild(overlay);
+}
 
 // ── INIT ──
 // Restore theme
@@ -4497,6 +5118,7 @@ renderMnemonic();
 renderDakuten();
 renderPolaKalimat();
 renderQuizLanjutanHome();
+renderNHK('');
 allVocabRendered=true;
 
 // ── SERVICE WORKER ──
