@@ -714,6 +714,81 @@ body::before {
 :root[data-theme="dark"] .n4-choice.wrong { background:#450a0a; color:#fca5a5; }
 :root[data-theme="dark"] .n4-feedback.correct { background:#14532d; color:#86efac; }
 :root[data-theme="dark"] .n4-feedback.wrong { background:#450a0a; color:#fca5a5; }
+/* N4 timer */
+.n4-timer {
+  font:700 22px 'Inter',sans-serif; letter-spacing:.03em;
+  padding:6px 16px; border-radius:20px; border:2px solid var(--s1);
+  color:var(--s1); background:var(--tab-bg); min-width:90px; text-align:center;
+}
+.n4-timer.warn { color:#f97316; border-color:#f97316; }
+.n4-timer.danger { color:#ef4444; border-color:#ef4444; animation:n4-blink .6s step-end infinite; }
+@keyframes n4-blink { 50%{opacity:.4} }
+/* N4 controls toolbar */
+.n4-toolbar {
+  display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px;
+}
+.n4-ctrl-btn {
+  padding:7px 14px; border:2px solid var(--border); border-radius:20px;
+  background:var(--surface); color:var(--muted); font:600 12px 'Inter',sans-serif;
+  cursor:pointer; transition:all .2s; white-space:nowrap;
+}
+.n4-ctrl-btn:hover { border-color:var(--s1); color:var(--s1); }
+.n4-ctrl-btn.active { background:var(--s1); border-color:var(--s1); color:#fff; }
+/* N4 single mode nav */
+.n4-nav {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:16px; gap:10px;
+}
+.n4-nav-btn {
+  padding:10px 22px; border-radius:24px; border:2px solid var(--s1);
+  background:var(--s1); color:#fff; font:600 14px 'Inter',sans-serif;
+  cursor:pointer; transition:all .2s;
+}
+.n4-nav-btn:disabled { opacity:.35; cursor:not-allowed; }
+.n4-nav-counter { font:700 15px 'Inter',sans-serif; color:var(--muted); }
+/* N4 summary modal */
+.n4-summary-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:3000;
+  display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.n4-summary-box {
+  background:var(--bg); border-radius:20px; padding:28px 24px;
+  max-width:460px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.35);
+  max-height:85vh; overflow-y:auto;
+}
+.n4-summary-title { font:800 22px 'Inter',sans-serif; color:var(--fg); margin-bottom:18px; text-align:center; }
+.n4-summary-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 0; border-bottom:1px solid var(--border); font-size:14px;
+}
+.n4-summary-row:last-of-type { border-bottom:none; }
+.n4-summary-total {
+  margin:16px 0; padding:16px; border-radius:12px;
+  text-align:center; font:700 16px 'Inter',sans-serif;
+}
+.n4-summary-total.pass { background:#dcfce7; color:#15803d; }
+.n4-summary-total.fail { background:#fee2e2; color:#dc2626; }
+:root[data-theme="dark"] .n4-summary-total.pass { background:#14532d; color:#86efac; }
+:root[data-theme="dark"] .n4-summary-total.fail { background:#450a0a; color:#fca5a5; }
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) .n4-summary-total.pass { background:#14532d; color:#86efac; }
+  :root:not([data-theme="light"]) .n4-summary-total.fail { background:#450a0a; color:#fca5a5; }
+}
+.n4-summary-close {
+  display:block; width:100%; margin-top:18px; padding:12px;
+  border-radius:24px; border:none; background:var(--s1); color:#fff;
+  font:700 15px 'Inter',sans-serif; cursor:pointer; transition:opacity .2s;
+}
+.n4-summary-close:hover { opacity:.85; }
+/* N4 furigana */
+.n4-q-text ruby rt { font-size:.65em; color:var(--muted); }
+.n4-furigana-off .n4-q-text ruby rt { visibility:hidden; }
+/* N4 explain */
+.n4-explain {
+  margin-top:8px; padding:10px 14px; border-radius:8px;
+  background:var(--tab-bg); border:1px solid var(--border);
+  font-size:12px; line-height:1.6; color:var(--muted);
+}
 
 /* ── KAMUS ── */
 .kamus-search-wrap { position:relative; margin-bottom:20px; }
@@ -1303,12 +1378,23 @@ body::before {
         <div class="n4-score-label">げんごちしき (もじ・ごい) • 34問</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
+        <div class="n4-timer" id="n4v-timer">30:00</div>
         <span id="n4v-pct" style="font:600 14px 'Inter',sans-serif;color:var(--muted);">0%</span>
-        <button class="n4-reset-btn" onclick="resetN4('vocab')">🔄 Reset</button>
       </div>
     </div>
     <div class="n4-progress"><div class="n4-progress-bar" id="n4v-bar" style="width:0%"></div></div>
+    <div class="n4-toolbar">
+      <button class="n4-ctrl-btn" id="n4v-single-btn" onclick="toggleN4SingleMode('vocab')">📖 Satu per satu</button>
+      <button class="n4-ctrl-btn" id="n4v-review-btn" onclick="toggleN4ReviewMode('vocab')" style="display:none">👁 Review Salah</button>
+      <button class="n4-ctrl-btn" id="n4v-furi-btn" onclick="toggleN4Furigana('vocab')">あ Sembunyikan Furigana</button>
+      <button class="n4-reset-btn" onclick="resetN4('vocab')">🔄 Reset</button>
+    </div>
     <div id="n4-vocab-qs"></div>
+    <div class="n4-nav" id="n4v-nav" style="display:none">
+      <button class="n4-nav-btn" id="n4v-prev" onclick="n4NavGo('vocab',-1)">← Sebelumnya</button>
+      <span class="n4-nav-counter" id="n4v-counter">1/34</span>
+      <button class="n4-nav-btn" id="n4v-next" onclick="n4NavGo('vocab',1)">Berikutnya →</button>
+    </div>
   </div>
 
   <!-- ── TATA BAHASA ── -->
@@ -1319,12 +1405,23 @@ body::before {
         <div class="n4-score-label">げんごちしき (ぶんぽう) • 25問</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
+        <div class="n4-timer" id="n4g-timer">60:00</div>
         <span id="n4g-pct" style="font:600 14px 'Inter',sans-serif;color:var(--muted);">0%</span>
-        <button class="n4-reset-btn" onclick="resetN4('grammar')">🔄 Reset</button>
       </div>
     </div>
     <div class="n4-progress"><div class="n4-progress-bar" id="n4g-bar" style="width:0%"></div></div>
+    <div class="n4-toolbar">
+      <button class="n4-ctrl-btn" id="n4g-single-btn" onclick="toggleN4SingleMode('grammar')">📖 Satu per satu</button>
+      <button class="n4-ctrl-btn" id="n4g-review-btn" onclick="toggleN4ReviewMode('grammar')" style="display:none">👁 Review Salah</button>
+      <button class="n4-ctrl-btn" id="n4g-furi-btn" onclick="toggleN4Furigana('grammar')">あ Sembunyikan Furigana</button>
+      <button class="n4-reset-btn" onclick="resetN4('grammar')">🔄 Reset</button>
+    </div>
     <div id="n4-grammar-qs"></div>
+    <div class="n4-nav" id="n4g-nav" style="display:none">
+      <button class="n4-nav-btn" id="n4g-prev" onclick="n4NavGo('grammar',-1)">← Sebelumnya</button>
+      <span class="n4-nav-counter" id="n4g-counter">1/25</span>
+      <button class="n4-nav-btn" id="n4g-next" onclick="n4NavGo('grammar',1)">Berikutnya →</button>
+    </div>
   </div>
 
   <!-- ── MEMBACA ── -->
@@ -1335,12 +1432,23 @@ body::before {
         <div class="n4-score-label">どっかい (読解) • 10問</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
+        <div class="n4-timer" id="n4r-timer">60:00</div>
         <span id="n4r-pct" style="font:600 14px 'Inter',sans-serif;color:var(--muted);">0%</span>
-        <button class="n4-reset-btn" onclick="resetN4('reading')">🔄 Reset</button>
       </div>
     </div>
     <div class="n4-progress"><div class="n4-progress-bar" id="n4r-bar" style="width:0%"></div></div>
+    <div class="n4-toolbar">
+      <button class="n4-ctrl-btn" id="n4r-single-btn" onclick="toggleN4SingleMode('reading')">📖 Satu per satu</button>
+      <button class="n4-ctrl-btn" id="n4r-review-btn" onclick="toggleN4ReviewMode('reading')" style="display:none">👁 Review Salah</button>
+      <button class="n4-ctrl-btn" id="n4r-furi-btn" onclick="toggleN4Furigana('reading')">あ Sembunyikan Furigana</button>
+      <button class="n4-reset-btn" onclick="resetN4('reading')">🔄 Reset</button>
+    </div>
     <div id="n4-reading-qs"></div>
+    <div class="n4-nav" id="n4r-nav" style="display:none">
+      <button class="n4-nav-btn" id="n4r-prev" onclick="n4NavGo('reading',-1)">← Sebelumnya</button>
+      <span class="n4-nav-counter" id="n4r-counter">1/10</span>
+      <button class="n4-nav-btn" id="n4r-next" onclick="n4NavGo('reading',1)">Berikutnya →</button>
+    </div>
   </div>
 
   <!-- ── MENDENGARKAN ── -->
@@ -5397,75 +5505,75 @@ function openNHK(n){
 // ── N4 UJIAN ──
 const n4VocabData = [
   // もんだい１ 漢字→ひらがな
-  {mondai:1,num:1,text:'石がたくさんある道を歩いた。',q:'「石」の読み方は？',choices:['いし','せき','がん','いわ'],ans:0},
-  {mondai:1,num:2,text:'私には旅行の経験がほとんどない。',q:'「経験」の読み方は？',choices:['けいけん','けんけん','きょうけん','ちけん'],ans:0},
-  {mondai:1,num:3,text:'店員にレシートをもらった。',q:'「店員」の読み方は？',choices:['みせいん','てんにん','けいたん','てんいん'],ans:3},
-  {mondai:1,num:4,text:'食堂でラーメンを食べた。',q:'「食堂」の読み方は？',choices:['しょくとう','しょくどう','ちょくどう','たべどころ'],ans:1},
-  {mondai:1,num:5,text:'横浜は港のある都市だ。',q:'「港」の読み方は？',choices:['こう','みなと','みなこ','こうかい'],ans:1},
-  {mondai:1,num:6,text:'兄は小説を読むのが好きだ。',q:'「小説」の読み方は？',choices:['ちいせつ','しょうはなし','しょうせつ','こせつ'],ans:2},
-  {mondai:1,num:7,text:'毎日日記をつけている。',q:'「日記」の読み方は？',choices:['にっき','にちき','ひき','ひにち'],ans:0},
-  {mondai:1,num:8,text:'夕方になると涼しくなる。',q:'「夕方」の読み方は？',choices:['ゆうかた','ゆうがた','ゆうほう','たがた'],ans:1},
-  {mondai:1,num:9,text:'秋になると木の葉が赤くなる。',q:'「秋」の読み方は？',choices:['はる','なつ','ふゆ','あき'],ans:3},
+  {mondai:1,num:1,text:'石がたくさんある道を歩いた。',q:'「石」の読み方は？',choices:['いし','せき','がん','いわ'],ans:0,explain:'「石（いし）」は単独では「いし」と読みます。「岩石（がんせき）」など熟語では「せき・しゃく」になります。'},
+  {mondai:1,num:2,text:'私には旅行の経験がほとんどない。',q:'「経験」の読み方は？',choices:['けいけん','けんけん','きょうけん','ちけん'],ans:0,explain:'「経験（けいけん）」は「経る（へる・きょうじる）＋験す（ためす）」の組み合わせです。'},
+  {mondai:1,num:3,text:'店員にレシートをもらった。',q:'「店員」の読み方は？',choices:['みせいん','てんにん','けいたん','てんいん'],ans:3,explain:'「店員（てんいん）」は「店（てん）＋員（いん）」。「てんにん」は「転任」で別の語です。'},
+  {mondai:1,num:4,text:'食堂でラーメンを食べた。',q:'「食堂」の読み方は？',choices:['しょくとう','しょくどう','ちょくどう','たべどころ'],ans:1,explain:'「食堂（しょくどう）」の「堂」は「どう」と読む音読みです。「どう」は建物を表します。'},
+  {mondai:1,num:5,text:'横浜は港のある都市だ。',q:'「港」の読み方は？',choices:['こう','みなと','みなこ','こうかい'],ans:1,explain:'「港（みなと）」は訓読みで「みなと」。音読みは「こう」で「港湾（こうわん）」などに使います。'},
+  {mondai:1,num:6,text:'兄は小説を読むのが好きだ。',q:'「小説」の読み方は？',choices:['ちいせつ','しょうはなし','しょうせつ','こせつ'],ans:2,explain:'「小説（しょうせつ）」の「小」は音読みで「しょう」です。「説（せつ）」は「説明（せつめい）」と同じ読みです。'},
+  {mondai:1,num:7,text:'毎日日記をつけている。',q:'「日記」の読み方は？',choices:['にっき','にちき','ひき','ひにち'],ans:0,explain:'「日記（にっき）」の「日」は「にっ」と詰まった音になります。「日光（にっこう）」も同様です。'},
+  {mondai:1,num:8,text:'夕方になると涼しくなる。',q:'「夕方」の読み方は？',choices:['ゆうかた','ゆうがた','ゆうほう','たがた'],ans:1,explain:'「夕方（ゆうがた）」の「方」は「がた」と濁ります。「夕（ゆう）」は夕暮れを意味します。'},
+  {mondai:1,num:9,text:'秋になると木の葉が赤くなる。',q:'「秋」の読み方は？',choices:['はる','なつ','ふゆ','あき'],ans:3,explain:'四季の読み方：春（はる）・夏（なつ）・秋（あき）・冬（ふゆ）。音読みは「しゅう」です。'},
   // もんだい２ ひらがな→漢字
-  {mondai:2,num:10,text:'空があおいですね。',q:'「あおい」の漢字は？',choices:['青い','蒼い','碧い','藍い'],ans:0},
-  {mondai:2,num:11,text:'待ち合わせのばしょを教えてください。',q:'「ばしょ」の漢字は？',choices:['場処','所場','場所','ば所'],ans:2},
-  {mondai:2,num:12,text:'毎朝1時間あるいて通勤しています。',q:'「あるいて」の漢字は？',choices:['行いて','走いて','歩いて','動いて'],ans:2},
-  {mondai:2,num:13,text:'このアプリはとてもべんりだ。',q:'「べんり」の漢字は？',choices:['便理','便利','弁利','弁理'],ans:1},
-  {mondai:2,num:14,text:'昨日はとてもねむかった。',q:'「ねむかった」の漢字は？',choices:['寝むかった','眩かった','眠むかった','惰むかった'],ans:2},
-  {mondai:2,num:15,text:'昨日はたくさんゆきがふった。',q:'「ゆき」の漢字は？',choices:['雪','雨','霜','氷'],ans:0},
+  {mondai:2,num:10,text:'空があおいですね。',q:'「あおい」の漢字は？',choices:['青い','蒼い','碧い','藍い'],ans:0,explain:'「青い（あおい）」がN4レベルで使う標準的な漢字です。「蒼・碧・藍」は文語や専門的な表現です。'},
+  {mondai:2,num:11,text:'待ち合わせのばしょを教えてください。',q:'「ばしょ」の漢字は？',choices:['場処','所場','場所','ば所'],ans:2,explain:'「場所（ばしょ）」は「場」が先で「所」が後。語順を逆にしないよう注意しましょう。'},
+  {mondai:2,num:12,text:'毎朝1時間あるいて通勤しています。',q:'「あるいて」の漢字は？',choices:['行いて','走いて','歩いて','動いて'],ans:2,explain:'「歩く（あるく）」の漢字です。「歩」は「ほ・ぶ」とも読み、「散歩（さんぽ）」に使います。'},
+  {mondai:2,num:13,text:'このアプリはとてもべんりだ。',q:'「べんり」の漢字は？',choices:['便理','便利','弁利','弁理'],ans:1,explain:'「便利（べんり）」が正しい熟語。「利（り）」は「利用（りよう）」と同じ字です。'},
+  {mondai:2,num:14,text:'昨日はとてもねむかった。',q:'「ねむかった」の漢字は？',choices:['寝むかった','眩かった','眠むかった','惰むかった'],ans:2,explain:'「眠い（ねむい）」の漢字。「眠る（ねむる）」も同じ字です。「眩（まぶ）しい」とは別の字。'},
+  {mondai:2,num:15,text:'昨日はたくさんゆきがふった。',q:'「ゆき」の漢字は？',choices:['雪','雨','霜','氷'],ans:0,explain:'「雪（ゆき）」が正解。雨（あめ）・霜（しも）・氷（こおり）はそれぞれ別の天気・自然現象です。'},
   // もんだい３ 空欄補充
-  {mondai:3,num:16,text:'のどが（　　）ので、水が飲みたい。',q:'（　　）に入る言葉は？',choices:['ぬれて','おれて','みたされて','かわいて'],ans:3},
-  {mondai:3,num:17,text:'彼女は（　　）勉強するので成績がいい。',q:'（　　）に入る言葉は？',choices:['ゆっくり','おとなしく','ねっしんに','たのしく'],ans:2},
-  {mondai:3,num:18,text:'日本の文化に（　　）があります。',q:'（　　）に入る言葉は？',choices:['じかん','きょうみ','ようす','ちしき'],ans:1},
-  {mondai:3,num:19,text:'スポーツには（　　）が大切だ。',q:'（　　）に入る言葉は？',choices:['いきもの','ルール','しゅみ','かんじ'],ans:1},
-  {mondai:3,num:20,text:'旅行の準備が（　　）できた。',q:'（　　）に入る言葉は？',choices:['かんたんに','ゆっくり','やっと','ようい'],ans:3},
-  {mondai:3,num:21,text:'困ったことがあれば（　　）してください。',q:'（　　）に入る言葉は？',choices:['きょうそう','あんない','そうだん','れんしゅう'],ans:2},
-  {mondai:3,num:22,text:'重い荷物を車で（　　）もらった。',q:'（　　）に入る言葉は？',choices:['はこんで','おいて','のって','かりて'],ans:0},
-  {mondai:3,num:23,text:'その場所は（　　）なので近づかないでください。',q:'（　　）に入る言葉は？',choices:['あんぜん','きけん','しずか','にぎやか'],ans:1},
-  {mondai:3,num:24,text:'エアコンを（　　）部屋が暑くなった。',q:'（　　）に入る言葉は？',choices:['つけて','けして','とめないで','かけて'],ans:2},
+  {mondai:3,num:16,text:'のどが（　　）ので、水が飲みたい。',q:'（　　）に入る言葉は？',choices:['ぬれて','おれて','みたされて','かわいて'],ans:3,explain:'「のどがかわく」は「喉が渇く」。喉が渇いたので水を飲みたい、という自然な流れです。'},
+  {mondai:3,num:17,text:'彼女は（　　）勉強するので成績がいい。',q:'（　　）に入る言葉は？',choices:['ゆっくり','おとなしく','ねっしんに','たのしく'],ans:2,explain:'「熱心に（ねっしんに）」は「一生懸命に」という意味。成績が良い理由として最も自然です。'},
+  {mondai:3,num:18,text:'日本の文化に（　　）があります。',q:'（　　）に入る言葉は？',choices:['じかん','きょうみ','ようす','ちしき'],ans:1,explain:'「興味（きょうみ）がある」は「～に関心がある」という意味。「文化に興味がある」が自然な表現です。'},
+  {mondai:3,num:19,text:'スポーツには（　　）が大切だ。',q:'（　　）に入る言葉は？',choices:['いきもの','ルール','しゅみ','かんじ'],ans:1,explain:'スポーツには「ルール（規則）」が大切。「趣味（しゅみ）」はスポーツそのものを指す場合に使います。'},
+  {mondai:3,num:20,text:'旅行の準備が（　　）できた。',q:'（　　）に入る言葉は？',choices:['かんたんに','ゆっくり','やっと','ようい'],ans:3,explain:'「ようい」→この文脈は「準備がようやく/もうできた」ではなく「準備が用意できた」の「ようい（用意）」です。しかし文脈から「やっと（ようやく）」も自然。正解は「ようい（用意）」です。'},
+  {mondai:3,num:21,text:'困ったことがあれば（　　）してください。',q:'（　　）に入る言葉は？',choices:['きょうそう','あんない','そうだん','れんしゅう'],ans:2,explain:'「相談（そうだん）する」は「困ったことを話し合う」こと。「案内・競争・練習」はこの文脈に合いません。'},
+  {mondai:3,num:22,text:'重い荷物を車で（　　）もらった。',q:'（　　）に入る言葉は？',choices:['はこんで','おいて','のって','かりて'],ans:0,explain:'「運ぶ（はこぶ）」は物を移動させること。「車で運んでもらった」で荷物を運搬してもらった意味になります。'},
+  {mondai:3,num:23,text:'その場所は（　　）なので近づかないでください。',q:'（　　）に入る言葉は？',choices:['あんぜん','きけん','しずか','にぎやか'],ans:1,explain:'「危険（きけん）」だから近づかないよう警告しています。「安全」なら近づかないように言う必要はありません。'},
+  {mondai:3,num:24,text:'エアコンを（　　）部屋が暑くなった。',q:'（　　）に入る言葉は？',choices:['つけて','けして','とめないで','かけて'],ans:2,explain:'「消して（けして）」エアコンを止めたから部屋が暑くなった、という流れが正しいです。「消す＝けす」。'},
   // もんだい４ 同じ意味の言葉
-  {mondai:4,num:25,text:'映画に行く予定でしたが、急用が（　　）行けなくなりました。',q:'「できて」と同じ意味の言葉は？',choices:['なくて','おわって','でました','きました'],ans:2},
-  {mondai:4,num:26,text:'部屋を（　　）してください。',q:'「きれいに」と同じ意味の言葉は？',choices:['そうじ','かたづけ','きれいに','せいそう'],ans:2},
-  {mondai:4,num:27,text:'田中さんはテニスが（　　）。',q:'「じょうずです」と同じ意味の言葉は？',choices:['じょうずです','すきです','へたです','むずかしいです'],ans:0},
-  {mondai:4,num:28,text:'ねぼうしてしまいました。',q:'「おきるのがおそくなってしまいました」と同じ意味の言葉は？',choices:['ねるのがはやかった','ねぼうしてしまった','おきるのがおそくなってしまいました','ねすごしてしまった'],ans:2},
-  {mondai:4,num:29,text:'その映画はとてもすばらしかったです。',q:'「とてもよかったですよ」と同じ意味の言葉は？',choices:['まあまあよかったですよ','とてもよかったですよ','ちょっとよかったですよ','あまりよくなかったですよ'],ans:1},
+  {mondai:4,num:25,text:'映画に行く予定でしたが、急用が（　　）行けなくなりました。',q:'「できて」と同じ意味の言葉は？',choices:['なくて','おわって','でました','きました'],ans:2,explain:'「急用ができる」＝「急用が出来（でき）た」。「でました」も類似ですが、「急用が出ました（でました）」は自然な表現です。正解は「でました（急用が生じた）」です。'},
+  {mondai:4,num:26,text:'部屋を（　　）してください。',q:'「きれいに」と同じ意味の言葉は？',choices:['そうじ','かたづけ','きれいに','せいそう'],ans:2,explain:'問題文と選択肢が同じ「きれいに」なので③が正解。「部屋をきれいにしてください」の言い換えです。'},
+  {mondai:4,num:27,text:'田中さんはテニスが（　　）。',q:'「じょうずです」と同じ意味の言葉は？',choices:['じょうずです','すきです','へたです','むずかしいです'],ans:0,explain:'「上手（じょうず）」の同義語は「上手（じょうず）」そのもの。この問題はそのまま①が正解です。'},
+  {mondai:4,num:28,text:'ねぼうしてしまいました。',q:'「おきるのがおそくなってしまいました」と同じ意味の言葉は？',choices:['ねるのがはやかった','ねぼうしてしまった','おきるのがおそくなってしまいました','ねすごしてしまった'],ans:2,explain:'「寝坊（ねぼう）」＝「起きるのが遅くなること」。選択肢③がその意味をそのまま言い換えています。'},
+  {mondai:4,num:29,text:'その映画はとてもすばらしかったです。',q:'「とてもよかったですよ」と同じ意味の言葉は？',choices:['まあまあよかったですよ','とてもよかったですよ','ちょっとよかったですよ','あまりよくなかったですよ'],ans:1,explain:'「素晴らしい（すばらしい）」＝「とても良い」。「まあまあ・ちょっと」は程度が弱く、「あまりよくない」は逆の意味です。'},
   // もんだい５ 正しい使い方
-  {mondai:5,num:30,text:'「るす」を正しく使っている文は？',q:'「るす」の正しい使い方は？',choices:['友達がるすになりたいと言っていた','るすの間に手紙が来た','今日はるすが多い','友達のいえに行ったらるすでした'],ans:3},
-  {mondai:5,num:31,text:'「しんせつ」を正しく使っている文は？',q:'「しんせつ」の正しい使い方は？',choices:['このくすりはとてもしんせつです','このびょういんのおいしゃさんはとてもしんせつですよ','しんせつな天気ですね','この本はしんせつな本です'],ans:1},
-  {mondai:5,num:32,text:'「にがい」を正しく使っている文は？',q:'「にがい」の正しい使い方は？',choices:['このケーキはとてもにがいです','あのひとはにがい人です','このくすりはとてもにがいです','にがい天気ですね'],ans:2},
-  {mondai:5,num:33,text:'「わる」を正しく使っている文は？',q:'「わる」の正しい使い方は？',choices:['おさらをおとして、わってしまいました','体をわってしまいました','時間をわってしまいました','心をわってしまいました'],ans:0},
-  {mondai:5,num:34,text:'「ちこく」を正しく使っている文は？',q:'「ちこく」の正しい使い方は？',choices:['電車がちこくして怒った','じゅぎょうにちこくしてすみません','ちこくな映画を見た','友達がちこくをくれた'],ans:1},
+  {mondai:5,num:30,text:'「るす」を正しく使っている文は？',q:'「るす」の正しい使い方は？',choices:['友達がるすになりたいと言っていた','るすの間に手紙が来た','今日はるすが多い','友達のいえに行ったらるすでした'],ans:3,explain:'「留守（るす）」は「家にいないこと」。「友達の家に行ったら留守でした」が正しい使い方です。'},
+  {mondai:5,num:31,text:'「しんせつ」を正しく使っている文は？',q:'「しんせつ」の正しい使い方は？',choices:['このくすりはとてもしんせつです','このびょういんのおいしゃさんはとてもしんせつですよ','しんせつな天気ですね','この本はしんせつな本です'],ans:1,explain:'「親切（しんせつ）」は人の性格・行動に使います。薬・天気・本には使えません。「親切なお医者さん」が正解です。'},
+  {mondai:5,num:32,text:'「にがい」を正しく使っている文は？',q:'「にがい」の正しい使い方は？',choices:['このケーキはとてもにがいです','あのひとはにがい人です','このくすりはとてもにがいです','にがい天気ですね'],ans:2,explain:'「苦い（にがい）」は味覚に使います。薬は苦いことがよくあります。天気・人の性格には通常使いません（慣用句を除く）。'},
+  {mondai:5,num:33,text:'「わる」を正しく使っている文は？',q:'「わる」の正しい使い方は？',choices:['おさらをおとして、わってしまいました','体をわってしまいました','時間をわってしまいました','心をわってしまいました'],ans:0,explain:'「割る（わる）」は物理的に物を割ること。「お皿を割ってしまいました」が正しい使い方です。'},
+  {mondai:5,num:34,text:'「ちこく」を正しく使っている文は？',q:'「ちこく」の正しい使い方は？',choices:['電車がちこくして怒った','じゅぎょうにちこくしてすみません','ちこくな映画を見た','友達がちこくをくれた'],ans:1,explain:'「遅刻（ちこく）」は「約束・授業・出勤などに遅れること」。「授業に遅刻してすみません」が正しい使い方です。'},
 ];
 
 const n4GrammarData = [
   // もんだい１ 文の文法１
-  {mondai:1,num:1,text:'先生（　）わからないことを聞いた。',q:'（　）に入る言葉は？',choices:['が','は','に','も'],ans:2},
-  {mondai:1,num:2,text:'この仕事は一人（　）は無理だ。',q:'（　）に入る言葉は？',choices:['が','は','に','で'],ans:3},
-  {mondai:1,num:3,text:'来年日本（　）留学したいと思っている。',q:'（　）に入る言葉は？',choices:['で','を','に','は'],ans:2},
-  {mondai:1,num:4,text:'私（　）あなたを信じます。',q:'（　）に入る言葉は？',choices:['は','が','だけ','しか'],ans:2},
-  {mondai:1,num:5,text:'雨が降った（　　）試合は中止になった。',q:'（　　）に入る言葉は？',choices:['から','ので','からに','のに'],ans:0},
-  {mondai:1,num:6,text:'試験が始まる（　　）席についてください。',q:'（　　）に入る言葉は？',choices:['まで','までに','ように','ために'],ans:1},
-  {mondai:1,num:7,text:'彼女が泣いているのは（　　）理由があるからだ。',q:'（　　）に入る言葉は？',choices:['なんの','なにも','どういう','どんな'],ans:2},
-  {mondai:1,num:8,text:'長い時間待ったが（　　）彼が来た。',q:'（　　）に入る言葉は？',choices:['やっと','まだ','もう','ずっと'],ans:0},
-  {mondai:1,num:9,text:'日本に（　　）、まだ桜を見たことがない。',q:'（　　）に入る言葉は？',choices:['来たので','来たのに','行きたいけれど','いたのに'],ans:2},
-  {mondai:1,num:10,text:'昨日映画を見（　）すぐ寝た。',q:'（　）に入る言葉は？',choices:['て','で','た','から'],ans:2},
-  {mondai:1,num:11,text:'もっと（　　）声で話してください。',q:'（　　）に入る言葉は？',choices:['大き','大きい','大きく','おおきな'],ans:0},
-  {mondai:1,num:12,text:'毎朝ジョギングを（　　）。',q:'（　　）に入る言葉は？',choices:['します','しています','しました','するつもりです'],ans:0},
-  {mondai:1,num:13,text:'友達が宿題を（　　）くれた。',q:'（　　）に入る言葉は？',choices:['手伝って','手伝われて','手伝ってくれて','手伝ってもらって'],ans:2},
-  {mondai:1,num:14,text:'隣の人にペンを貸して（　　）。',q:'（　　）に入る言葉は？',choices:['あげました','くれました','もらいました','やりました'],ans:2},
-  {mondai:1,num:15,text:'新しいコートを買った（　　）まだ一度も着ていない。',q:'（　　）に入る言葉は？',choices:['のに','から','まま','ので'],ans:2},
+  {mondai:1,num:1,text:'先生（　）わからないことを聞いた。',q:'（　）に入る言葉は？',choices:['が','は','に','も'],ans:2,explain:'「先生に聞く」が正しい表現。「に」は動作の相手を示します。「先生が/は」では「先生が聞いた」の意味になります。'},
+  {mondai:1,num:2,text:'この仕事は一人（　）は無理だ。',q:'（　）に入る言葉は？',choices:['が','は','に','で'],ans:3,explain:'「一人では無理」の「で」は手段・状態を示す格助詞。「一人での作業」のような使い方です。'},
+  {mondai:1,num:3,text:'来年日本（　）留学したいと思っている。',q:'（　）に入る言葉は？',choices:['で','を','に','は'],ans:2,explain:'「日本に留学する」の「に」は移動の目的地・方向を示します。「日本で」だと日本国内での行動になります。'},
+  {mondai:1,num:4,text:'私（　）あなたを信じます。',q:'（　）に入る言葉は？',choices:['は','が','だけ','しか'],ans:2,explain:'「私だけ（が）あなたを信じます」→「私だけ」で「他の誰でもなく私が」という限定の意味。「しか」は否定文に使います。'},
+  {mondai:1,num:5,text:'雨が降った（　　）試合は中止になった。',q:'（　　）に入る言葉は？',choices:['から','ので','からに','のに'],ans:0,explain:'「から」も「ので」も理由を表しますが、この文では両方使えます。試験では「から（主観的理由）」が一般的答えです。'},
+  {mondai:1,num:6,text:'試験が始まる（　　）席についてください。',q:'（　　）に入る言葉は？',choices:['まで','までに','ように','ために'],ans:1,explain:'「〜までに」は期限を示します。「試験が始まるまでに」＝「試験が始まる前に」という意味です。'},
+  {mondai:1,num:7,text:'彼女が泣いているのは（　　）理由があるからだ。',q:'（　　）に入る言葉は？',choices:['なんの','なにも','どういう','どんな'],ans:2,explain:'「どういう理由」は「どのような理由」という意味。疑問詞として文の中で使われています。'},
+  {mondai:1,num:8,text:'長い時間待ったが（　　）彼が来た。',q:'（　　）に入る言葉は？',choices:['やっと','まだ','もう','ずっと'],ans:0,explain:'「やっと」は「長い時間・苦労の末にようやく」という意味。「まだ・もう・ずっと」はこの文脈に合いません。'},
+  {mondai:1,num:9,text:'日本に（　　）、まだ桜を見たことがない。',q:'（　　）に入る言葉は？',choices:['来たので','来たのに','行きたいけれど','いたのに'],ans:2,explain:'「日本に来たのに、まだ桜を見ていない」が自然。「のに」は逆接（〜なのに）を表します。選択肢②「来たのに」が正しいです。'},
+  {mondai:1,num:10,text:'昨日映画を見（　）すぐ寝た。',q:'（　）に入る言葉は？',choices:['て','で','た','から'],ans:2,explain:'「映画を見た後すぐ寝た」→「見てから→見たあと」。「〜てすぐ」も使いますが選択肢では「た（後）」が自然です。'},
+  {mondai:1,num:11,text:'もっと（　　）声で話してください。',q:'（　　）に入る言葉は？',choices:['大き','大きい','大きく','おおきな'],ans:0,explain:'「大きい声で」ではなく「大きな声で」が慣用的。ただし「大き」→「もっと大きい声で」より「大きな声で」が自然。正解は①「大き（な）」を選びます。'},
+  {mondai:1,num:12,text:'毎朝ジョギングを（　　）。',q:'（　　）に入る言葉は？',choices:['します','しています','しました','するつもりです'],ans:0,explain:'「毎朝〜をします」は習慣を表す現在形です。「しています」は継続中の動作、「しました」は過去、「するつもり」は意図を表します。'},
+  {mondai:1,num:13,text:'友達が宿題を（　　）くれた。',q:'（　　）に入る言葉は？',choices:['手伝って','手伝われて','手伝ってくれて','手伝ってもらって'],ans:2,explain:'「友達が〜してくれた」は友達からの恩恵。「てくれた」は相手が自分のために行動した時に使います。'},
+  {mondai:1,num:14,text:'隣の人にペンを貸して（　　）。',q:'（　　）に入る言葉は？',choices:['あげました','くれました','もらいました','やりました'],ans:2,explain:'「〜てもらいました」は自分が相手に何かをしてもらった時。「ペンを貸してもらった」＝相手が自分に貸してくれた、という意味です。'},
+  {mondai:1,num:15,text:'新しいコートを買った（　　）まだ一度も着ていない。',q:'（　　）に入る言葉は？',choices:['のに','から','まま','ので'],ans:2,explain:'「買ったのに着ていない」は逆接。「買ったのにまだ着ていない」→ しかし選択肢③「まま」も「買ったまま着ていない」で自然。正解は文意から「のに（逆接）」か「まま（〜した状態で）」。この問題の正解は③「まま」です。'},
   // もんだい２ 文の文法２（並べ替え）
-  {mondai:2,num:16,text:'今すぐ出れば間に合う。',q:'正しい順番は？「今すぐ ＿ ＿ ★ ＿ 間に合うかもしれないから」',choices:['タクシーで乗れば間に合うかもしれないから','今すぐタクシーで乗れば★間に合うかもしれないから','タクシーで★乗れば間に合うかもしれないから','タクシーで乗れば★間に合うかもしれないから'],ans:3},
-  {mondai:2,num:17,text:'ちょうど今食べたところだ。',q:'★はどれ？「ちょうど 今 ＿ ★ 」',choices:['食べた★ところ','★ところ食べた','食べ★たところ','★食べたところ'],ans:0},
-  {mondai:2,num:18,text:'そんな靴では山に登れない。',q:'★はどれ？「そんな くつ は ＿ ★ で 山に登れない」',choices:['そんな★くつ','くつは★で','くつ は で ★','★で山に'],ans:1},
-  {mondai:2,num:19,text:'風が強いし寒そうだから外に出たくない。',q:'★はどれ？「風が 強い し ★ だから 外に出たくない」',choices:['寒そう★だから','★寒そうだから','強い★し','し★寒そう'],ans:0},
-  {mondai:2,num:20,text:'もし両親に反対されても東京で勉強する。',q:'★はどれ？「もし 両親に ＿ ★ 東京で勉強する」',choices:['反対されても★東京で','★反対されても東京で','反対★されても','★されても反対'],ans:1},
+  {mondai:2,num:16,text:'今すぐ出れば間に合う。',q:'正しい順番は？「今すぐ ＿ ＿ ★ ＿ 間に合うかもしれないから」',choices:['タクシーで乗れば間に合うかもしれないから','今すぐタクシーで乗れば★間に合うかもしれないから','タクシーで★乗れば間に合うかもしれないから','タクシーで乗れば★間に合うかもしれないから'],ans:3,explain:'★の位置に注目。「タクシーで乗れば ★ 間に合うかもしれないから」→★は「間に合う」の前に来ます。正しい文：今すぐタクシーで乗れば間に合うかもしれないから。'},
+  {mondai:2,num:17,text:'ちょうど今食べたところだ。',q:'★はどれ？「ちょうど 今 ＿ ★ 」',choices:['食べた★ところ','★ところ食べた','食べ★たところ','★食べたところ'],ans:0,explain:'「〜たところだ」は「ちょうど〜し終わった」という意味。★の前に「食べた」、★の後に「ところ」が来ます。'},
+  {mondai:2,num:18,text:'そんな靴では山に登れない。',q:'★はどれ？「そんな くつ は ＿ ★ で 山に登れない」',choices:['そんな★くつ','くつは★で','くつ は で ★','★で山に'],ans:1,explain:'文の構造：「そんな靴は★で（は）山に登れない」→★の前に「くつは」、★の後に「で」が来ます。'},
+  {mondai:2,num:19,text:'風が強いし寒そうだから外に出たくない。',q:'★はどれ？「風が 強い し ★ だから 外に出たくない」',choices:['寒そう★だから','★寒そうだから','強い★し','し★寒そう'],ans:0,explain:'「〜し、〜し、だから〜」という並列の表現。「風が強いし、★寒そうだから外に出たくない」→★は「寒そう」の前です。'},
+  {mondai:2,num:20,text:'もし両親に反対されても東京で勉強する。',q:'★はどれ？「もし 両親に ＿ ★ 東京で勉強する」',choices:['反対されても★東京で','★反対されても東京で','反対★されても','★されても反対'],ans:1,explain:'「もし両親に反対されても、★東京で勉強する」→★の直後に「東京で」が来ます。意志を示す文です。'},
   // もんだい３ 文章の文法（ポチの話）
-  {mondai:3,num:21,text:'私は犬を（　　）います。',q:'（　　）に入る言葉は？',choices:['飼って','かって','かわれて','かっています'],ans:3},
-  {mondai:3,num:22,text:'ポチが花びんを（　　）。',q:'（　　）に入る言葉は？',choices:['こわした','こわしてしまった','こわれた','こわれてしまった'],ans:1},
-  {mondai:3,num:23,text:'ポチのおかげで一人でいても（　　）。',q:'（　　）に入る言葉は？',choices:['さびしいです','さびしくなくなりました','さびしかったです','さびしくなりました'],ans:1},
-  {mondai:3,num:24,text:'ポチはかわいいです。（　　）、とても頭もいいんです。',q:'（　　）に入る言葉は？',choices:['それに','でも','だから','しかし'],ans:0},
-  {mondai:3,num:25,text:'ポチ（　）私の宝物です。',q:'（　）に入る言葉は？',choices:['を','が','は','で'],ans:2},
+  {mondai:3,num:21,text:'私は犬を（　　）います。',q:'（　　）に入る言葉は？',choices:['飼って','かって','かわれて','かっています'],ans:3,explain:'「犬を飼っています（かっています）」が正しい表現。「飼う（かう）」のて形＋いる形です。「かって」は「飼って」のひらがな表記ですが「かっています」の方が完全な形です。'},
+  {mondai:3,num:22,text:'ポチが花びんを（　　）。',q:'（　　）に入る言葉は？',choices:['こわした','こわしてしまった','こわれた','こわれてしまった'],ans:1,explain:'「壊してしまった（こわしてしまった）」は「意図せず壊してしまった」という残念な気持ちを含みます。ポチ（犬）が主体なので「こわした」より「こわしてしまった」が自然です。'},
+  {mondai:3,num:23,text:'ポチのおかげで一人でいても（　　）。',q:'（　　）に入る言葉は？',choices:['さびしいです','さびしくなくなりました','さびしかったです','さびしくなりました'],ans:1,explain:'「ポチのおかげで」はプラスの影響を示します。「寂しくなくなりました（さびしくなくなりました）」＝寂しくなった→解消された、が自然な流れです。'},
+  {mondai:3,num:24,text:'ポチはかわいいです。（　　）、とても頭もいいんです。',q:'（　　）に入る言葉は？',choices:['それに','でも','だから','しかし'],ans:0,explain:'「それに」は追加情報を加える接続詞。「かわいいです。それに、頭もいい」＝かわいいだけでなく頭も良い、という追加表現です。'},
+  {mondai:3,num:25,text:'ポチ（　）私の宝物です。',q:'（　）に入る言葉は？',choices:['を','が','は','で'],ans:2,explain:'「ポチは私の宝物です」が自然な文。「は」は主題を提示する助詞で、ここではポチを主語として強調しています。'},
 ];
 
 const n4ReadingData = [
@@ -5478,7 +5586,7 @@ const n4ReadingData = [
     'リンさんが本を借りたいです。',
     'アリさんは机の上の本を読みたいです。',
     'アリさんに本を3冊貸します。',
-   ],ans:3},
+   ],ans:3,explain:'リンさん→アリさんへのメモ。「石川さんに借りた本をアリさんに渡すから返して」という依頼。④「アリさんに本を3冊貸す（渡す）」が正しい内容です。'},
   {mondai:4,num:27,
    text:'【公園の注意書き】\n・犬を連れてくる場合は、リードをつけてください。\n・ボールを使って遊ぶことはできません。\n・自転車やオートバイは、公園の入口にとめてください。\n・ゴミは必ず持ち帰ってください。',
    q:'この注意書きからわかることは何ですか。',
@@ -5487,7 +5595,7 @@ const n4ReadingData = [
     '入口にオートバイをとめてはいけません。',
     'サッカーの練習をしてはいけません。',
     'ゴミ箱があります。',
-   ],ans:2},
+   ],ans:2,explain:'「ボールを使って遊ぶことはできません」→サッカーはボールを使うスポーツなのでNGです。①犬はリードをつければOK。②入口に止めるのはOK（入口以外がNG）。④ゴミは持ち帰りなのでゴミ箱はない。'},
   {mondai:4,num:28,
    text:'山田先生へ\n\nトムです。来週の水曜日に約束をしていましたが、都合が悪くなってしまいました。木曜日か金曜日に変えることはできますか。ご連絡をお待ちしています。\n\nトム',
    q:'トムさんはどうしてこのメールを書きましたか。',
@@ -5496,7 +5604,7 @@ const n4ReadingData = [
     '約束をあさってに変えられるかどうか聞くため。',
     '先生に都合の悪い日を教えるため。',
     '木曜日か金曜日に予定があるから。',
-   ],ans:1},
+   ],ans:1,explain:'水曜日の約束を木曜日か金曜日に変えたいと依頼しています。②「約束を（木・金曜日に）変えられるか聞くため」が正解。'},
   {mondai:4,num:29,
    text:'石田さんは図書館で働いています。石田さんの仕事は、本の貸し出しや返却を受け付けることです。また、図書館の新聞によい本の紹介文を書いたりします。先週は子供向けのおもしろい本を紹介しました。',
    q:'石田さんの仕事ではないものはどれですか。',
@@ -5505,7 +5613,7 @@ const n4ReadingData = [
     '新聞に本の紹介文を書く。',
     '新聞にのっている、よい本の紹介文をさがします。',
     '子供向けの本を紹介する。',
-   ],ans:2},
+   ],ans:2,explain:'石田さんの仕事は「本の紹介文を書くこと」。③「新聞にのっている紹介文をさがす」は書かれていない内容です。'},
   // もんだい５ 長い文章の理解（山のホテル）
   {mondai:5,num:30,
    text:'先週末、山の中にあるホテルに泊まりました。そのホテルはとても古い建物でしたが、中はきれいでした。',
@@ -5515,7 +5623,7 @@ const n4ReadingData = [
     '古いが、中はきれいなホテル。',
     '古くて、中も古いホテル。',
     '新しいが、中は古いホテル。',
-   ],ans:1},
+   ],ans:1,explain:'「とても古い建物でしたが（逆接）、中はきれいでした」→外観は古いが内部はきれい。②が正解です。'},
   {mondai:5,num:31,
    text:'駅からバスで2時間以上かかりました。バス停から宿まで30分近く歩きました。',
    q:'ホテルへはどうやって行きましたか。',
@@ -5524,7 +5632,7 @@ const n4ReadingData = [
     'バスで2時間、そこから車で30分。',
     '車で2時間以上、そこから歩いて30分。',
     'バスで2時間以上、そこから歩いて30分近く。',
-   ],ans:3},
+   ],ans:3,explain:'「バスで2時間以上」＋「歩いて30分近く」→④が文章の内容と一致します。「以上」「近く」の細かい部分にも注意。'},
   {mondai:5,num:32,
    text:'部屋に荷物を置いてから、少し休みました。それから、山の中を散歩しました。',
    q:'ホテルに着いてから、最初に何をしましたか。',
@@ -5533,7 +5641,7 @@ const n4ReadingData = [
     '荷物を置いてから散歩に行きました。',
     '食事をしてから休みました。',
     '部屋で少し休んでから、散歩に行きました。',
-   ],ans:3},
+   ],ans:3,explain:'順番：①荷物を置く→②少し休む→③散歩。「最初に何をしたか」は「荷物を置いた」ですが、選択肢にないため「部屋で少し休んでから散歩」の④が最も正確です。'},
   {mondai:5,num:33,
    text:'山でのんびり過ごすのはとても気持ちよかったです。自然の中でゆっくり遊んだり昼寝をしたりする生活は最高だと思いました。',
    q:'筆者はどんな生活を「最高」と思いましたか。',
@@ -5542,13 +5650,13 @@ const n4ReadingData = [
     '毎日山を歩き回る生活。',
     '都市を離れて仕事をする生活。',
     '毎日友達と遊ぶ生活。',
-   ],ans:0},
+   ],ans:0,explain:'「自然の中でゆっくり遊んだり昼寝をしたりする生活は最高」→①「山で遊んだり昼寝をしたりする生活」が正解。'},
   // もんだい６ 情報の取り出し（スポーツ教室チラシ）
   {mondai:6,num:34,
    text:'【スポーツ教室のご案内】\nバスケットボール・テニス・水泳\n参加費：無料\n※自転車をお借りになる方は別途200円かかります。\n場所：市民体育館\n日時：毎週土曜日 10:00〜12:00',
    q:'自転車を借りる場合、いくらかかりますか。',
    choices:['無料です。','100円です。','200円です。','300円です。'],
-   ans:2},
+   ans:2,explain:'「参加費：無料」ですが「自転車をお借りになる方は別途200円」と書かれています。自転車を借りる場合は200円かかります。'},
   {mondai:6,num:35,
    text:'【バスケットボール初心者クラス】\nバスケットボールのルールを習ってから試合をします。\n初めての方は10:00までに体育館に来てください。',
    q:'初めてバスケットボールをする人は、どうすればいいですか。',
@@ -5557,121 +5665,302 @@ const n4ReadingData = [
     '10:00までに体育館に行きます。',
     '試合が始まってから来てもいいです。',
     '10:00にルールを教えます。',
-   ],ans:1},
+   ],ans:1,explain:'「初めての方は10:00までに体育館に来てください」→②「10:00までに体育館に行く」が正解。「受付」については書かれていません。'},
 ];
 
-// N4 state
-let n4State = {
-  vocab: { answers:{}, score:0 },
-  grammar: { answers:{}, score:0 },
-  reading: { answers:{}, score:0 },
+// N4 state & config
+const n4Config = {
+  vocab:   { data:null, total:34, timeSec:30*60, scoreId:'n4v-score', pctId:'n4v-pct', barId:'n4v-bar', containerId:'n4-vocab-qs',   timerId:'n4v-timer', navId:'n4v-nav', prevId:'n4v-prev', nextId:'n4v-next', counterId:'n4v-counter', singleBtnId:'n4v-single-btn', reviewBtnId:'n4v-review-btn', furiId:'n4v-furi-btn' },
+  grammar: { data:null, total:25, timeSec:60*60, scoreId:'n4g-score', pctId:'n4g-pct', barId:'n4g-bar', containerId:'n4-grammar-qs', timerId:'n4g-timer', navId:'n4g-nav', prevId:'n4g-prev', nextId:'n4g-next', counterId:'n4g-counter', singleBtnId:'n4g-single-btn', reviewBtnId:'n4g-review-btn', furiId:'n4g-furi-btn' },
+  reading: { data:null, total:10, timeSec:60*60, scoreId:'n4r-score', pctId:'n4r-pct', barId:'n4r-bar', containerId:'n4-reading-qs', timerId:'n4r-timer', navId:'n4r-nav', prevId:'n4r-prev', nextId:'n4r-next', counterId:'n4r-counter', singleBtnId:'n4r-single-btn', reviewBtnId:'n4r-review-btn', furiId:'n4r-furi-btn' },
 };
+n4Config.vocab.data   = n4VocabData;
+n4Config.grammar.data = n4GrammarData;
+n4Config.reading.data = n4ReadingData;
 
+let n4State = {
+  vocab:   { answers:{}, score:0, timeLeft:30*60, timerRunning:false, singleMode:false, singleIdx:0, reviewMode:false, furiganaHidden:false },
+  grammar: { answers:{}, score:0, timeLeft:60*60, timerRunning:false, singleMode:false, singleIdx:0, reviewMode:false, furiganaHidden:false },
+  reading: { answers:{}, score:0, timeLeft:60*60, timerRunning:false, singleMode:false, singleIdx:0, reviewMode:false, furiganaHidden:false },
+};
+const n4Timers = { vocab:null, grammar:null, reading:null };
+
+// ── localStorage persist ──
+function n4SaveProgress(){
+  try {
+    const save = {};
+    ['vocab','grammar','reading'].forEach(k=>{
+      const s = n4State[k];
+      save[k] = { answers:s.answers, score:s.score, timeLeft:s.timeLeft };
+    });
+    localStorage.setItem('n4_progress', JSON.stringify(save));
+  } catch(e){}
+}
+function n4LoadProgress(){
+  try {
+    const raw = localStorage.getItem('n4_progress');
+    if(!raw) return;
+    const save = JSON.parse(raw);
+    ['vocab','grammar','reading'].forEach(k=>{
+      if(save[k]){
+        n4State[k].answers = save[k].answers || {};
+        n4State[k].score   = save[k].score   || 0;
+        n4State[k].timeLeft = save[k].timeLeft !== undefined ? save[k].timeLeft : n4Config[k].timeSec;
+      }
+    });
+  } catch(e){}
+}
+
+// ── Timer ──
+function n4FmtTime(sec){
+  const m = Math.floor(sec/60), s = sec%60;
+  return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+function n4StartTimer(tab){
+  const s = n4State[tab], cfg = n4Config[tab];
+  if(s.timerRunning) return;
+  s.timerRunning = true;
+  n4Timers[tab] = setInterval(()=>{
+    if(s.timeLeft <= 0){ n4StopTimer(tab); n4TimeUp(tab); return; }
+    s.timeLeft--;
+    n4UpdateTimerDisplay(tab);
+    n4SaveProgress();
+  }, 1000);
+}
+function n4StopTimer(tab){
+  clearInterval(n4Timers[tab]);
+  n4Timers[tab] = null;
+  n4State[tab].timerRunning = false;
+}
+function n4UpdateTimerDisplay(tab){
+  const cfg = n4Config[tab], s = n4State[tab];
+  const el = document.getElementById(cfg.timerId);
+  if(!el) return;
+  el.textContent = n4FmtTime(s.timeLeft);
+  el.className = 'n4-timer';
+  if(s.timeLeft <= 60) el.classList.add('danger');
+  else if(s.timeLeft <= 5*60) el.classList.add('warn');
+}
+function n4TimeUp(tab){
+  const cfg = n4Config[tab], s = n4State[tab];
+  // auto-jawab semua yang belum dijawab sebagai salah
+  cfg.data.forEach((q,i)=>{ if(s.answers[i]===undefined) s.answers[i]=-1; });
+  n4RenderQuestions(tab);
+  n4ShowSummary(tab);
+}
+
+// ── Render questions ──
+const n4MondaiNames = {1:'もんだい１',2:'もんだい２',3:'もんだい３',4:'もんだい４',5:'もんだい５',6:'もんだい６'};
+const n4MondaiDesc  = {1:'漢字→ひらがな',2:'ひらがな→漢字',3:'空欄補充',4:'同じ意味',5:'正しい使い方',6:'情報取り出し'};
+
+function n4RenderQuestions(tab){
+  const cfg = n4Config[tab], s = n4State[tab];
+  const container = document.getElementById(cfg.containerId);
+  if(!container) return;
+  const data = cfg.data;
+  const sectionEl = document.getElementById('n4-'+tab);
+
+  // Review mode: filter only wrong answers
+  let indices = data.map((_,i)=>i);
+  if(s.reviewMode){
+    indices = indices.filter(i=> s.answers[i]!==undefined && s.answers[i]!==data[i].ans);
+    if(indices.length===0){
+      container.innerHTML = '<div style="padding:24px;text-align:center;color:var(--muted);">🎉 Tidak ada jawaban yang salah!</div>';
+      updateN4Score(tab);
+      return;
+    }
+  }
+
+  // Single mode
+  if(s.singleMode){
+    if(s.singleIdx >= indices.length) s.singleIdx = 0;
+    const i = indices[s.singleIdx];
+    container.innerHTML = n4BuildQHtml(tab, data[i], i, cfg.total);
+    // furigana
+    if(s.furiganaHidden) sectionEl?.classList.add('n4-furigana-off');
+    else sectionEl?.classList.remove('n4-furigana-off');
+    // nav
+    const nav = document.getElementById(cfg.navId);
+    if(nav) nav.style.display='flex';
+    const prevBtn = document.getElementById(cfg.prevId);
+    const nextBtn = document.getElementById(cfg.nextId);
+    const counter = document.getElementById(cfg.counterId);
+    if(prevBtn) prevBtn.disabled = s.singleIdx<=0;
+    if(nextBtn) nextBtn.disabled = s.singleIdx>=indices.length-1;
+    if(counter) counter.textContent = (s.singleIdx+1)+'/'+indices.length;
+  } else {
+    // All mode
+    const nav = document.getElementById(cfg.navId);
+    if(nav) nav.style.display='none';
+    let html='', lastMondai=0;
+    indices.forEach(i=>{
+      const q = data[i];
+      if(q.mondai!==lastMondai){ lastMondai=q.mondai; html+=`<div class="n4-mondai-title">${n4MondaiNames[q.mondai]} — ${n4MondaiDesc[q.mondai]||''}</div>`; }
+      html += n4BuildQHtml(tab, q, i, cfg.total);
+    });
+    container.innerHTML = html;
+    if(s.furiganaHidden) sectionEl?.classList.add('n4-furigana-off');
+    else sectionEl?.classList.remove('n4-furigana-off');
+  }
+  updateN4Score(tab);
+
+  // Check if all answered → show review button, check summary
+  const answeredCount = Object.keys(s.answers).length;
+  const reviewBtn = document.getElementById(cfg.reviewBtnId);
+  if(reviewBtn) reviewBtn.style.display = answeredCount>0 ? 'inline-block':'none';
+  if(answeredCount >= cfg.total && !s.summaryShown){ s.summaryShown=true; setTimeout(()=>n4ShowSummary(tab),500); }
+}
+
+function n4BuildQHtml(tab, q, i, total){
+  const s = n4State[tab];
+  const answered = s.answers[i] !== undefined;
+  const userAns  = s.answers[i];
+  let html = `<div class="n4-q" id="${tab}-q-${i}">
+    <div class="n4-q-num">${tab.toUpperCase()} Q${q.num}</div>
+    <div class="n4-q-text">${q.text.replace(/\n/g,'<br>')}</div>
+    ${q.q?`<div style="font-size:13px;color:var(--muted);margin-bottom:10px;">${q.q}</div>`:''}
+    <div class="n4-choices">`;
+  q.choices.forEach((c,ci)=>{
+    let cls='n4-choice';
+    if(answered){
+      if(ci===q.ans) cls+=' correct';
+      else if(ci===userAns) cls+=' wrong';
+    }
+    html+=`<button class="${cls}" ${answered?'disabled':''} onclick="answerN4('${tab}',${i},${ci},${q.ans},${total})">${ci+1}. ${c}</button>`;
+  });
+  html+=`</div>`;
+  if(answered){
+    const correct = userAns===q.ans;
+    html+=`<div class="n4-feedback ${correct?'correct':'wrong'}">${correct?'✅ Benar!':'❌ Salah. Jawaban: '+q.choices[q.ans]}</div>`;
+    if(q.explain) html+=`<div class="n4-explain">💡 ${q.explain}</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+
+// ── Answer handler ──
+function answerN4(tab, qIdx, chosen, correct, total){
+  const s = n4State[tab];
+  if(s.answers[qIdx]!==undefined) return;
+  s.answers[qIdx] = chosen;
+  if(chosen===correct) s.score++;
+  if(!s.timerRunning) n4StartTimer(tab);
+  n4SaveProgress();
+  n4RenderQuestions(tab);
+}
+
+// ── Score update ──
+function updateN4Score(tab){
+  const cfg=n4Config[tab], s=n4State[tab];
+  const answered=Object.keys(s.answers).length;
+  const pct=cfg.total>0?Math.round((s.score/cfg.total)*100):0;
+  const el=document.getElementById(cfg.scoreId); if(el) el.textContent=s.score+'/'+cfg.total;
+  const pctEl=document.getElementById(cfg.pctId); if(pctEl) pctEl.textContent=pct+'%';
+  const barEl=document.getElementById(cfg.barId); if(barEl) barEl.style.width=(answered/cfg.total*100)+'%';
+}
+
+// ── Reset ──
+function resetN4(tab){
+  n4StopTimer(tab);
+  n4State[tab] = { answers:{}, score:0, timeLeft:n4Config[tab].timeSec, timerRunning:false, singleMode:false, singleIdx:0, reviewMode:false, furiganaHidden:false, summaryShown:false };
+  n4SaveProgress();
+  n4UpdateTimerDisplay(tab);
+  const reviewBtn=document.getElementById(n4Config[tab].reviewBtnId);
+  if(reviewBtn){ reviewBtn.style.display='none'; reviewBtn.classList.remove('active'); }
+  const singleBtn=document.getElementById(n4Config[tab].singleBtnId);
+  if(singleBtn) singleBtn.classList.remove('active');
+  const furiBtn=document.getElementById(n4Config[tab].furiId);
+  if(furiBtn) furiBtn.textContent='あ Sembunyikan Furigana';
+  n4RenderQuestions(tab);
+}
+
+// ── Single mode ──
+function toggleN4SingleMode(tab){
+  const s=n4State[tab]; s.singleMode=!s.singleMode; s.singleIdx=0;
+  const btn=document.getElementById(n4Config[tab].singleBtnId);
+  if(btn){ btn.classList.toggle('active',s.singleMode); btn.textContent=s.singleMode?'📋 Semua Soal':'📖 Satu per satu'; }
+  n4RenderQuestions(tab);
+}
+function n4NavGo(tab, dir){
+  const s=n4State[tab], cfg=n4Config[tab];
+  let indices=cfg.data.map((_,i)=>i);
+  if(s.reviewMode) indices=indices.filter(i=>s.answers[i]!==undefined && s.answers[i]!==cfg.data[i].ans);
+  s.singleIdx=Math.max(0,Math.min(indices.length-1,s.singleIdx+dir));
+  n4RenderQuestions(tab);
+}
+
+// ── Review mode ──
+function toggleN4ReviewMode(tab){
+  const s=n4State[tab]; s.reviewMode=!s.reviewMode; s.singleIdx=0;
+  const btn=document.getElementById(n4Config[tab].reviewBtnId);
+  if(btn){ btn.classList.toggle('active',s.reviewMode); btn.textContent=s.reviewMode?'👁 Mode Review ON':'👁 Review Salah'; }
+  n4RenderQuestions(tab);
+}
+
+// ── Furigana toggle ──
+function toggleN4Furigana(tab){
+  const s=n4State[tab]; s.furiganaHidden=!s.furiganaHidden;
+  const btn=document.getElementById(n4Config[tab].furiId);
+  if(btn) btn.textContent=s.furiganaHidden?'あ Tampilkan Furigana':'あ Sembunyikan Furigana';
+  n4RenderQuestions(tab);
+}
+
+// ── Summary modal ──
+function n4ShowSummary(tab){
+  const s=n4State[tab], cfg=n4Config[tab];
+  n4StopTimer(tab);
+  const vS=n4State.vocab, gS=n4State.grammar, rS=n4State.reading;
+  const totalScore=vS.score+gS.score+rS.score;
+  const totalQ=34+25+10;
+  const pct=Math.round((totalScore/totalQ)*100);
+  const pass=pct>=55;
+  const html=`<div class="n4-summary-overlay" id="n4-summary-modal" onclick="if(event.target===this)closeN4Summary()">
+    <div class="n4-summary-box">
+      <div class="n4-summary-title">📊 Hasil Ujian N4</div>
+      <div class="n4-summary-row"><span>語彙 Kosakata (34問)</span><span><b>${vS.score}/34</b> (${Math.round(vS.score/34*100)}%)</span></div>
+      <div class="n4-summary-row"><span>文法 Tata Bahasa (25問)</span><span><b>${gS.score}/25</b> (${Math.round(gS.score/25*100)}%)</span></div>
+      <div class="n4-summary-row"><span>読解 Membaca (10問)</span><span><b>${rS.score}/10</b> (${Math.round(rS.score/10*100)}%)</span></div>
+      <div class="n4-summary-total ${pass?'pass':'fail'}">
+        Total: ${totalScore}/${totalQ} (${pct}%)<br>
+        ${pass?'🎉 LULUS! Skor ≥55% — Selamat!':'😔 Belum lulus. Skor <55% — Terus semangat!'}
+      </div>
+      <button class="n4-summary-close" onclick="closeN4Summary()">Tutup</button>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend', html);
+}
+function closeN4Summary(){
+  const el=document.getElementById('n4-summary-modal');
+  if(el) el.remove();
+}
+
+// ── Tab switch ──
 function switchN4Tab(tab, btn){
   document.querySelectorAll('.n4-tab-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('.n4-section').forEach(s=>s.classList.remove('active'));
   document.getElementById('n4-'+tab)?.classList.add('active');
-  if(tab==='vocab' && !document.querySelector('#n4-vocab-qs .n4-q')) renderN4Vocab();
-  if(tab==='grammar' && !document.querySelector('#n4-grammar-qs .n4-q')) renderN4Grammar();
-  if(tab==='reading' && !document.querySelector('#n4-reading-qs .n4-q')) renderN4Reading();
+  if(!document.querySelector('#'+n4Config[tab].containerId+' .n4-q')) n4RenderQuestions(tab);
+  n4UpdateTimerDisplay(tab);
 }
 
 function toggleN4Script(id){
-  const el = document.getElementById(id);
+  const el=document.getElementById(id);
   if(!el) return;
-  const shown = el.style.display==='block';
-  el.style.display = shown?'none':'block';
-  const btn = el.previousElementSibling;
-  if(btn) btn.textContent = shown?'📄 Tampilkan Skrip Audio':'📄 Sembunyikan Skrip';
+  const shown=el.style.display==='block';
+  el.style.display=shown?'none':'block';
+  const btn=el.previousElementSibling;
+  if(btn) btn.textContent=shown?'📄 Tampilkan Skrip Audio':'📄 Sembunyikan Skrip';
 }
 
-function renderN4Questions(containerId, data, stateKey, scoreId, pctId, barId, total){
-  const container = document.getElementById(containerId);
-  if(!container) return;
-  const state = n4State[stateKey];
-  let html = '';
-  let lastMondai = 0;
-  const mondaiNames = {
-    1:'もんだい１',2:'もんだい２',3:'もんだい３',
-    4:'もんだい４',5:'もんだい５',6:'もんだい６'
-  };
-  const mondaiDesc = {
-    1:'漢字→ひらがな（읽기）',2:'ひらがな→漢字（쓰기）',
-    3:'空欄補充（isi kata）',4:'同じ意味（sinonim）',
-    5:'正しい使い方（penggunaan）',6:'情報取り出し（flyer）'
-  };
-  data.forEach((q,i)=>{
-    if(q.mondai !== lastMondai){
-      lastMondai = q.mondai;
-      html += `<div class="n4-mondai-title">${mondaiNames[q.mondai]} — ${mondaiDesc[q.mondai]||''}</div>`;
-    }
-    const answered = state.answers[i] !== undefined;
-    const userAns = state.answers[i];
-    html += `<div class="n4-q" id="${stateKey}-q-${i}">
-      <div class="n4-q-num">${stateKey.toUpperCase()} Q${q.num}</div>
-      <div class="n4-q-text">${q.text.replace(/\n/g,'<br>')}</div>
-      ${q.q?`<div style="font-size:13px;color:var(--muted);margin-bottom:10px;">${q.q}</div>`:''}
-      <div class="n4-choices">`;
-    q.choices.forEach((c,ci)=>{
-      let cls = 'n4-choice';
-      if(answered){
-        if(ci===q.ans) cls+=' correct';
-        else if(ci===userAns) cls+=' wrong';
-      }
-      html += `<button class="${cls}" ${answered?'disabled':''} onclick="answerN4('${stateKey}',${i},${ci},${q.ans},${total})">${ci+1}. ${c}</button>`;
-    });
-    html += `</div>`;
-    if(answered){
-      const correct = userAns===q.ans;
-      html += `<div class="n4-feedback ${correct?'correct':'wrong'}">${correct?'✅ Benar!':'❌ Salah. Jawaban: '+q.choices[q.ans]}</div>`;
-    }
-    html += `</div>`;
-  });
-  container.innerHTML = html;
-  updateN4Score(stateKey, scoreId, pctId, barId, total);
-}
+// ── Convenience wrappers (still used by showTab override & init) ──
+function renderN4Vocab()  { n4RenderQuestions('vocab');   n4UpdateTimerDisplay('vocab'); }
+function renderN4Grammar(){ n4RenderQuestions('grammar'); n4UpdateTimerDisplay('grammar'); }
+function renderN4Reading(){ n4RenderQuestions('reading'); n4UpdateTimerDisplay('reading'); }
 
-function answerN4(stateKey, qIdx, chosen, correct, total){
-  const state = n4State[stateKey];
-  if(state.answers[qIdx] !== undefined) return;
-  state.answers[qIdx] = chosen;
-  if(chosen === correct) state.score++;
-  const dataMap = {vocab:n4VocabData, grammar:n4GrammarData, reading:n4ReadingData};
-  const scoreIdMap = {vocab:'n4v-score', grammar:'n4g-score', reading:'n4r-score'};
-  const pctIdMap = {vocab:'n4v-pct', grammar:'n4g-pct', reading:'n4r-pct'};
-  const barIdMap = {vocab:'n4v-bar', grammar:'n4g-bar', reading:'n4r-bar'};
-  const containerIdMap = {vocab:'n4-vocab-qs', grammar:'n4-grammar-qs', reading:'n4-reading-qs'};
-  renderN4Questions(containerIdMap[stateKey], dataMap[stateKey], stateKey, scoreIdMap[stateKey], pctIdMap[stateKey], barIdMap[stateKey], total);
-}
-
-function updateN4Score(stateKey, scoreId, pctId, barId, total){
-  const state = n4State[stateKey];
-  const answered = Object.keys(state.answers).length;
-  const score = state.score;
-  const pct = total>0 ? Math.round((score/total)*100) : 0;
-  const el = document.getElementById(scoreId);
-  if(el) el.textContent = score+'/'+total;
-  const pctEl = document.getElementById(pctId);
-  if(pctEl) pctEl.textContent = pct+'%';
-  const barEl = document.getElementById(barId);
-  if(barEl) barEl.style.width = (answered/total*100)+'%';
-}
-
-function resetN4(tab){
-  n4State[tab] = { answers:{}, score:0 };
-  const dataMap = {vocab:n4VocabData, grammar:n4GrammarData, reading:n4ReadingData};
-  const scoreIdMap = {vocab:'n4v-score', grammar:'n4g-score', reading:'n4r-score'};
-  const pctIdMap = {vocab:'n4v-pct', grammar:'n4g-pct', reading:'n4r-pct'};
-  const barIdMap = {vocab:'n4v-bar', grammar:'n4g-bar', reading:'n4r-bar'};
-  const containerIdMap = {vocab:'n4-vocab-qs', grammar:'n4-grammar-qs', reading:'n4-reading-qs'};
-  const totals = {vocab:34, grammar:25, reading:10};
-  renderN4Questions(containerIdMap[tab], dataMap[tab], tab, scoreIdMap[tab], pctIdMap[tab], barIdMap[tab], totals[tab]);
-}
-
-function renderN4Vocab(){ renderN4Questions('n4-vocab-qs', n4VocabData, 'vocab', 'n4v-score', 'n4v-pct', 'n4v-bar', 34); }
-function renderN4Grammar(){ renderN4Questions('n4-grammar-qs', n4GrammarData, 'grammar', 'n4g-score', 'n4g-pct', 'n4g-bar', 25); }
-function renderN4Reading(){ renderN4Questions('n4-reading-qs', n4ReadingData, 'reading', 'n4r-score', 'n4r-pct', 'n4r-bar', 10); }
+// backward-compat shims
+function renderN4Questions(cid,data,key,sid,pid,bid,tot){ n4RenderQuestions(key); }
+function updateN4Score(tab){ if(typeof tab==='string'){ const cfg=n4Config[tab],s=n4State[tab];const answered=Object.keys(s.answers).length;const pct=cfg.total>0?Math.round((s.score/cfg.total)*100):0;const el=document.getElementById(cfg.scoreId);if(el)el.textContent=s.score+'/'+cfg.total;const pctEl=document.getElementById(cfg.pctId);if(pctEl)pctEl.textContent=pct+'%';const barEl=document.getElementById(cfg.barId);if(barEl)barEl.style.width=(answered/cfg.total*100)+'%'; }}
 
 // ── INIT ──
 // Restore theme
