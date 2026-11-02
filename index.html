@@ -549,6 +549,76 @@ body::before {
 .lagu-vocab-tag { background:var(--tab-bg); border:1px solid var(--border); border-radius:20px; padding:3px 10px; font-size:11px; }
 .lagu-vocab-tag .vt-jp { font-family:'Noto Sans JP',sans-serif; font-weight:700; }
 
+/* ── AUDIO TTS BUTTON ── */
+.btn-audio {
+  background:none; border:1px solid var(--border); border-radius:6px;
+  padding:3px 8px; font-size:13px; cursor:pointer; color:var(--muted);
+  transition:all .15s; line-height:1; flex-shrink:0;
+}
+.btn-audio:hover { border-color:var(--s2); color:var(--s2); }
+.btn-audio.speaking { border-color:var(--s3); color:var(--s3); animation:pulse .6s infinite alternate; }
+
+/* ── KAMUS ── */
+.kamus-search-wrap { position:relative; margin-bottom:20px; }
+.kamus-search-wrap input {
+  width:100%; padding:12px 44px 12px 16px; font:500 15px 'Inter',sans-serif;
+  border:2px solid var(--border); border-radius:12px; background:var(--surface);
+  color:var(--fg); outline:none; box-sizing:border-box; transition:border-color .2s;
+}
+.kamus-search-wrap input:focus { border-color:var(--s2); }
+.kamus-search-wrap .kamus-clear {
+  position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  background:none; border:none; font-size:18px; cursor:pointer; color:var(--muted);
+  line-height:1; padding:2px 4px; display:none;
+}
+.kamus-search-wrap.has-text .kamus-clear { display:block; }
+.kamus-tabs { display:flex; gap:8px; margin-bottom:16px; }
+.kamus-tab { padding:6px 16px; border-radius:99px; border:1px solid var(--border);
+  background:var(--surface); color:var(--muted); font:600 12px 'Inter',sans-serif;
+  cursor:pointer; transition:all .15s; }
+.kamus-tab.active { background:var(--s2); color:#fff; border-color:var(--s2); }
+.kamus-hint { text-align:center; padding:48px 16px; color:var(--muted); font-size:14px; }
+.kamus-hint .kamus-hint-icon { font-size:48px; margin-bottom:12px; }
+.kamus-results { display:flex; flex-direction:column; gap:8px; }
+.kamus-item {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:14px 16px; display:flex; align-items:flex-start; gap:10px;
+}
+.kamus-item-main { flex:1; min-width:0; }
+.kamus-item-jp { font-family:'Noto Sans JP',sans-serif; font-size:22px; font-weight:700; line-height:1.2; }
+.kamus-item-rd { font-size:12px; color:var(--muted); margin-top:2px; }
+.kamus-item-id { font-size:14px; font-weight:500; margin-top:6px; }
+.kamus-item-tag { display:inline-block; font-size:10px; padding:1px 6px; border-radius:99px;
+  background:var(--tab-bg); color:var(--muted); margin-top:4px; }
+.kamus-item-actions { display:flex; flex-direction:column; gap:4px; flex-shrink:0; }
+.kamus-count { font-size:12px; color:var(--muted); margin-bottom:10px; }
+
+/* ── FAVORIT ── */
+.btn-fav {
+  background:none; border:none; cursor:pointer; font-size:16px;
+  padding:2px 4px; line-height:1; transition:transform .15s;
+  color:var(--muted);
+}
+.btn-fav:hover { transform:scale(1.2); }
+.btn-fav.active { color:#f59e0b; }
+.fav-badge { position:absolute; top:6px; left:6px; font-size:13px; }
+
+/* ── STATISTIK ── */
+.stat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; margin-bottom:28px; }
+.stat-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 16px; text-align:center; }
+.stat-num { font-size:36px; font-weight:700; line-height:1; margin-bottom:4px; }
+.stat-label { font-size:12px; color:var(--muted); }
+.stat-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+.stat-section-title { font-size:15px; font-weight:700; margin:20px 0 12px; padding-bottom:8px; border-bottom:2px solid var(--border); display:flex; align-items:center; gap:8px; }
+.stat-prog-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.stat-prog-label { font-size:13px; font-weight:600; min-width:110px; }
+.stat-prog-bar { flex:1; background:var(--tab-bg); border-radius:99px; height:10px; overflow:hidden; }
+.stat-prog-fill { height:10px; border-radius:99px; transition:width .4s; }
+.stat-prog-count { font-size:12px; color:var(--muted); min-width:60px; text-align:right; }
+
+/* ── GANTI PASSWORD MODAL ── */
+#modal-changepass .modal-box { max-width:360px; }
+
 /* ── MNEMONIC ── */
 .mnemonic-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-bottom:24px; }
 .mnemo-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
@@ -622,6 +692,21 @@ body::before {
   </div>
 </div>
 
+<!-- ══════════ GANTI PASSWORD MODAL ══════════ -->
+<div class="modal-bg" id="modal-changepass">
+  <div class="modal-box">
+    <h3>🔐 Ganti Password</h3>
+    <div class="mfield"><label>Password Lama</label><input type="password" id="cp-old" placeholder="Password lama"></div>
+    <div class="mfield"><label>Password Baru</label><input type="password" id="cp-new" placeholder="Min. 6 karakter"></div>
+    <div class="mfield"><label>Konfirmasi Password Baru</label><input type="password" id="cp-confirm" placeholder="Ulangi password baru"></div>
+    <div class="login-msg" id="cp-msg" style="text-align:left;"></div>
+    <div class="modal-actions">
+      <button class="btn-batal" onclick="document.getElementById('modal-changepass').classList.remove('open')">Batal</button>
+      <button class="btn-simpan" onclick="submitChangePass()">Simpan</button>
+    </div>
+  </div>
+</div>
+
 <header class="site-header">
   <div class="header-inner">
     <button class="sb-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
@@ -630,7 +715,7 @@ body::before {
     </div>
     <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
       <div id="user-chip-wrap" style="display:none;">
-        <div class="user-chip">
+        <div class="user-chip" onclick="document.getElementById('modal-changepass').classList.add('open')" title="Klik untuk ganti password" style="cursor:pointer;">
           <div class="user-avatar" id="hdr-avatar">Y</div>
           <span id="hdr-name">Yayan</span>
           <span class="user-role-badge" id="hdr-role-badge" style="display:none;">ADMIN</span>
@@ -697,6 +782,9 @@ body::before {
   <div class="sb-group">
     <div class="sb-group-label">Lainnya</div>
     <button class="tab-btn" onclick="showTab('panduan',this)"><span class="sb-icon">📖</span>Panduan Belajar</button>
+    <button class="tab-btn" onclick="showTab('kamus',this)"><span class="sb-icon">📖</span>Kamus JP↔ID</button>
+    <button class="tab-btn" onclick="showTab('statistik',this)"><span class="sb-icon">📊</span>Statistik Belajar</button>
+    <button class="tab-btn" onclick="showTab('favorit',this)"><span class="sb-icon">⭐</span>Favorit Saya</button>
     <button class="tab-btn" id="sb-admin-btn" onclick="showTab('adminpanel',this)" style="display:none;"><span class="sb-icon">👥</span>Kelola User</button>
   </div>
   <div style="padding:16px 18px 0;border-top:1px solid var(--border);margin-top:8px;">
@@ -1018,6 +1106,42 @@ body::before {
   <div id="mnemonic-container"></div>
 </section>
 
+<!-- ===== KAMUS ===== -->
+<section id="kamus" class="section">
+  <div class="section-intro">
+    <h2>📖 Kamus JP↔ID</h2>
+    <p>Cari kata dalam dua arah — ketik Jepang (hiragana/kanji/romaji) atau Indonesia.</p>
+  </div>
+  <div class="kamus-tabs">
+    <button class="kamus-tab active" id="ktab-both" onclick="setKamusMode('both',this)">🔄 Dua Arah</button>
+    <button class="kamus-tab" id="ktab-jp" onclick="setKamusMode('jp',this)">🇯🇵 JP → ID</button>
+    <button class="kamus-tab" id="ktab-id" onclick="setKamusMode('id',this)">🇮🇩 ID → JP</button>
+  </div>
+  <div class="kamus-search-wrap" id="kamus-search-wrap">
+    <input type="search" id="kamus-input" placeholder="Cari kata… (contoh: 食べる, taberu, makan)" oninput="onKamusInput(this)">
+    <button class="kamus-clear" onclick="clearKamus()">✕</button>
+  </div>
+  <div id="kamus-result"></div>
+</section>
+
+<!-- ===== STATISTIK ===== -->
+<section id="statistik" class="section">
+  <div class="section-intro">
+    <h2>📊 Statistik Belajar</h2>
+    <p>Ringkasan progres hafalan dan latihan quiz kamu.</p>
+  </div>
+  <div id="statistik-container"></div>
+</section>
+
+<!-- ===== FAVORIT ===== -->
+<section id="favorit" class="section">
+  <div class="section-intro">
+    <h2>⭐ Favorit Saya</h2>
+    <p>Kata dan karakter yang kamu simpan sebagai favorit. Tap ⭐ di kosakata atau kalimat mana saja.</p>
+  </div>
+  <div id="favorit-container"></div>
+</section>
+
 </main>
 
 </div><!-- /.app-body -->
@@ -1053,10 +1177,14 @@ function renderGrid(data, id, showMeaning){
     const mn=(showMeaning&&d.m)?`<div class="meaning">${d.m}</div>`:'';
     const isMastered=mastered[d.c];
     const badge=isMastered?'<div class="mastered-badge">✅</div>':'';
+    const favKey='fav_char_'+d.c; let isFav=false;
+    try{isFav=!!JSON.parse(localStorage.getItem('favorites')||'{}')[favKey];}catch(e){}
     return `<div class="char-card${isMastered?' mastered':''}" title="${d.t}" onclick="toggleMastered(this,'${d.c}','${progKey||''}')">
-      ${badge}<div class="char-svg-wrap">${buildSVG(d.c,d.s)}</div>
+      ${badge}<div class="fav-badge"><button class="btn-fav${isFav?' active':''}" onclick="event.stopPropagation();toggleFav('${favKey}',{type:'char',jp:'${d.c}',reading:'${d.r}',desc:'${d.t.replace(/'/g,'')}'});updateFavBtn(this,'${favKey}')" title="Favorit">★</button></div>
+      <div class="char-svg-wrap">${buildSVG(d.c,d.s)}</div>
       <div class="romaji">${d.r}</div>${mn}
       <div class="strokes-row">${dots}</div>
+      <button class="btn-audio" onclick="event.stopPropagation();speakJP('${d.c}',this)" title="Dengar">🔊</button>
     </div>`;
   }).join('');
   if(progKey) updateProgressUI(progKey,data.length);
@@ -1797,11 +1925,21 @@ const kosakata=[
 function renderPercakapan(){
   const el=document.getElementById('convo-grid'); if(!el) return;
   el.innerHTML=percakapan.map(p=>{
-    const rows=p.frasa.map(f=>`
-      <div class="phrase-row">
-        <div><div class="phrase-jp">${f.jp}</div><div class="phrase-reading">${f.rd}</div></div>
+    const rows=p.frasa.map(f=>{
+      const fkey='fav_phrase_'+f.jp; let isF=false;
+      try{isF=!!JSON.parse(localStorage.getItem('favorites')||'{}')[fkey];}catch(e){}
+      return `<div class="phrase-row">
+        <div>
+          <div style="display:flex;align-items:center;gap:5px;">
+            <div class="phrase-jp">${f.jp}</div>
+            <button class="btn-audio" onclick="speakJP('${f.jp.replace(/'/g,'').replace(/`/g,'')}',this)" title="Dengar" style="padding:2px 6px;font-size:11px;">🔊</button>
+            <button class="btn-fav${isF?' active':''}" onclick="toggleFav('${fkey}',{type:'phrase',jp:'${f.jp.replace(/'/g,'').replace(/`/g,'')}',reading:'${f.rd}',desc:'${f.id.replace(/'/g,'')}'});updateFavBtn(this,'${fkey}')" title="Favorit" style="font-size:14px;">★</button>
+          </div>
+          <div class="phrase-reading">${f.rd}</div>
+        </div>
         <div class="phrase-id">${f.id}</div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
     return `<div class="convo-card">
       <div class="convo-header"><span class="convo-icon">${p.icon}</span>${p.judul}</div>
       <div class="convo-body">${rows}</div>
@@ -1819,12 +1957,21 @@ function renderKosakata(filter=''){
       k.id.toLowerCase().includes(q)||k.rd.toLowerCase().includes(q)||k.jp.includes(q)
     ):cat.kata;
     if(filtered.length===0) return '';
-    const cards=filtered.map(k=>`
-      <div class="vocab-card">
-        <div class="vocab-jp">${k.jp}</div>
+    const cards=filtered.map(k=>{
+      const fkey='fav_vocab_'+k.jp; let isF=false;
+      try{isF=!!JSON.parse(localStorage.getItem('favorites')||'{}')[fkey];}catch(e){}
+      return `<div class="vocab-card" style="position:relative;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;">
+          <div class="vocab-jp">${k.jp}</div>
+          <div style="display:flex;gap:3px;flex-shrink:0;">
+            <button class="btn-audio" onclick="speakJP('${k.jp}',this)" title="Dengar">🔊</button>
+            <button class="btn-fav${isF?' active':''}" onclick="toggleFav('${fkey}',{type:'vocab',jp:'${k.jp}',reading:'${k.rd}',desc:'${k.id.replace(/'/g,'')}'});updateFavBtn(this,'${fkey}')" title="Favorit">★</button>
+          </div>
+        </div>
         <div class="vocab-reading">${k.rd}</div>
         <div class="vocab-id">${k.id}</div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
     return `<div class="vocab-section">
       <div class="vocab-section-title"><span>${cat.icon}</span>${cat.judul}</div>
       <div class="vocab-grid">${cards}</div>
@@ -2398,6 +2545,13 @@ function nextQuestion(){
 
 function renderQuizResult(){
   const box=document.getElementById('quiz-box'); if(!box) return;
+  // Simpan statistik quiz ke localStorage (akumulasi)
+  try{
+    const qs=JSON.parse(localStorage.getItem('quiz_stats')||'{}');
+    qs.score=(qs.score||0)+quizState.score;
+    qs.total=(qs.total||0)+quizState.questions.length;
+    localStorage.setItem('quiz_stats',JSON.stringify(qs));
+  }catch(e){}
   const pct=Math.round(quizState.score/quizState.questions.length*100);
   const emoji=pct>=80?'🎉':pct>=60?'👍':'💪';
   box.innerHTML=`
@@ -3638,6 +3792,414 @@ function renderQAResult(){
   </div>`;
 }
 
+// ══════════════════════════════════════════════
+// ── AUDIO TTS ──
+// ══════════════════════════════════════════════
+function speakJP(text, btn){
+  if(!('speechSynthesis' in window)){
+    if(btn){ btn.textContent='✗'; setTimeout(()=>{btn.textContent='🔊';},1000); }
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.lang='ja-JP'; utt.rate=0.85; utt.pitch=1;
+  const voices=window.speechSynthesis.getVoices();
+  const jpVoice=voices.find(v=>v.lang==='ja-JP'||v.lang==='ja')||null;
+  if(jpVoice) utt.voice=jpVoice;
+  if(btn){ btn.classList.add('speaking'); }
+  utt.onend=()=>{ if(btn){ btn.classList.remove('speaking'); } };
+  utt.onerror=()=>{ if(btn){ btn.classList.remove('speaking'); } };
+  window.speechSynthesis.speak(utt);
+}
+// Preload voices
+if('speechSynthesis' in window){ window.speechSynthesis.getVoices(); window.speechSynthesis.addEventListener('voiceschanged',()=>{}); }
+
+// ══════════════════════════════════════════════
+// ── FAVORIT / BOOKMARK ──
+// ══════════════════════════════════════════════
+function getFavs(){
+  try{ return JSON.parse(localStorage.getItem('favorites')||'{}'); }catch(e){ return {}; }
+}
+function saveFavs(data){
+  try{ localStorage.setItem('favorites',JSON.stringify(data)); }catch(e){}
+}
+function toggleFav(key, item){
+  const favs=getFavs();
+  if(favs[key]) delete favs[key];
+  else favs[key]=item;
+  saveFavs(favs);
+  if(document.getElementById('favorit').classList.contains('active')) renderFavorit();
+}
+function updateFavBtn(btn, key){
+  const favs=getFavs();
+  if(favs[key]) btn.classList.add('active');
+  else btn.classList.remove('active');
+}
+function renderFavorit(){
+  const el=document.getElementById('favorit-container'); if(!el) return;
+  const favs=getFavs();
+  const keys=Object.keys(favs);
+  if(keys.length===0){
+    el.innerHTML='<div style="text-align:center;padding:48px;color:var(--muted);"><div style="font-size:48px;margin-bottom:12px;">⭐</div><div style="font-size:14px;">Belum ada favorit.<br>Tap ★ di kosakata, karakter, atau kalimat mana saja.</div></div>';
+    return;
+  }
+  const chars=keys.filter(k=>favs[k].type==='char');
+  const vocabs=keys.filter(k=>favs[k].type==='vocab');
+  const phrases=keys.filter(k=>favs[k].type==='phrase');
+  let html='';
+  if(chars.length){
+    html+=`<div class="stat-section-title">🔡 Karakter (${chars.length})</div>
+    <div class="vocab-grid" style="margin-bottom:20px;">${chars.map(k=>{
+      const f=favs[k];
+      return `<div class="vocab-card" style="position:relative;text-align:center;">
+        <div style="font-family:'Noto Sans JP',sans-serif;font-size:32px;font-weight:700;">${f.jp}</div>
+        <div class="vocab-reading">${f.reading}</div>
+        <div style="display:flex;justify-content:center;gap:6px;margin-top:4px;">
+          <button class="btn-audio" onclick="speakJP('${f.jp}',this)">🔊</button>
+          <button class="btn-fav active" onclick="toggleFav('${k}',null);this.closest('.vocab-card').remove();renderFavorit()">★</button>
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+  if(vocabs.length){
+    html+=`<div class="stat-section-title">語 Kosakata (${vocabs.length})</div>
+    <div class="vocab-grid" style="margin-bottom:20px;">${vocabs.map(k=>{
+      const f=favs[k];
+      return `<div class="vocab-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;">
+          <div class="vocab-jp">${f.jp}</div>
+          <div style="display:flex;gap:3px;">
+            <button class="btn-audio" onclick="speakJP('${f.jp}',this)">🔊</button>
+            <button class="btn-fav active" onclick="toggleFav('${k}',null);this.closest('.vocab-card').remove();renderFavorit()">★</button>
+          </div>
+        </div>
+        <div class="vocab-reading">${f.reading}</div>
+        <div class="vocab-id">${f.desc}</div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+  if(phrases.length){
+    html+=`<div class="stat-section-title">💬 Kalimat (${phrases.length})</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">${phrases.map(k=>{
+      const f=favs[k];
+      return `<div class="vocab-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;">
+          <div style="font-family:'Noto Sans JP',sans-serif;font-size:15px;font-weight:700;">${f.jp}</div>
+          <div style="display:flex;gap:3px;flex-shrink:0;">
+            <button class="btn-audio" onclick="speakJP('${f.jp}',this)">🔊</button>
+            <button class="btn-fav active" onclick="toggleFav('${k}',null);this.closest('.vocab-card').remove();renderFavorit()">★</button>
+          </div>
+        </div>
+        <div class="vocab-reading">${f.reading}</div>
+        <div class="vocab-id">${f.desc}</div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+  el.innerHTML=html;
+}
+
+// ══════════════════════════════════════════════
+// ── KAMUS JP ↔ ID ──
+// ══════════════════════════════════════════════
+let kamusMode='both'; // 'both' | 'jp' | 'id'
+
+// Bangun flat array dari semua kosakata yang sudah ada
+function buildKamusDB(){
+  const db=[];
+  // Dari kosakata (grouped by kategori)
+  kosakata.forEach(cat=>{
+    cat.kata.forEach(k=>{
+      db.push({jp:k.jp, rd:k.rd||'', id:k.id||'', tag:cat.judul});
+    });
+  });
+  // Dari n5VocabData
+  if(typeof n5VocabData!=='undefined'){
+    n5VocabData.forEach(cat=>{
+      cat.kata.forEach(k=>{
+        db.push({jp:k.jp, rd:k.rd||'', id:k.id||'', tag:'N5 '+cat.judul});
+      });
+    });
+  }
+  // Dedupe berdasarkan jp
+  const seen=new Set();
+  return db.filter(d=>{ if(seen.has(d.jp)) return false; seen.add(d.jp); return true; });
+}
+
+// Kata ekstra yang belum ada di data lain
+const kamusEkstra=[
+  // Kata kerja umum
+  {jp:'行く',rd:'iku',id:'pergi',tag:'Ekstra'},
+  {jp:'来る',rd:'kuru',id:'datang',tag:'Ekstra'},
+  {jp:'帰る',rd:'kaeru',id:'pulang',tag:'Ekstra'},
+  {jp:'起きる',rd:'okiru',id:'bangun (tidur)',tag:'Ekstra'},
+  {jp:'寝る',rd:'neru',id:'tidur',tag:'Ekstra'},
+  {jp:'食べる',rd:'taberu',id:'makan',tag:'Ekstra'},
+  {jp:'飲む',rd:'nomu',id:'minum',tag:'Ekstra'},
+  {jp:'読む',rd:'yomu',id:'membaca',tag:'Ekstra'},
+  {jp:'書く',rd:'kaku',id:'menulis',tag:'Ekstra'},
+  {jp:'聞く',rd:'kiku',id:'mendengar / bertanya',tag:'Ekstra'},
+  {jp:'話す',rd:'hanasu',id:'berbicara',tag:'Ekstra'},
+  {jp:'見る',rd:'miru',id:'melihat',tag:'Ekstra'},
+  {jp:'買う',rd:'kau',id:'membeli',tag:'Ekstra'},
+  {jp:'売る',rd:'uru',id:'menjual',tag:'Ekstra'},
+  {jp:'使う',rd:'tsukau',id:'menggunakan',tag:'Ekstra'},
+  {jp:'作る',rd:'tsukuru',id:'membuat',tag:'Ekstra'},
+  {jp:'開ける',rd:'akeru',id:'membuka',tag:'Ekstra'},
+  {jp:'閉める',rd:'shimeru',id:'menutup',tag:'Ekstra'},
+  {jp:'入れる',rd:'ireru',id:'memasukkan',tag:'Ekstra'},
+  {jp:'出す',rd:'dasu',id:'mengeluarkan',tag:'Ekstra'},
+  {jp:'持つ',rd:'motsu',id:'memegang / membawa',tag:'Ekstra'},
+  {jp:'置く',rd:'oku',id:'meletakkan',tag:'Ekstra'},
+  {jp:'取る',rd:'toru',id:'mengambil',tag:'Ekstra'},
+  {jp:'送る',rd:'okuru',id:'mengirim',tag:'Ekstra'},
+  {jp:'受ける',rd:'ukeru',id:'menerima',tag:'Ekstra'},
+  {jp:'始まる',rd:'hajimaru',id:'mulai (intransitif)',tag:'Ekstra'},
+  {jp:'始める',rd:'hajimeru',id:'memulai',tag:'Ekstra'},
+  {jp:'終わる',rd:'owaru',id:'selesai',tag:'Ekstra'},
+  {jp:'終わらせる',rd:'owaraseru',id:'menyelesaikan',tag:'Ekstra'},
+  {jp:'考える',rd:'kangaeru',id:'berpikir',tag:'Ekstra'},
+  {jp:'分かる',rd:'wakaru',id:'mengerti / paham',tag:'Ekstra'},
+  {jp:'知る',rd:'shiru',id:'mengetahui',tag:'Ekstra'},
+  {jp:'覚える',rd:'oboeru',id:'menghafal / mengingat',tag:'Ekstra'},
+  {jp:'忘れる',rd:'wasureru',id:'melupakan',tag:'Ekstra'},
+  {jp:'教える',rd:'oshieru',id:'mengajarkan / memberitahu',tag:'Ekstra'},
+  {jp:'習う',rd:'narau',id:'belajar (dari guru)',tag:'Ekstra'},
+  {jp:'勉強する',rd:'benkyou suru',id:'belajar',tag:'Ekstra'},
+  {jp:'練習する',rd:'renshuu suru',id:'berlatih',tag:'Ekstra'},
+  {jp:'働く',rd:'hataraku',id:'bekerja',tag:'Ekstra'},
+  {jp:'休む',rd:'yasumu',id:'istirahat',tag:'Ekstra'},
+  {jp:'遊ぶ',rd:'asobu',id:'bermain',tag:'Ekstra'},
+  {jp:'会う',rd:'au',id:'bertemu',tag:'Ekstra'},
+  {jp:'待つ',rd:'matsu',id:'menunggu',tag:'Ekstra'},
+  {jp:'探す',rd:'sagasu',id:'mencari',tag:'Ekstra'},
+  {jp:'見つける',rd:'mitsukeru',id:'menemukan',tag:'Ekstra'},
+  {jp:'助ける',rd:'tasukeru',id:'menolong',tag:'Ekstra'},
+  {jp:'頼む',rd:'tanomu',id:'meminta tolong',tag:'Ekstra'},
+  {jp:'答える',rd:'kotaeru',id:'menjawab',tag:'Ekstra'},
+  {jp:'質問する',rd:'shitsumon suru',id:'bertanya',tag:'Ekstra'},
+  {jp:'説明する',rd:'setsumei suru',id:'menjelaskan',tag:'Ekstra'},
+  // Kata sifat umum
+  {jp:'大きい',rd:'ookii',id:'besar',tag:'Ekstra'},
+  {jp:'小さい',rd:'chiisai',id:'kecil',tag:'Ekstra'},
+  {jp:'長い',rd:'nagai',id:'panjang',tag:'Ekstra'},
+  {jp:'短い',rd:'mijikai',id:'pendek',tag:'Ekstra'},
+  {jp:'高い',rd:'takai',id:'tinggi / mahal',tag:'Ekstra'},
+  {jp:'低い',rd:'hikui',id:'rendah',tag:'Ekstra'},
+  {jp:'安い',rd:'yasui',id:'murah',tag:'Ekstra'},
+  {jp:'重い',rd:'omoi',id:'berat',tag:'Ekstra'},
+  {jp:'軽い',rd:'karui',id:'ringan',tag:'Ekstra'},
+  {jp:'速い',rd:'hayai',id:'cepat',tag:'Ekstra'},
+  {jp:'遅い',rd:'osoi',id:'lambat / terlambat',tag:'Ekstra'},
+  {jp:'強い',rd:'tsuyoi',id:'kuat',tag:'Ekstra'},
+  {jp:'弱い',rd:'yowai',id:'lemah',tag:'Ekstra'},
+  {jp:'難しい',rd:'muzukashii',id:'sulit',tag:'Ekstra'},
+  {jp:'易しい',rd:'yasashii',id:'mudah',tag:'Ekstra'},
+  {jp:'面白い',rd:'omoshiroi',id:'menarik / lucu',tag:'Ekstra'},
+  {jp:'つまらない',rd:'tsumaranai',id:'membosankan',tag:'Ekstra'},
+  {jp:'楽しい',rd:'tanoshii',id:'menyenangkan',tag:'Ekstra'},
+  {jp:'悲しい',rd:'kanashii',id:'sedih',tag:'Ekstra'},
+  {jp:'怖い',rd:'kowai',id:'menakutkan',tag:'Ekstra'},
+  {jp:'痛い',rd:'itai',id:'sakit / nyeri',tag:'Ekstra'},
+  {jp:'眠い',rd:'nemui',id:'mengantuk',tag:'Ekstra'},
+  {jp:'暇',rd:'hima',id:'senggang / tidak sibuk',tag:'Ekstra'},
+  {jp:'忙しい',rd:'isogashii',id:'sibuk',tag:'Ekstra'},
+  {jp:'便利',rd:'benri',id:'praktis / nyaman',tag:'Ekstra'},
+  {jp:'不便',rd:'fuben',id:'tidak praktis',tag:'Ekstra'},
+  {jp:'大切',rd:'taisetsu',id:'penting / berharga',tag:'Ekstra'},
+  {jp:'必要',rd:'hitsuyou',id:'perlu / diperlukan',tag:'Ekstra'},
+  // Kata benda umum
+  {jp:'言葉',rd:'kotoba',id:'kata / bahasa',tag:'Ekstra'},
+  {jp:'意味',rd:'imi',id:'arti / makna',tag:'Ekstra'},
+  {jp:'文章',rd:'bunshou',id:'kalimat / teks',tag:'Ekstra'},
+  {jp:'質問',rd:'shitsumon',id:'pertanyaan',tag:'Ekstra'},
+  {jp:'答え',rd:'kotae',id:'jawaban',tag:'Ekstra'},
+  {jp:'授業',rd:'jugyou',id:'pelajaran / kelas',tag:'Ekstra'},
+  {jp:'試験',rd:'shiken',id:'ujian',tag:'Ekstra'},
+  {jp:'成績',rd:'seiseki',id:'nilai / prestasi',tag:'Ekstra'},
+  {jp:'会社',rd:'kaisha',id:'perusahaan',tag:'Ekstra'},
+  {jp:'仕事',rd:'shigoto',id:'pekerjaan',tag:'Ekstra'},
+  {jp:'給料',rd:'kyuuryou',id:'gaji',tag:'Ekstra'},
+  {jp:'部屋',rd:'heya',id:'kamar / ruangan',tag:'Ekstra'},
+  {jp:'窓',rd:'mado',id:'jendela',tag:'Ekstra'},
+  {jp:'ドア',rd:'doa',id:'pintu',tag:'Ekstra'},
+  {jp:'机',rd:'tsukue',id:'meja',tag:'Ekstra'},
+  {jp:'椅子',rd:'isu',id:'kursi',tag:'Ekstra'},
+  {jp:'壁',rd:'kabe',id:'dinding',tag:'Ekstra'},
+  {jp:'床',rd:'yuka',id:'lantai',tag:'Ekstra'},
+  {jp:'天井',rd:'tenjou',id:'langit-langit',tag:'Ekstra'},
+  {jp:'電気',rd:'denki',id:'listrik / lampu',tag:'Ekstra'},
+  {jp:'電話',rd:'denwa',id:'telepon',tag:'Ekstra'},
+  {jp:'携帯',rd:'keitai',id:'ponsel',tag:'Ekstra'},
+  {jp:'パソコン',rd:'pasokon',id:'komputer',tag:'Ekstra'},
+  {jp:'インターネット',rd:'intaanetto',id:'internet',tag:'Ekstra'},
+  {jp:'メール',rd:'meeru',id:'email',tag:'Ekstra'},
+  {jp:'道',rd:'michi',id:'jalan',tag:'Ekstra'},
+  {jp:'橋',rd:'hashi',id:'jembatan',tag:'Ekstra'},
+  {jp:'駅',rd:'eki',id:'stasiun',tag:'Ekstra'},
+  {jp:'空港',rd:'kuukou',id:'bandara',tag:'Ekstra'},
+  {jp:'病院',rd:'byouin',id:'rumah sakit',tag:'Ekstra'},
+  {jp:'薬',rd:'kusuri',id:'obat',tag:'Ekstra'},
+  {jp:'医者',rd:'isha',id:'dokter',tag:'Ekstra'},
+  {jp:'天気',rd:'tenki',id:'cuaca',tag:'Ekstra'},
+  {jp:'雨',rd:'ame',id:'hujan',tag:'Ekstra'},
+  {jp:'雪',rd:'yuki',id:'salju',tag:'Ekstra'},
+  {jp:'風',rd:'kaze',id:'angin',tag:'Ekstra'},
+  {jp:'海',rd:'umi',id:'laut',tag:'Ekstra'},
+  {jp:'山',rd:'yama',id:'gunung',tag:'Ekstra'},
+  {jp:'川',rd:'kawa',id:'sungai',tag:'Ekstra'},
+  {jp:'花',rd:'hana',id:'bunga',tag:'Ekstra'},
+  {jp:'木',rd:'ki',id:'pohon',tag:'Ekstra'},
+  {jp:'犬',rd:'inu',id:'anjing',tag:'Ekstra'},
+  {jp:'猫',rd:'neko',id:'kucing',tag:'Ekstra'},
+  {jp:'鳥',rd:'tori',id:'burung',tag:'Ekstra'},
+  {jp:'魚',rd:'sakana',id:'ikan',tag:'Ekstra'},
+];
+
+let _kamusDB=null;
+function getKamusDB(){
+  if(!_kamusDB) _kamusDB=[...buildKamusDB(),...kamusEkstra.filter(e=>!buildKamusDB().find(d=>d.jp===e.jp))];
+  return _kamusDB;
+}
+
+function setKamusMode(mode,btn){
+  kamusMode=mode;
+  document.querySelectorAll('.kamus-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const inp=document.getElementById('kamus-input');
+  if(mode==='jp') inp.placeholder='Cari kata Jepang… (contoh: 食べる, taberu)';
+  else if(mode==='id') inp.placeholder='Cari kata Indonesia… (contoh: makan, pergi)';
+  else inp.placeholder='Cari kata… (contoh: 食べる, taberu, makan)';
+  onKamusInput(inp);
+}
+
+function onKamusInput(inp){
+  const wrap=document.getElementById('kamus-search-wrap');
+  if(inp.value) wrap.classList.add('has-text'); else wrap.classList.remove('has-text');
+  renderKamusResult(inp.value.trim());
+}
+
+function clearKamus(){
+  const inp=document.getElementById('kamus-input');
+  inp.value=''; inp.focus();
+  document.getElementById('kamus-search-wrap').classList.remove('has-text');
+  renderKamusResult('');
+}
+
+function renderKamusResult(q){
+  const el=document.getElementById('kamus-result'); if(!el) return;
+  if(!q){
+    el.innerHTML=`<div class="kamus-hint"><div class="kamus-hint-icon">📖</div>Ketik kata untuk mulai mencari.<br><span style="font-size:12px;margin-top:8px;display:block;">Contoh: <b>食べる</b> · <b>taberu</b> · <b>makan</b></span></div>`;
+    return;
+  }
+  const db=getKamusDB();
+  const ql=q.toLowerCase();
+  const results=db.filter(d=>{
+    const jpMatch=d.jp.includes(q)||d.rd.toLowerCase().includes(ql);
+    const idMatch=d.id.toLowerCase().includes(ql);
+    if(kamusMode==='jp') return jpMatch;
+    if(kamusMode==='id') return idMatch;
+    return jpMatch||idMatch;
+  }).slice(0,60);
+
+  if(!results.length){
+    el.innerHTML=`<div class="kamus-hint"><div class="kamus-hint-icon">🔍</div>Kata "<b>${q}</b>" tidak ditemukan.<br><span style="font-size:12px;margin-top:6px;display:block;">Coba kata lain atau ganti mode pencarian.</span></div>`;
+    return;
+  }
+  el.innerHTML=`<div class="kamus-count">${results.length} hasil ditemukan</div>
+  <div class="kamus-results">${results.map(d=>{
+    const fkey='fav_vocab_'+d.jp; let isF=false;
+    try{isF=!!JSON.parse(localStorage.getItem('favorites')||'{}')[fkey];}catch(e){}
+    const safeJp=d.jp.replace(/'/g,"\\'").replace(/`/g,'');
+    return `<div class="kamus-item">
+      <div class="kamus-item-main">
+        <div class="kamus-item-jp">${d.jp}</div>
+        <div class="kamus-item-rd">${d.rd}</div>
+        <div class="kamus-item-id">${d.id}</div>
+        <span class="kamus-item-tag">${d.tag}</span>
+      </div>
+      <div class="kamus-item-actions">
+        <button class="btn-audio" onclick="speakJP('${safeJp}',this)" title="Dengar">🔊</button>
+        <button class="btn-fav${isF?' active':''}" onclick="toggleFav('${fkey}',{type:'vocab',jp:'${safeJp}',reading:'${d.rd}',desc:'${d.id.replace(/'/g,'')}'});updateFavBtn(this,'${fkey}')" title="Favorit">★</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+// ══════════════════════════════════════════════
+// ── STATISTIK BELAJAR ──
+// ══════════════════════════════════════════════
+function renderStatistik(){
+  const el=document.getElementById('statistik-container'); if(!el) return;
+  let hira={},kata={},kanj={};
+  try{hira=JSON.parse(localStorage.getItem('prog_hiragana')||'{}');}catch(e){}
+  try{kata=JSON.parse(localStorage.getItem('prog_katakana')||'{}');}catch(e){}
+  try{kanj=JSON.parse(localStorage.getItem('prog_kanji')||'{}');}catch(e){}
+  const hiraC=Object.keys(hira).length, kataC=Object.keys(kata).length, kanjiC=Object.keys(kanj).length;
+  const favC=Object.keys(getFavs()).length;
+  let quizScore=0,quizTotal=0;
+  try{const qs=JSON.parse(localStorage.getItem('quiz_stats')||'{}');quizScore=qs.score||0;quizTotal=qs.total||0;}catch(e){}
+  const totalHafal=hiraC+kataC+kanjiC;
+  const totalMungkin=192; // 46+46+100
+  const pctTotal=Math.round(totalHafal/totalMungkin*100);
+
+  const progRow=(label,count,total,color)=>`
+    <div class="stat-prog-row">
+      <div class="stat-prog-label">${label}</div>
+      <div class="stat-prog-bar"><div class="stat-prog-fill" style="width:${Math.round(count/total*100)}%;background:${color};"></div></div>
+      <div class="stat-prog-count">${count}/${total} (${Math.round(count/total*100)}%)</div>
+    </div>`;
+
+  el.innerHTML=`
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num" style="color:var(--s3)">${totalHafal}</div><div class="stat-label">Total Hafal</div><div class="stat-sub">dari 192 karakter</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--s1)">${pctTotal}%</div><div class="stat-label">Progress Keseluruhan</div><div class="stat-sub">Hiragana + Katakana + Kanji</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--s4)">${favC}</div><div class="stat-label">Item Favorit</div><div class="stat-sub">karakter, kosakata, kalimat</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--s2)">${quizTotal>0?Math.round(quizScore/quizTotal*100)+'%':'—'}</div><div class="stat-label">Akurasi Quiz</div><div class="stat-sub">${quizTotal} soal dijawab</div></div>
+    </div>
+    <div class="stat-section-title">📈 Progres Hafalan</div>
+    ${progRow('ひ Hiragana',hiraC,46,'var(--s1)')}
+    ${progRow('カ Katakana',kataC,46,'var(--s2)')}
+    ${progRow('漢 Kanji N5',kanjiC,100,'var(--s3)')}
+    <div class="stat-section-title" style="margin-top:24px;">📝 Ringkasan Quiz</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px;">
+      <div class="stat-card" style="flex:1;min-width:120px;"><div class="stat-num" style="color:var(--s3);font-size:28px;">${quizScore}</div><div class="stat-label">Jawaban Benar</div></div>
+      <div class="stat-card" style="flex:1;min-width:120px;"><div class="stat-num" style="color:var(--muted);font-size:28px;">${quizTotal-quizScore}</div><div class="stat-label">Jawaban Salah</div></div>
+      <div class="stat-card" style="flex:1;min-width:120px;"><div class="stat-num" style="color:var(--s2);font-size:28px;">${quizTotal}</div><div class="stat-label">Total Soal</div></div>
+    </div>
+    <div style="margin-top:16px;">
+      <button onclick="if(confirm('Reset semua statistik quiz?')){localStorage.removeItem('quiz_stats');renderStatistik();}" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 14px;font:500 12px/1 'Inter',sans-serif;color:var(--muted);cursor:pointer;">↻ Reset Statistik Quiz</button>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════
+// ── GANTI PASSWORD ──
+// ══════════════════════════════════════════════
+async function submitChangePass(){
+  const oldP=document.getElementById('cp-old').value;
+  const newP=document.getElementById('cp-new').value;
+  const cnf=document.getElementById('cp-confirm').value;
+  const msg=document.getElementById('cp-msg');
+  if(!oldP||!newP||!cnf){setMsg(msg,'Semua field wajib diisi','err');return;}
+  if(newP.length<6){setMsg(msg,'Password baru minimal 6 karakter','err');return;}
+  if(newP!==cnf){setMsg(msg,'Konfirmasi password tidak cocok','err');return;}
+  setMsg(msg,'Memproses...','');
+  try{
+    const url=GAS_URL+'?action=changePassword&token='+encodeURIComponent(authSession.token)
+      +'&oldPass='+encodeURIComponent(oldP)+'&newPass='+encodeURIComponent(newP);
+    const res=await fetch(url);
+    const data=await res.json();
+    if(data.ok){
+      setMsg(msg,'✅ Password berhasil diubah','ok');
+      document.getElementById('cp-old').value='';
+      document.getElementById('cp-new').value='';
+      document.getElementById('cp-confirm').value='';
+      setTimeout(()=>document.getElementById('modal-changepass').classList.remove('open'),1500);
+    } else {
+      setMsg(msg,'❌ '+data.msg,'err');
+    }
+  }catch(e){setMsg(msg,'Gagal terhubung ke server','err');}
+}
+
 // ── SIDEBAR TOGGLE ──
 function toggleSidebar(){
   const sb=document.getElementById('sidebar');
@@ -3893,11 +4455,14 @@ async function submitAddUser(){
   } catch(e){ setMsg(msg,'Gagal terhubung ke server','err'); }
 }
 
-// Auto-load users when admin panel opens
+// Auto-load users when admin panel opens, refresh statistik & favorit
 const _origShowTab=showTab;
 showTab=function(id,btn){
   _origShowTab(id,btn);
   if(id==='adminpanel') loadUsers();
+  if(id==='statistik') renderStatistik();
+  if(id==='favorit') renderFavorit();
+  if(id==='kamus'){ renderKamusResult(''); setTimeout(()=>document.getElementById('kamus-input')?.focus(),200); }
 };
 
 // ── INIT ──
