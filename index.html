@@ -634,6 +634,87 @@ body::before {
 .nhk-cultural-title { font:700 14px 'Inter',sans-serif; margin-bottom:8px; }
 .nhk-cultural p { font-size:13px; line-height:1.7; color:var(--fg); margin:0; }
 
+/* ── N4 UJIAN ── */
+.n4-tabs { display:flex; gap:6px; margin-bottom:18px; flex-wrap:wrap; }
+.n4-tab-btn {
+  padding:8px 16px; border:2px solid var(--border); border-radius:20px;
+  background:var(--surface); color:var(--muted); font:600 12px 'Inter',sans-serif;
+  cursor:pointer; transition:all .2s; white-space:nowrap;
+}
+.n4-tab-btn.active { background:var(--s1); border-color:var(--s1); color:#fff; }
+.n4-tab-btn:hover:not(.active) { border-color:var(--s1); color:var(--s1); }
+.n4-section { display:none; }
+.n4-section.active { display:block; }
+.n4-section-title {
+  font:700 18px 'Noto Sans JP',sans-serif; margin:0 0 4px;
+  display:flex; align-items:center; gap:8px;
+}
+.n4-section-sub { font-size:12px; color:var(--muted); margin-bottom:16px; }
+.n4-mondai-title {
+  background:var(--tab-bg); border-left:3px solid var(--s1);
+  padding:10px 14px; border-radius:0 8px 8px 0; margin:20px 0 10px;
+  font:700 14px 'Noto Sans JP',sans-serif; color:var(--fg);
+}
+.n4-q { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:12px; }
+.n4-q-num { font:700 11px 'Inter',sans-serif; color:var(--s1); letter-spacing:.05em; text-transform:uppercase; margin-bottom:6px; }
+.n4-q-text { font:500 15px 'Noto Sans JP',sans-serif; line-height:1.6; margin-bottom:12px; }
+.n4-choices { display:flex; flex-direction:column; gap:6px; }
+.n4-choice {
+  padding:10px 14px; border:2px solid var(--border); border-radius:8px;
+  background:var(--bg); cursor:pointer; font:400 14px 'Noto Sans JP',sans-serif;
+  text-align:left; color:var(--fg); transition:all .15s; width:100%;
+}
+.n4-choice:hover { border-color:var(--s1); background:var(--tab-bg); }
+.n4-choice.correct { border-color:#22c55e; background:#dcfce7; color:#15803d; font-weight:600; }
+.n4-choice.wrong { border-color:#ef4444; background:#fee2e2; color:#dc2626; }
+.n4-choice:disabled { cursor:not-allowed; opacity:.7; }
+.n4-feedback { margin-top:10px; padding:10px 14px; border-radius:8px; font-size:13px; line-height:1.5; }
+.n4-feedback.correct { background:#dcfce7; color:#15803d; border:1px solid #86efac; }
+.n4-feedback.wrong { background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; }
+.n4-score-bar {
+  background:var(--tab-bg); border-radius:12px; padding:16px; margin-bottom:16px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+.n4-score-val { font:700 28px 'Inter',sans-serif; color:var(--s1); }
+.n4-score-label { font-size:12px; color:var(--muted); }
+.n4-reset-btn {
+  padding:8px 18px; border:2px solid var(--s1); border-radius:20px;
+  background:transparent; color:var(--s1); font:600 13px 'Inter',sans-serif;
+  cursor:pointer; transition:all .2s;
+}
+.n4-reset-btn:hover { background:var(--s1); color:#fff; }
+.n4-progress { height:6px; background:var(--border); border-radius:3px; margin-bottom:20px; overflow:hidden; }
+.n4-progress-bar { height:100%; background:var(--s1); border-radius:3px; transition:width .3s; }
+/* Listening section */
+.n4-audio-player {
+  background:var(--tab-bg); border-radius:12px; padding:16px; margin-bottom:16px;
+  display:flex; flex-direction:column; gap:10px;
+}
+.n4-audio-label { font:700 13px 'Inter',sans-serif; color:var(--muted); margin-bottom:4px; }
+.n4-audio-player audio { width:100%; border-radius:8px; }
+.n4-script-box {
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:14px; font:400 13px 'Noto Sans JP',sans-serif; line-height:1.8;
+  color:var(--fg); white-space:pre-wrap; margin-top:8px; display:none;
+}
+.n4-script-toggle {
+  padding:6px 14px; border:1px solid var(--border); border-radius:16px;
+  background:transparent; color:var(--muted); font:500 12px 'Inter',sans-serif;
+  cursor:pointer; transition:all .2s; align-self:flex-start;
+}
+.n4-script-toggle:hover { border-color:var(--s1); color:var(--s1); }
+/* Dark mode fixes */
+@media (prefers-color-scheme: dark) {
+  .n4-choice.correct { background:#14532d; color:#86efac; }
+  .n4-choice.wrong { background:#450a0a; color:#fca5a5; }
+  .n4-feedback.correct { background:#14532d; color:#86efac; }
+  .n4-feedback.wrong { background:#450a0a; color:#fca5a5; }
+}
+:root[data-theme="dark"] .n4-choice.correct { background:#14532d; color:#86efac; }
+:root[data-theme="dark"] .n4-choice.wrong { background:#450a0a; color:#fca5a5; }
+:root[data-theme="dark"] .n4-feedback.correct { background:#14532d; color:#86efac; }
+:root[data-theme="dark"] .n4-feedback.wrong { background:#450a0a; color:#fca5a5; }
+
 /* ── KAMUS ── */
 .kamus-search-wrap { position:relative; margin-bottom:20px; }
 .kamus-search-wrap input {
@@ -860,6 +941,7 @@ body::before {
     <button class="tab-btn" onclick="showTab('panduan',this)"><span class="sb-icon">📖</span>Panduan Belajar</button>
     <button class="tab-btn" onclick="showTab('kamus',this)"><span class="sb-icon">📖</span>Kamus JP↔ID</button>
     <button class="tab-btn" onclick="showTab('nhk',this)"><span class="sb-icon">📚</span>Pelajaran NHK</button>
+    <button class="tab-btn" onclick="showTab('n4ujian',this)"><span class="sb-icon">📝</span>Ujian N4<span class="sb-badge">NEW</span></button>
     <button class="tab-btn" onclick="showTab('statistik',this)"><span class="sb-icon">📊</span>Statistik Belajar</button>
     <button class="tab-btn" onclick="showTab('favorit',this)"><span class="sb-icon">⭐</span>Favorit Saya</button>
     <button class="tab-btn" id="sb-admin-btn" onclick="showTab('adminpanel',this)" style="display:none;"><span class="sb-icon">👥</span>Kelola User</button>
@@ -1193,6 +1275,231 @@ body::before {
     <input type="search" id="nhk-search" placeholder="🔍 Cari pelajaran, kata, atau topik..." oninput="renderNHK(this.value)">
   </div>
   <div class="nhk-grid" id="nhk-grid"></div>
+</section>
+
+<!-- ===== N4 UJIAN ===== -->
+<section id="n4ujian" class="section">
+  <div class="section-intro">
+    <div class="section-intro-icon">📝</div>
+    <div>
+      <div class="section-intro-title">Simulasi Ujian JLPT N4</div>
+      <div class="section-intro-sub">Latihan soal lengkap: Kosakata・Tata Bahasa・Membaca・Mendengarkan</div>
+    </div>
+  </div>
+
+  <!-- Sub-tabs -->
+  <div class="n4-tabs">
+    <button class="n4-tab-btn active" onclick="switchN4Tab('vocab',this)">語彙 Kosakata</button>
+    <button class="n4-tab-btn" onclick="switchN4Tab('grammar',this)">文法 Tata Bahasa</button>
+    <button class="n4-tab-btn" onclick="switchN4Tab('reading',this)">読解 Membaca</button>
+    <button class="n4-tab-btn" onclick="switchN4Tab('listening',this)">聴解 Mendengarkan</button>
+  </div>
+
+  <!-- ── KOSAKATA ── -->
+  <div id="n4-vocab" class="n4-section active">
+    <div class="n4-score-bar">
+      <div>
+        <div class="n4-score-val" id="n4v-score">0/34</div>
+        <div class="n4-score-label">げんごちしき (もじ・ごい) • 34問</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="n4v-pct" style="font:600 14px 'Inter',sans-serif;color:var(--muted);">0%</span>
+        <button class="n4-reset-btn" onclick="resetN4('vocab')">🔄 Reset</button>
+      </div>
+    </div>
+    <div class="n4-progress"><div class="n4-progress-bar" id="n4v-bar" style="width:0%"></div></div>
+    <div id="n4-vocab-qs"></div>
+  </div>
+
+  <!-- ── TATA BAHASA ── -->
+  <div id="n4-grammar" class="n4-section">
+    <div class="n4-score-bar">
+      <div>
+        <div class="n4-score-val" id="n4g-score">0/25</div>
+        <div class="n4-score-label">げんごちしき (ぶんぽう) • 25問</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="n4g-pct" style="font:600 14px 'Inter',sans-serif;color:var(--muted);">0%</span>
+        <button class="n4-reset-btn" onclick="resetN4('grammar')">🔄 Reset</button>
+      </div>
+    </div>
+    <div class="n4-progress"><div class="n4-progress-bar" id="n4g-bar" style="width:0%"></div></div>
+    <div id="n4-grammar-qs"></div>
+  </div>
+
+  <!-- ── MEMBACA ── -->
+  <div id="n4-reading" class="n4-section">
+    <div class="n4-score-bar">
+      <div>
+        <div class="n4-score-val" id="n4r-score">0/10</div>
+        <div class="n4-score-label">どっかい (読解) • 10問</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="n4r-pct" style="font:600 14px 'Inter',sans-serif;color:var(--muted);">0%</span>
+        <button class="n4-reset-btn" onclick="resetN4('reading')">🔄 Reset</button>
+      </div>
+    </div>
+    <div class="n4-progress"><div class="n4-progress-bar" id="n4r-bar" style="width:0%"></div></div>
+    <div id="n4-reading-qs"></div>
+  </div>
+
+  <!-- ── MENDENGARKAN ── -->
+  <div id="n4-listening" class="n4-section">
+    <div class="n4-section-title">🎧 聴解 Mendengarkan</div>
+    <div class="n4-section-sub">Dengarkan audio lalu jawab soal. Tempatkan file N4Q1-4.mp3 di folder yang sama dengan index.html.</div>
+
+    <div class="n4-audio-player">
+      <div class="n4-audio-label">🎵 もんだい１ — Pilih gambar yang sesuai (8 soal)</div>
+      <audio id="n4-audio-1" controls src="./N4Q1.mp3">Browser tidak mendukung audio.</audio>
+      <button class="n4-script-toggle" onclick="toggleN4Script('script1')">📄 Tampilkan Skrip Audio</button>
+      <div id="script1" class="n4-script-box">【もんだい１ — skrip percakapan】
+
+１番：男の人と女の人が話しています。男の人は、何で美術館へ行きますか。
+M：美術館に行きたいんですけど、何で行くのが便利ですか。
+F：車で行けば10分ですよ。
+M：そうですか。電車かバスでも行けますか。
+F：うーん、行けますけど、時間がかかりますよ。自転車は持っていますか。
+M：はい。
+F：じゃあ、自転車のほうが便利ですよ。
+M：そうですか。分かりました。じゃ、そうします。
+→ こたえ：自転車
+
+２番：男の学生と女の学生が話しています。男の学生は、何を買いますか。
+M：来週、佐藤さんの誕生日だね。もうプレゼント、買った？
+F：うん。かばん、買った。
+M：そうか。僕はまだ決められなくて困っているんだ。
+F：そう。じゃあ、カップはどう？佐藤さん、コーヒーが好きで、よく飲んでいるよ。
+M：うーん、でも、カップはもうたくさん持っているかもしれないな。
+F：じゃあ、タオルはどう？よくスポーツをしているから。
+M：そうだね。じゃあ、そうしよう。ありがとう。
+→ こたえ：タオル
+
+３番：男の人と女の人が話しています。女の人は、チケットを何枚予約しますか。
+M：来月のコンサートのチケット、予約してくれる？
+F：うん、いいよ。何枚？
+M：僕たち二人と、友達四人。
+F：じゃあ、6枚ね。
+M：あ、そうだ、ごめん。一人都合が悪くなったから、五人だ。
+F：あ、そう。分かった。
+→ こたえ：5枚
+
+４番：女の人と男の人が写真について話しています。女の人は、どの写真を送りますか。
+F：国の両親に写真を送りたいんだけど、どれがいいと思う？
+M：この海の写真は顔が小さくてよく見えないね。
+F：うん。じゃ、だめだね。この山の写真はどう？
+M：うん、これ、いいね。
+F：じゃ、これ1枚。もう1枚は、この、私の部屋の写真は？
+M：部屋があまりきれいじゃないからやめたほうがいいよ。それより、大学の前でとった写真がいいよ。
+F：そうだね。この2枚にしよう。
+→ こたえ：山の写真と大学前の写真
+
+５番：男の留学生と女の人が話しています。男の留学生は、何を持っていきますか。
+M：友達がけがをして、入院しているんです。お見舞いに行きたいんですが、日本では何を持っていきますか。
+F：そうですね。よく花や果物を持っていきます。病院では時間がたくさんあるから、本もいいと思いますよ。
+M：ああ、いいですね。本読むのが好きだから、そうします。
+F：あ、それから、若い人なら音楽のCDもいいと思いますよ。
+M：うーん、でも、音楽はあまり聴きませんから。
+→ こたえ：本
+
+６番：会社で男の人と女の人が話しています。女の人は今日、このあと何をしますか。
+M：ちょっと、いい？
+F：はい。
+M：今部長から電話があって、資料のコピーを頼まれたんだ。お願いしてもいい？
+F：分かりました。明日の会議の資料ですね。
+M：うん。それから、会議室の準備だけど、いすを並べておいてくれる？
+F：はい。でも、会議室は今、使っています。
+M：そうか。じゃあ、それは明日だね。
+→ こたえ：資料のコピー
+
+７番：教室で、先生が話しています。学生は明日、何時にどこに集まらなければなりませんか。
+M：えー、これから、明日のバス旅行について連絡します。明日は、朝8時半までに来てください。いつもは9時からですが、30分早いので、間違えないでくださいね。学校の体育館の前に集まってください。いいですか。教室じゃなくて、体育館の前ですよ。
+→ こたえ：8時半に体育館の前
+
+８番：図書館で男の人と係りの人が話しています。男の人はこのあとどのボタンを押しますか。
+M：すみません。ちょっと、コピーの仕方を教えてもらえませんか。青いボタンを押したんですが、字が小さくなってしまったんです。
+F：字を大きくするなら、赤いボタンを押してください。
+M：あ、はい。それから、もう少し濃くしたいんです。
+F：じゃあ、黄色いボタンを押してください。薄くするときは、白いボタンです。
+→ こたえ：赤いボタン、それから黄色いボタン</div>
+    </div>
+
+    <div class="n4-audio-player">
+      <div class="n4-audio-label">🎵 もんだい２ — Pilih jawaban yang sesuai (7 soal)</div>
+      <audio id="n4-audio-2" controls src="./N4Q2.mp3">Browser tidak mendukung audio.</audio>
+      <button class="n4-script-toggle" onclick="toggleN4Script('script2')">📄 Tampilkan Skrip Audio</button>
+      <div id="script2" class="n4-script-box">【もんだい２ — skrip + pilihan jawaban】
+
+１番：だれと住んでいますか。→ 弟と一緒（姉は両親と住んでいる）
+２番：今日の夕方、相談しますか。→ 今日4時頃（6時から約束、4時頃大丈夫）
+３番：どうしてアルバイトがしたいですか。→ 日本人の働き方を知りたいから
+４番：何曜日に一日中雨が降ると言っていますか。→ 木曜日（一日中雨）
+５番：男の人は最近どのくらい本を読んでいますか。→ 全然読んでいない
+６番：女の学生は子供のとき、何になりたかったですか。→ ピアニスト
+７番：次の船は何時に出発しますか。→ 10時20分</div>
+    </div>
+
+    <div class="n4-audio-player">
+      <div class="n4-audio-label">🎵 もんだい３ — Ungkapan yang tepat (5 soal)</div>
+      <audio id="n4-audio-3" controls src="./N4Q3.mp3">Browser tidak mendukung audio.</audio>
+      <button class="n4-script-toggle" onclick="toggleN4Script('script3')">📄 Tampilkan Skrip Audio</button>
+      <div id="script3" class="n4-script-box">【もんだい３ — situasi & pilihan ungkapan】
+
+例：レストランでお店の人を呼びます → 3. すみません。
+
+１番：お土産を買いました。先輩にあげます。何と言いますか。
+→ 1. これ、お土産です。どうぞ。
+
+２番：明日、二人で映画に行きたいです。何と言いますか。
+→ 2. 明日、映画を見に行きませんか。
+
+３番：黒板の字が小さくて、読めません。先生に何と言いますか。
+→ 1. すいません、よく見えません。
+
+４番：先生に今、相談したいです。何と言いますか。
+→ 2. ちょっとよろしいでしょうか。
+
+５番：友達のペンを借りたいです。何と言いますか。
+→ 1. ペン、貸してもらえる？</div>
+    </div>
+
+    <div class="n4-audio-player">
+      <div class="n4-audio-label">🎵 もんだい４ — Respons percakapan (8 soal)</div>
+      <audio id="n4-audio-4" controls src="./N4Q4.mp3">Browser tidak mendukung audio.</audio>
+      <button class="n4-script-toggle" onclick="toggleN4Script('script4')">📄 Tampilkan Skrip Audio</button>
+      <div id="script4" class="n4-script-box">【もんだい４ — respons singkat yang tepat】
+
+例：F：ジュース買いに行きますけど、何か買ってきましょうか。
+→ 3. あ、コーヒー、お願いします。
+
+１番：F：どこに行くんですか。
+→ 2. ちょっと食事に行ってきます。
+
+２番：F：ねえ、京都、行ったことある？
+→ 3. うん、1回あるよ。
+
+３番：M：どうして昨日、授業を休んだんですか。
+→ 2. 風邪をひいてしまいました。
+
+４番：M：夏休みに国へ帰ったら、何をしますか。
+→ 1. 友達に会うつもりです。
+
+５番：M：学校を休むときは電話してください。
+→ 2. はい、連絡します。
+
+６番：M：あのう、その本を取ってくれませんか。
+→ 3. え、どれですか。
+
+７番：F：ジョンさん、日本語が話せますか。
+→ 3. 少しならできます。
+
+８番：M：あ、田中さん、黒板を消しておいてくれませんか。
+→ 1. はい、すぐにやります。</div>
+    </div>
+
+    <div style="background:var(--tab-bg);border-radius:10px;padding:14px;font-size:13px;color:var(--muted);line-height:1.6;margin-top:8px;">
+      💡 <strong>Cara pakai:</strong> Letakkan file <code>N4Q1.mp3</code>, <code>N4Q2.mp3</code>, <code>N4Q3.mp3</code>, <code>N4Q4.mp3</code> di folder yang sama dengan <code>index.html</code>. Klik Play untuk mendengarkan soal, lalu cocokkan dengan skrip di atas.
+    </div>
+  </div>
 </section>
 
 <!-- ===== KAMUS ===== -->
@@ -4553,6 +4860,7 @@ showTab=function(id,btn){
   if(id==='favorit') renderFavorit();
   if(id==='kamus'){ renderKamusResult(''); setTimeout(()=>document.getElementById('kamus-input')?.focus(),200); }
   if(id==='nhk'){ renderNHK(''); setTimeout(()=>document.getElementById('nhk-search')?.focus(),200); }
+  if(id==='n4ujian'){ if(!document.querySelector('#n4-vocab-qs .n4-q')) renderN4Vocab(); }
 };
 
 // ── NHK PELAJARAN ──
@@ -5086,6 +5394,285 @@ function openNHK(n){
   document.body.appendChild(overlay);
 }
 
+// ── N4 UJIAN ──
+const n4VocabData = [
+  // もんだい１ 漢字→ひらがな
+  {mondai:1,num:1,text:'石がたくさんある道を歩いた。',q:'「石」の読み方は？',choices:['いし','せき','がん','いわ'],ans:0},
+  {mondai:1,num:2,text:'私には旅行の経験がほとんどない。',q:'「経験」の読み方は？',choices:['けいけん','けんけん','きょうけん','ちけん'],ans:0},
+  {mondai:1,num:3,text:'店員にレシートをもらった。',q:'「店員」の読み方は？',choices:['みせいん','てんにん','けいたん','てんいん'],ans:3},
+  {mondai:1,num:4,text:'食堂でラーメンを食べた。',q:'「食堂」の読み方は？',choices:['しょくとう','しょくどう','ちょくどう','たべどころ'],ans:1},
+  {mondai:1,num:5,text:'横浜は港のある都市だ。',q:'「港」の読み方は？',choices:['こう','みなと','みなこ','こうかい'],ans:1},
+  {mondai:1,num:6,text:'兄は小説を読むのが好きだ。',q:'「小説」の読み方は？',choices:['ちいせつ','しょうはなし','しょうせつ','こせつ'],ans:2},
+  {mondai:1,num:7,text:'毎日日記をつけている。',q:'「日記」の読み方は？',choices:['にっき','にちき','ひき','ひにち'],ans:0},
+  {mondai:1,num:8,text:'夕方になると涼しくなる。',q:'「夕方」の読み方は？',choices:['ゆうかた','ゆうがた','ゆうほう','たがた'],ans:1},
+  {mondai:1,num:9,text:'秋になると木の葉が赤くなる。',q:'「秋」の読み方は？',choices:['はる','なつ','ふゆ','あき'],ans:3},
+  // もんだい２ ひらがな→漢字
+  {mondai:2,num:10,text:'空があおいですね。',q:'「あおい」の漢字は？',choices:['青い','蒼い','碧い','藍い'],ans:0},
+  {mondai:2,num:11,text:'待ち合わせのばしょを教えてください。',q:'「ばしょ」の漢字は？',choices:['場処','所場','場所','ば所'],ans:2},
+  {mondai:2,num:12,text:'毎朝1時間あるいて通勤しています。',q:'「あるいて」の漢字は？',choices:['行いて','走いて','歩いて','動いて'],ans:2},
+  {mondai:2,num:13,text:'このアプリはとてもべんりだ。',q:'「べんり」の漢字は？',choices:['便理','便利','弁利','弁理'],ans:1},
+  {mondai:2,num:14,text:'昨日はとてもねむかった。',q:'「ねむかった」の漢字は？',choices:['寝むかった','眩かった','眠むかった','惰むかった'],ans:2},
+  {mondai:2,num:15,text:'昨日はたくさんゆきがふった。',q:'「ゆき」の漢字は？',choices:['雪','雨','霜','氷'],ans:0},
+  // もんだい３ 空欄補充
+  {mondai:3,num:16,text:'のどが（　　）ので、水が飲みたい。',q:'（　　）に入る言葉は？',choices:['ぬれて','おれて','みたされて','かわいて'],ans:3},
+  {mondai:3,num:17,text:'彼女は（　　）勉強するので成績がいい。',q:'（　　）に入る言葉は？',choices:['ゆっくり','おとなしく','ねっしんに','たのしく'],ans:2},
+  {mondai:3,num:18,text:'日本の文化に（　　）があります。',q:'（　　）に入る言葉は？',choices:['じかん','きょうみ','ようす','ちしき'],ans:1},
+  {mondai:3,num:19,text:'スポーツには（　　）が大切だ。',q:'（　　）に入る言葉は？',choices:['いきもの','ルール','しゅみ','かんじ'],ans:1},
+  {mondai:3,num:20,text:'旅行の準備が（　　）できた。',q:'（　　）に入る言葉は？',choices:['かんたんに','ゆっくり','やっと','ようい'],ans:3},
+  {mondai:3,num:21,text:'困ったことがあれば（　　）してください。',q:'（　　）に入る言葉は？',choices:['きょうそう','あんない','そうだん','れんしゅう'],ans:2},
+  {mondai:3,num:22,text:'重い荷物を車で（　　）もらった。',q:'（　　）に入る言葉は？',choices:['はこんで','おいて','のって','かりて'],ans:0},
+  {mondai:3,num:23,text:'その場所は（　　）なので近づかないでください。',q:'（　　）に入る言葉は？',choices:['あんぜん','きけん','しずか','にぎやか'],ans:1},
+  {mondai:3,num:24,text:'エアコンを（　　）部屋が暑くなった。',q:'（　　）に入る言葉は？',choices:['つけて','けして','とめないで','かけて'],ans:2},
+  // もんだい４ 同じ意味の言葉
+  {mondai:4,num:25,text:'映画に行く予定でしたが、急用が（　　）行けなくなりました。',q:'「できて」と同じ意味の言葉は？',choices:['なくて','おわって','でました','きました'],ans:2},
+  {mondai:4,num:26,text:'部屋を（　　）してください。',q:'「きれいに」と同じ意味の言葉は？',choices:['そうじ','かたづけ','きれいに','せいそう'],ans:2},
+  {mondai:4,num:27,text:'田中さんはテニスが（　　）。',q:'「じょうずです」と同じ意味の言葉は？',choices:['じょうずです','すきです','へたです','むずかしいです'],ans:0},
+  {mondai:4,num:28,text:'ねぼうしてしまいました。',q:'「おきるのがおそくなってしまいました」と同じ意味の言葉は？',choices:['ねるのがはやかった','ねぼうしてしまった','おきるのがおそくなってしまいました','ねすごしてしまった'],ans:2},
+  {mondai:4,num:29,text:'その映画はとてもすばらしかったです。',q:'「とてもよかったですよ」と同じ意味の言葉は？',choices:['まあまあよかったですよ','とてもよかったですよ','ちょっとよかったですよ','あまりよくなかったですよ'],ans:1},
+  // もんだい５ 正しい使い方
+  {mondai:5,num:30,text:'「るす」を正しく使っている文は？',q:'「るす」の正しい使い方は？',choices:['友達がるすになりたいと言っていた','るすの間に手紙が来た','今日はるすが多い','友達のいえに行ったらるすでした'],ans:3},
+  {mondai:5,num:31,text:'「しんせつ」を正しく使っている文は？',q:'「しんせつ」の正しい使い方は？',choices:['このくすりはとてもしんせつです','このびょういんのおいしゃさんはとてもしんせつですよ','しんせつな天気ですね','この本はしんせつな本です'],ans:1},
+  {mondai:5,num:32,text:'「にがい」を正しく使っている文は？',q:'「にがい」の正しい使い方は？',choices:['このケーキはとてもにがいです','あのひとはにがい人です','このくすりはとてもにがいです','にがい天気ですね'],ans:2},
+  {mondai:5,num:33,text:'「わる」を正しく使っている文は？',q:'「わる」の正しい使い方は？',choices:['おさらをおとして、わってしまいました','体をわってしまいました','時間をわってしまいました','心をわってしまいました'],ans:0},
+  {mondai:5,num:34,text:'「ちこく」を正しく使っている文は？',q:'「ちこく」の正しい使い方は？',choices:['電車がちこくして怒った','じゅぎょうにちこくしてすみません','ちこくな映画を見た','友達がちこくをくれた'],ans:1},
+];
+
+const n4GrammarData = [
+  // もんだい１ 文の文法１
+  {mondai:1,num:1,text:'先生（　）わからないことを聞いた。',q:'（　）に入る言葉は？',choices:['が','は','に','も'],ans:2},
+  {mondai:1,num:2,text:'この仕事は一人（　）は無理だ。',q:'（　）に入る言葉は？',choices:['が','は','に','で'],ans:3},
+  {mondai:1,num:3,text:'来年日本（　）留学したいと思っている。',q:'（　）に入る言葉は？',choices:['で','を','に','は'],ans:2},
+  {mondai:1,num:4,text:'私（　）あなたを信じます。',q:'（　）に入る言葉は？',choices:['は','が','だけ','しか'],ans:2},
+  {mondai:1,num:5,text:'雨が降った（　　）試合は中止になった。',q:'（　　）に入る言葉は？',choices:['から','ので','からに','のに'],ans:0},
+  {mondai:1,num:6,text:'試験が始まる（　　）席についてください。',q:'（　　）に入る言葉は？',choices:['まで','までに','ように','ために'],ans:1},
+  {mondai:1,num:7,text:'彼女が泣いているのは（　　）理由があるからだ。',q:'（　　）に入る言葉は？',choices:['なんの','なにも','どういう','どんな'],ans:2},
+  {mondai:1,num:8,text:'長い時間待ったが（　　）彼が来た。',q:'（　　）に入る言葉は？',choices:['やっと','まだ','もう','ずっと'],ans:0},
+  {mondai:1,num:9,text:'日本に（　　）、まだ桜を見たことがない。',q:'（　　）に入る言葉は？',choices:['来たので','来たのに','行きたいけれど','いたのに'],ans:2},
+  {mondai:1,num:10,text:'昨日映画を見（　）すぐ寝た。',q:'（　）に入る言葉は？',choices:['て','で','た','から'],ans:2},
+  {mondai:1,num:11,text:'もっと（　　）声で話してください。',q:'（　　）に入る言葉は？',choices:['大き','大きい','大きく','おおきな'],ans:0},
+  {mondai:1,num:12,text:'毎朝ジョギングを（　　）。',q:'（　　）に入る言葉は？',choices:['します','しています','しました','するつもりです'],ans:0},
+  {mondai:1,num:13,text:'友達が宿題を（　　）くれた。',q:'（　　）に入る言葉は？',choices:['手伝って','手伝われて','手伝ってくれて','手伝ってもらって'],ans:2},
+  {mondai:1,num:14,text:'隣の人にペンを貸して（　　）。',q:'（　　）に入る言葉は？',choices:['あげました','くれました','もらいました','やりました'],ans:2},
+  {mondai:1,num:15,text:'新しいコートを買った（　　）まだ一度も着ていない。',q:'（　　）に入る言葉は？',choices:['のに','から','まま','ので'],ans:2},
+  // もんだい２ 文の文法２（並べ替え）
+  {mondai:2,num:16,text:'今すぐ出れば間に合う。',q:'正しい順番は？「今すぐ ＿ ＿ ★ ＿ 間に合うかもしれないから」',choices:['タクシーで乗れば間に合うかもしれないから','今すぐタクシーで乗れば★間に合うかもしれないから','タクシーで★乗れば間に合うかもしれないから','タクシーで乗れば★間に合うかもしれないから'],ans:3},
+  {mondai:2,num:17,text:'ちょうど今食べたところだ。',q:'★はどれ？「ちょうど 今 ＿ ★ 」',choices:['食べた★ところ','★ところ食べた','食べ★たところ','★食べたところ'],ans:0},
+  {mondai:2,num:18,text:'そんな靴では山に登れない。',q:'★はどれ？「そんな くつ は ＿ ★ で 山に登れない」',choices:['そんな★くつ','くつは★で','くつ は で ★','★で山に'],ans:1},
+  {mondai:2,num:19,text:'風が強いし寒そうだから外に出たくない。',q:'★はどれ？「風が 強い し ★ だから 外に出たくない」',choices:['寒そう★だから','★寒そうだから','強い★し','し★寒そう'],ans:0},
+  {mondai:2,num:20,text:'もし両親に反対されても東京で勉強する。',q:'★はどれ？「もし 両親に ＿ ★ 東京で勉強する」',choices:['反対されても★東京で','★反対されても東京で','反対★されても','★されても反対'],ans:1},
+  // もんだい３ 文章の文法（ポチの話）
+  {mondai:3,num:21,text:'私は犬を（　　）います。',q:'（　　）に入る言葉は？',choices:['飼って','かって','かわれて','かっています'],ans:3},
+  {mondai:3,num:22,text:'ポチが花びんを（　　）。',q:'（　　）に入る言葉は？',choices:['こわした','こわしてしまった','こわれた','こわれてしまった'],ans:1},
+  {mondai:3,num:23,text:'ポチのおかげで一人でいても（　　）。',q:'（　　）に入る言葉は？',choices:['さびしいです','さびしくなくなりました','さびしかったです','さびしくなりました'],ans:1},
+  {mondai:3,num:24,text:'ポチはかわいいです。（　　）、とても頭もいいんです。',q:'（　　）に入る言葉は？',choices:['それに','でも','だから','しかし'],ans:0},
+  {mondai:3,num:25,text:'ポチ（　）私の宝物です。',q:'（　）に入る言葉は？',choices:['を','が','は','で'],ans:2},
+];
+
+const n4ReadingData = [
+  // もんだい４ 短い文章の理解
+  {mondai:4,num:26,
+   text:'アリさんへ\n\n急いでいるので、書き置きします。\n石川さんに借りた本3冊を机の上に置きました。\n返してください。お願いします。\n\nリン',
+   q:'このメモについて正しい文はどれですか。',
+   choices:[
+    'アリさんから石川さんへのメモです。',
+    'リンさんが本を借りたいです。',
+    'アリさんは机の上の本を読みたいです。',
+    'アリさんに本を3冊貸します。',
+   ],ans:3},
+  {mondai:4,num:27,
+   text:'【公園の注意書き】\n・犬を連れてくる場合は、リードをつけてください。\n・ボールを使って遊ぶことはできません。\n・自転車やオートバイは、公園の入口にとめてください。\n・ゴミは必ず持ち帰ってください。',
+   q:'この注意書きからわかることは何ですか。',
+   choices:[
+    'ペットを連れて来てはいけません。',
+    '入口にオートバイをとめてはいけません。',
+    'サッカーの練習をしてはいけません。',
+    'ゴミ箱があります。',
+   ],ans:2},
+  {mondai:4,num:28,
+   text:'山田先生へ\n\nトムです。来週の水曜日に約束をしていましたが、都合が悪くなってしまいました。木曜日か金曜日に変えることはできますか。ご連絡をお待ちしています。\n\nトム',
+   q:'トムさんはどうしてこのメールを書きましたか。',
+   choices:[
+    '来週の水曜日に会いたいから。',
+    '約束をあさってに変えられるかどうか聞くため。',
+    '先生に都合の悪い日を教えるため。',
+    '木曜日か金曜日に予定があるから。',
+   ],ans:1},
+  {mondai:4,num:29,
+   text:'石田さんは図書館で働いています。石田さんの仕事は、本の貸し出しや返却を受け付けることです。また、図書館の新聞によい本の紹介文を書いたりします。先週は子供向けのおもしろい本を紹介しました。',
+   q:'石田さんの仕事ではないものはどれですか。',
+   choices:[
+    '本の貸し出しや返却を受け付ける。',
+    '新聞に本の紹介文を書く。',
+    '新聞にのっている、よい本の紹介文をさがします。',
+    '子供向けの本を紹介する。',
+   ],ans:2},
+  // もんだい５ 長い文章の理解（山のホテル）
+  {mondai:5,num:30,
+   text:'先週末、山の中にあるホテルに泊まりました。そのホテルはとても古い建物でしたが、中はきれいでした。',
+   q:'ホテルについてどう書かれていますか。',
+   choices:[
+    '新しくて、中もきれいなホテル。',
+    '古いが、中はきれいなホテル。',
+    '古くて、中も古いホテル。',
+    '新しいが、中は古いホテル。',
+   ],ans:1},
+  {mondai:5,num:31,
+   text:'駅からバスで2時間以上かかりました。バス停から宿まで30分近く歩きました。',
+   q:'ホテルへはどうやって行きましたか。',
+   choices:[
+    '電車で2時間、そこから歩いて30分。',
+    'バスで2時間、そこから車で30分。',
+    '車で2時間以上、そこから歩いて30分。',
+    'バスで2時間以上、そこから歩いて30分近く。',
+   ],ans:3},
+  {mondai:5,num:32,
+   text:'部屋に荷物を置いてから、少し休みました。それから、山の中を散歩しました。',
+   q:'ホテルに着いてから、最初に何をしましたか。',
+   choices:[
+    'すぐ散歩に行きました。',
+    '荷物を置いてから散歩に行きました。',
+    '食事をしてから休みました。',
+    '部屋で少し休んでから、散歩に行きました。',
+   ],ans:3},
+  {mondai:5,num:33,
+   text:'山でのんびり過ごすのはとても気持ちよかったです。自然の中でゆっくり遊んだり昼寝をしたりする生活は最高だと思いました。',
+   q:'筆者はどんな生活を「最高」と思いましたか。',
+   choices:[
+    '山で遊んだり、昼寝をしたりする生活。',
+    '毎日山を歩き回る生活。',
+    '都市を離れて仕事をする生活。',
+    '毎日友達と遊ぶ生活。',
+   ],ans:0},
+  // もんだい６ 情報の取り出し（スポーツ教室チラシ）
+  {mondai:6,num:34,
+   text:'【スポーツ教室のご案内】\nバスケットボール・テニス・水泳\n参加費：無料\n※自転車をお借りになる方は別途200円かかります。\n場所：市民体育館\n日時：毎週土曜日 10:00〜12:00',
+   q:'自転車を借りる場合、いくらかかりますか。',
+   choices:['無料です。','100円です。','200円です。','300円です。'],
+   ans:2},
+  {mondai:6,num:35,
+   text:'【バスケットボール初心者クラス】\nバスケットボールのルールを習ってから試合をします。\n初めての方は10:00までに体育館に来てください。',
+   q:'初めてバスケットボールをする人は、どうすればいいですか。',
+   choices:[
+    '10:00前に受付をします。',
+    '10:00までに体育館に行きます。',
+    '試合が始まってから来てもいいです。',
+    '10:00にルールを教えます。',
+   ],ans:1},
+];
+
+// N4 state
+let n4State = {
+  vocab: { answers:{}, score:0 },
+  grammar: { answers:{}, score:0 },
+  reading: { answers:{}, score:0 },
+};
+
+function switchN4Tab(tab, btn){
+  document.querySelectorAll('.n4-tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.n4-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('n4-'+tab)?.classList.add('active');
+  if(tab==='vocab' && !document.querySelector('#n4-vocab-qs .n4-q')) renderN4Vocab();
+  if(tab==='grammar' && !document.querySelector('#n4-grammar-qs .n4-q')) renderN4Grammar();
+  if(tab==='reading' && !document.querySelector('#n4-reading-qs .n4-q')) renderN4Reading();
+}
+
+function toggleN4Script(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const shown = el.style.display==='block';
+  el.style.display = shown?'none':'block';
+  const btn = el.previousElementSibling;
+  if(btn) btn.textContent = shown?'📄 Tampilkan Skrip Audio':'📄 Sembunyikan Skrip';
+}
+
+function renderN4Questions(containerId, data, stateKey, scoreId, pctId, barId, total){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const state = n4State[stateKey];
+  let html = '';
+  let lastMondai = 0;
+  const mondaiNames = {
+    1:'もんだい１',2:'もんだい２',3:'もんだい３',
+    4:'もんだい４',5:'もんだい５',6:'もんだい６'
+  };
+  const mondaiDesc = {
+    1:'漢字→ひらがな（읽기）',2:'ひらがな→漢字（쓰기）',
+    3:'空欄補充（isi kata）',4:'同じ意味（sinonim）',
+    5:'正しい使い方（penggunaan）',6:'情報取り出し（flyer）'
+  };
+  data.forEach((q,i)=>{
+    if(q.mondai !== lastMondai){
+      lastMondai = q.mondai;
+      html += `<div class="n4-mondai-title">${mondaiNames[q.mondai]} — ${mondaiDesc[q.mondai]||''}</div>`;
+    }
+    const answered = state.answers[i] !== undefined;
+    const userAns = state.answers[i];
+    html += `<div class="n4-q" id="${stateKey}-q-${i}">
+      <div class="n4-q-num">${stateKey.toUpperCase()} Q${q.num}</div>
+      <div class="n4-q-text">${q.text.replace(/\n/g,'<br>')}</div>
+      ${q.q?`<div style="font-size:13px;color:var(--muted);margin-bottom:10px;">${q.q}</div>`:''}
+      <div class="n4-choices">`;
+    q.choices.forEach((c,ci)=>{
+      let cls = 'n4-choice';
+      if(answered){
+        if(ci===q.ans) cls+=' correct';
+        else if(ci===userAns) cls+=' wrong';
+      }
+      html += `<button class="${cls}" ${answered?'disabled':''} onclick="answerN4('${stateKey}',${i},${ci},${q.ans},${total})">${ci+1}. ${c}</button>`;
+    });
+    html += `</div>`;
+    if(answered){
+      const correct = userAns===q.ans;
+      html += `<div class="n4-feedback ${correct?'correct':'wrong'}">${correct?'✅ Benar!':'❌ Salah. Jawaban: '+q.choices[q.ans]}</div>`;
+    }
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+  updateN4Score(stateKey, scoreId, pctId, barId, total);
+}
+
+function answerN4(stateKey, qIdx, chosen, correct, total){
+  const state = n4State[stateKey];
+  if(state.answers[qIdx] !== undefined) return;
+  state.answers[qIdx] = chosen;
+  if(chosen === correct) state.score++;
+  const dataMap = {vocab:n4VocabData, grammar:n4GrammarData, reading:n4ReadingData};
+  const scoreIdMap = {vocab:'n4v-score', grammar:'n4g-score', reading:'n4r-score'};
+  const pctIdMap = {vocab:'n4v-pct', grammar:'n4g-pct', reading:'n4r-pct'};
+  const barIdMap = {vocab:'n4v-bar', grammar:'n4g-bar', reading:'n4r-bar'};
+  const containerIdMap = {vocab:'n4-vocab-qs', grammar:'n4-grammar-qs', reading:'n4-reading-qs'};
+  renderN4Questions(containerIdMap[stateKey], dataMap[stateKey], stateKey, scoreIdMap[stateKey], pctIdMap[stateKey], barIdMap[stateKey], total);
+}
+
+function updateN4Score(stateKey, scoreId, pctId, barId, total){
+  const state = n4State[stateKey];
+  const answered = Object.keys(state.answers).length;
+  const score = state.score;
+  const pct = total>0 ? Math.round((score/total)*100) : 0;
+  const el = document.getElementById(scoreId);
+  if(el) el.textContent = score+'/'+total;
+  const pctEl = document.getElementById(pctId);
+  if(pctEl) pctEl.textContent = pct+'%';
+  const barEl = document.getElementById(barId);
+  if(barEl) barEl.style.width = (answered/total*100)+'%';
+}
+
+function resetN4(tab){
+  n4State[tab] = { answers:{}, score:0 };
+  const dataMap = {vocab:n4VocabData, grammar:n4GrammarData, reading:n4ReadingData};
+  const scoreIdMap = {vocab:'n4v-score', grammar:'n4g-score', reading:'n4r-score'};
+  const pctIdMap = {vocab:'n4v-pct', grammar:'n4g-pct', reading:'n4r-pct'};
+  const barIdMap = {vocab:'n4v-bar', grammar:'n4g-bar', reading:'n4r-bar'};
+  const containerIdMap = {vocab:'n4-vocab-qs', grammar:'n4-grammar-qs', reading:'n4-reading-qs'};
+  const totals = {vocab:34, grammar:25, reading:10};
+  renderN4Questions(containerIdMap[tab], dataMap[tab], tab, scoreIdMap[tab], pctIdMap[tab], barIdMap[tab], totals[tab]);
+}
+
+function renderN4Vocab(){ renderN4Questions('n4-vocab-qs', n4VocabData, 'vocab', 'n4v-score', 'n4v-pct', 'n4v-bar', 34); }
+function renderN4Grammar(){ renderN4Questions('n4-grammar-qs', n4GrammarData, 'grammar', 'n4g-score', 'n4g-pct', 'n4g-bar', 25); }
+function renderN4Reading(){ renderN4Questions('n4-reading-qs', n4ReadingData, 'reading', 'n4r-score', 'n4r-pct', 'n4r-bar', 10); }
+
 // ── INIT ──
 // Restore theme
 try{const t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);const btn=document.getElementById('theme-toggle');if(btn)btn.textContent=t==='dark'?'☀️':'🌙';}}catch(e){}
@@ -5119,6 +5706,7 @@ renderDakuten();
 renderPolaKalimat();
 renderQuizLanjutanHome();
 renderNHK('');
+renderN4Vocab();
 allVocabRendered=true;
 
 // ── SERVICE WORKER ──
