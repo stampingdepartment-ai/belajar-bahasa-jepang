@@ -1016,7 +1016,8 @@ body::before {
     <button class="tab-btn" onclick="showTab('panduan',this)"><span class="sb-icon">📖</span>Panduan Belajar</button>
     <button class="tab-btn" onclick="showTab('kamus',this)"><span class="sb-icon">📖</span>Kamus JP↔ID</button>
     <button class="tab-btn" onclick="showTab('nhk',this)"><span class="sb-icon">📚</span>Pelajaran NHK</button>
-    <button class="tab-btn" onclick="showTab('n4ujian',this)"><span class="sb-icon">📝</span>Ujian N4<span class="sb-badge">NEW</span></button>
+    <button class="tab-btn" onclick="showTab('n4ujian',this)"><span class="sb-icon">📝</span>Ujian N4</button>
+    <button class="tab-btn" onclick="showTab('n5ujian',this)"><span class="sb-icon">📝</span>Ujian N5<span class="sb-badge">NEW</span></button>
     <button class="tab-btn" onclick="showTab('statistik',this)"><span class="sb-icon">📊</span>Statistik Belajar</button>
     <button class="tab-btn" onclick="showTab('favorit',this)"><span class="sb-icon">⭐</span>Favorit Saya</button>
     <button class="tab-btn" id="sb-admin-btn" onclick="showTab('adminpanel',this)" style="display:none;"><span class="sb-icon">👥</span>Kelola User</button>
@@ -1626,6 +1627,104 @@ F：じゃあ、黄色いボタンを押してください。薄くするとき�
     <button class="kamus-clear" onclick="clearKamus()">✕</button>
   </div>
   <div id="kamus-result"></div>
+</section>
+
+<!-- ===== UJIAN N5 ===== -->
+<section id="n5ujian" class="section">
+  <div class="section-intro">
+    <div class="section-intro-icon">📝</div>
+    <div>
+      <div class="section-intro-title">Simulasi Ujian JLPT N5</div>
+      <div class="section-intro-sub">Latihan soal lengkap: Kosakata・Tata Bahasa・Membaca</div>
+    </div>
+  </div>
+
+  <div class="n4-tabs">
+    <button class="n4-tab-btn active" onclick="switchN5Tab('vocab',this)">語彙 Kosakata</button>
+    <button class="n4-tab-btn" onclick="switchN5Tab('grammar',this)">文法 Tata Bahasa</button>
+    <button class="n4-tab-btn" onclick="switchN5Tab('reading',this)">読解 Membaca</button>
+  </div>
+
+  <!-- KOSAKATA -->
+  <div id="n5-vocab" class="n4-section active">
+    <div class="n4-score-bar">
+      <div>
+        <div class="n4-score-val" id="n5v-score">0/35</div>
+        <div class="n4-score-label">げんごちしき (もじ・ごい) • 35問</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div class="n4-timer" id="n5v-timer">25:00</div>
+        <span id="n5v-pct" style="font:600 14px 'Inter',sans-serif;color:var(--muted);">0%</span>
+      </div>
+    </div>
+    <div class="n4-progress"><div class="n4-progress-bar" id="n5v-bar" style="width:0%"></div></div>
+    <div class="n4-toolbar">
+      <button class="n4-ctrl-btn" id="n5v-single-btn" onclick="toggleN5SingleMode('vocab')">📖 Satu per satu</button>
+      <button class="n4-ctrl-btn" id="n5v-review-btn" onclick="toggleN5ReviewMode('vocab')" style="display:none">👁 Review Salah</button>
+      <button class="n4-ctrl-btn" id="n5v-furi-btn" onclick="toggleN5Furigana('vocab')">あ Sembunyikan Furigana</button>
+      <button class="n4-reset-btn" onclick="resetN5('vocab')">🔄 Reset</button>
+    </div>
+    <div id="n5-vocab-qs"></div>
+    <div class="n4-nav" id="n5v-nav" style="display:none">
+      <button class="n4-nav-btn" id="n5v-prev" onclick="n5NavGo('vocab',-1)">← Sebelumnya</button>
+      <span class="n4-nav-counter" id="n5v-counter">1/35</span>
+      <button class="n4-nav-btn" id="n5v-next" onclick="n5NavGo('vocab',1)">Berikutnya →</button>
+    </div>
+  </div>
+
+  <!-- TATA BAHASA -->
+  <div id="n5-grammar" class="n4-section">
+    <div class="n4-score-bar">
+      <div>
+        <div class="n4-score-val" id="n5g-score">0/20</div>
+        <div class="n4-score-label">げんごちしき (ぶんぽう) • 20問</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div class="n4-timer" id="n5g-timer">50:00</div>
+        <span id="n5g-pct" style="font:600 14px 'Inter',sans-serif;color:var(--muted);">0%</span>
+      </div>
+    </div>
+    <div class="n4-progress"><div class="n4-progress-bar" id="n5g-bar" style="width:0%"></div></div>
+    <div class="n4-toolbar">
+      <button class="n4-ctrl-btn" id="n5g-single-btn" onclick="toggleN5SingleMode('grammar')">📖 Satu per satu</button>
+      <button class="n4-ctrl-btn" id="n5g-review-btn" onclick="toggleN5ReviewMode('grammar')" style="display:none">👁 Review Salah</button>
+      <button class="n4-ctrl-btn" id="n5g-furi-btn" onclick="toggleN5Furigana('grammar')">あ Sembunyikan Furigana</button>
+      <button class="n4-reset-btn" onclick="resetN5('grammar')">🔄 Reset</button>
+    </div>
+    <div id="n5-grammar-qs"></div>
+    <div class="n4-nav" id="n5g-nav" style="display:none">
+      <button class="n4-nav-btn" id="n5g-prev" onclick="n5NavGo('grammar',-1)">← Sebelumnya</button>
+      <span class="n4-nav-counter" id="n5g-counter">1/20</span>
+      <button class="n4-nav-btn" id="n5g-next" onclick="n5NavGo('grammar',1)">Berikutnya →</button>
+    </div>
+  </div>
+
+  <!-- MEMBACA -->
+  <div id="n5-reading" class="n4-section">
+    <div class="n4-score-bar">
+      <div>
+        <div class="n4-score-val" id="n5r-score">0/10</div>
+        <div class="n4-score-label">どっかい (読解) • 10問</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div class="n4-timer" id="n5r-timer">50:00</div>
+        <span id="n5r-pct" style="font:600 14px 'Inter',sans-serif;color:var(--muted);">0%</span>
+      </div>
+    </div>
+    <div class="n4-progress"><div class="n4-progress-bar" id="n5r-bar" style="width:0%"></div></div>
+    <div class="n4-toolbar">
+      <button class="n4-ctrl-btn" id="n5r-single-btn" onclick="toggleN5SingleMode('reading')">📖 Satu per satu</button>
+      <button class="n4-ctrl-btn" id="n5r-review-btn" onclick="toggleN5ReviewMode('reading')" style="display:none">👁 Review Salah</button>
+      <button class="n4-ctrl-btn" id="n5r-furi-btn" onclick="toggleN5Furigana('reading')">あ Sembunyikan Furigana</button>
+      <button class="n4-reset-btn" onclick="resetN5('reading')">🔄 Reset</button>
+    </div>
+    <div id="n5-reading-qs"></div>
+    <div class="n4-nav" id="n5r-nav" style="display:none">
+      <button class="n4-nav-btn" id="n5r-prev" onclick="n5NavGo('reading',-1)">← Sebelumnya</button>
+      <span class="n4-nav-counter" id="n5r-counter">1/10</span>
+      <button class="n4-nav-btn" id="n5r-next" onclick="n5NavGo('reading',1)">Berikutnya →</button>
+    </div>
+  </div>
 </section>
 
 <!-- ===== STATISTIK ===== -->
@@ -5961,6 +6060,352 @@ function renderN4Reading(){ n4RenderQuestions('reading'); n4UpdateTimerDisplay('
 // backward-compat shims
 function renderN4Questions(cid,data,key,sid,pid,bid,tot){ n4RenderQuestions(key); }
 function updateN4Score(tab){ if(typeof tab==='string'){ const cfg=n4Config[tab],s=n4State[tab];const answered=Object.keys(s.answers).length;const pct=cfg.total>0?Math.round((s.score/cfg.total)*100):0;const el=document.getElementById(cfg.scoreId);if(el)el.textContent=s.score+'/'+cfg.total;const pctEl=document.getElementById(cfg.pctId);if(pctEl)pctEl.textContent=pct+'%';const barEl=document.getElementById(cfg.barId);if(barEl)barEl.style.width=(answered/cfg.total*100)+'%'; }}
+
+// ══════════════════════════════════════════════
+// ── N5 UJIAN ──
+// ══════════════════════════════════════════════
+const n5VocabData = [
+  // もんだい１ 漢字→ひらがな
+  {mondai:1,num:1,text:'毎日学校へ行きます。',q:'「学校」の読み方は？',choices:['がっこう','がくこう','がっこ','がくしょ'],ans:0,explain:'「学校（がっこう）」は毎日通う場所。「学」は「がく・がっ」、「校」は「こう」と読みます。'},
+  {mondai:1,num:2,text:'あの山はとても高いです。',q:'「山」の読み方は？',choices:['かわ','やま','うみ','そら'],ans:1,explain:'「山（やま）」は訓読み。音読みは「さん」で「富士山（ふじさん）」などに使います。'},
+  {mondai:1,num:3,text:'今日は天気がいいです。',q:'「天気」の読み方は？',choices:['てんき','あまき','そらき','かぜ'],ans:0,explain:'「天気（てんき）」は空の様子・お天気のこと。「天」は「てん」、「気」は「き」と読みます。'},
+  {mondai:1,num:4,text:'父は会社で働いています。',q:'「会社」の読み方は？',choices:['かいしゃ','えしゃ','かいさ','あいしゃ'],ans:0,explain:'「会社（かいしゃ）」は仕事をする場所。「会」は「かい」、「社」は「しゃ」と読みます。'},
+  {mondai:1,num:5,text:'電車で学校に行きます。',q:'「電車」の読み方は？',choices:['でんしゃ','でんさ','でんじゃ','でんきしゃ'],ans:0,explain:'「電車（でんしゃ）」は電気で動く乗り物。「電」は「でん」、「車」は「しゃ」と読みます。'},
+  {mondai:1,num:6,text:'右の道をまがってください。',q:'「右」の読み方は？',choices:['みぎ','ひだり','まえ','うしろ'],ans:0,explain:'「右（みぎ）」は訓読み。音読みは「う・ゆう」で「右折（うせつ）」などに使います。'},
+  {mondai:1,num:7,text:'母は料理が上手です。',q:'「料理」の読み方は？',choices:['りょうり','りょり','ようり','らいり'],ans:0,explain:'「料理（りょうり）」は食べ物を作ること。「料」は「りょう」、「理」は「り」と読みます。'},
+  {mondai:1,num:8,text:'友達と映画を見ました。',q:'「友達」の読み方は？',choices:['ともだち','ゆうだち','ともたち','ゆうどち'],ans:0,explain:'「友達（ともだち）」は仲の良い人のこと。「友」は「とも」と読みます。'},
+  {mondai:1,num:9,text:'この本はおもしろいです。',q:'「本」の読み方は？',choices:['もと','ほん','はん','もと'],ans:1,explain:'「本（ほん）」は書物のこと。「もと」とも読み「本来（もとから）」の意味になります。'},
+  // もんだい２ ひらがな→漢字
+  {mondai:2,num:10,text:'まいにちにほんごをべんきょうします。',q:'「まいにち」の漢字は？',choices:['每日','毎日','日毎','日每'],ans:1,explain:'「毎日（まいにち）」は「毎」が「まい」（every）、「日」が「にち」（day）。正しい漢字は「毎日」です。'},
+  {mondai:2,num:11,text:'あのたてものはあたらしいです。',q:'「たてもの」の漢字は？',choices:['建物','立物','建者','建所'],ans:0,explain:'「建物（たてもの）」は「建てる（たてる）」＋「物（もの）」。建築されたものという意味です。'},
+  {mondai:2,num:12,text:'えきのまえにコンビニがあります。',q:'「えき」の漢字は？',choices:['駅','役','液','益'],ans:0,explain:'「駅（えき）」は電車が止まる場所。「役所（やくしょ）」の「役」とは別の字です。'},
+  {mondai:2,num:13,text:'としょかんでほんをかります。',q:'「としょかん」の漢字は？',choices:['図書館','図書間','図所館','図書感'],ans:0,explain:'「図書館（としょかん）」は本を借りる場所。「図書（としょ）」＋「館（かん）」です。'},
+  {mondai:2,num:14,text:'そとはさむいですね。',q:'「さむい」の漢字は？',choices:['冷い','寒い','涼い','冬い'],ans:1,explain:'「寒い（さむい）」は気温が低いこと。「冷たい（つめたい）」とは違い、空気や気候に使います。'},
+  {mondai:2,num:15,text:'びょういんにいきました。',q:'「びょういん」の漢字は？',choices:['病院','美容院','病引','病員'],ans:0,explain:'「病院（びょういん）」はお医者さんがいる所。「美容院（びよういん）」は髪を切る所で別の字です。'},
+  // もんだい３ 空欄補充
+  {mondai:3,num:16,text:'このかばんは（　　）ですか。',q:'（　　）に入る言葉は？（値段を聞く場合）',choices:['どれ','いくら','どこ','なに'],ans:1,explain:'「いくら」は値段を聞く疑問詞。「どれ」はどの物か、「どこ」は場所、「なに」は何かを聞きます。'},
+  {mondai:3,num:17,text:'すみません、トイレは（　　）ですか。',q:'（　　）に入る言葉は？',choices:['いくら','だれ','どこ','いつ'],ans:2,explain:'場所を聞く疑問詞は「どこ」。「トイレはどこですか」は場所を尋ねる表現です。'},
+  {mondai:3,num:18,text:'きのう（　　）を食べましたか。',q:'（　　）に入る言葉は？',choices:['どこ','なに','いつ','だれ'],ans:1,explain:'「なに（何）」は物・事を聞く疑問詞。「何を食べましたか」は食べ物を尋ねる表現です。'},
+  {mondai:3,num:19,text:'わたしは（　　）にほんごをべんきょうします。',q:'（　　）に入る言葉は？（毎朝という意味）',choices:['まいあさ','まいばん','まいにち','まいしゅう'],ans:0,explain:'「毎朝（まいあさ）」は毎日の朝のこと。「毎晩（まいばん）」は毎晩、「毎日」は毎日、「毎週」は毎週です。'},
+  {mondai:3,num:20,text:'このえいがは（　　）おもしろかったです。',q:'（　　）に入る言葉は？',choices:['あまり','とても','すこし','だいたい'],ans:1,explain:'「とても（とても）」は「very」の意味。「あまり」は否定と一緒に使い、「あまりおもしろくない」のように使います。'},
+  {mondai:3,num:21,text:'コーヒーより（　　）がすきです。',q:'（　　）に入る言葉は？（お茶が好きという意味）',choices:['コーヒー','みず','おちゃ','ジュース'],ans:2,explain:'「コーヒーより（〜の方が）好き」という比較表現。「おちゃ（お茶）」が正解です。'},
+  {mondai:3,num:22,text:'あした（　　）がふるかもしれません。',q:'（　　）に入る言葉は？',choices:['かぜ','あめ','くも','そら'],ans:1,explain:'「雨が降る（あめがふる）」は雨が降ること。「風（かぜ）」は吹く、「雲（くも）」はかかる、です。'},
+  {mondai:3,num:23,text:'このケーキは（　　）あまいです。',q:'（　　）に入る言葉は？',choices:['すこし','とても','あまり','まだ'],ans:1,explain:'「とても甘い」は「非常に甘い」こと。「少し（すこし）」は少量、「あまり」は否定文に使います。'},
+  {mondai:3,num:24,text:'きょうは（　　）いそがしくないです。',q:'（　　）に入る言葉は？（あまり忙しくない）',choices:['とても','もっと','あまり','すこし'],ans:2,explain:'「あまり〜ない」は「それほど〜でない」という意味。否定文とセットで使う副詞です。'},
+  // もんだい４ 同じ意味
+  {mondai:4,num:25,text:'このりんごはとてもおいしいです。',q:'「おいしい」と同じ意味の言葉は？',choices:['まずい','からい','うまい','にがい'],ans:2,explain:'「おいしい」と「うまい」は同じ意味（delicious）。「まずい」は不味い、「からい」は辛い、「にがい」は苦いです。'},
+  {mondai:4,num:26,text:'かれはとてもやさしいひとです。',q:'「やさしい」と同じ意味の言葉は？',choices:['きびしい','しんせつ','おこりっぽい','むずかしい'],ans:1,explain:'「やさしい（優しい）」と「しんせつ（親切）」は似た意味。どちらも人への思いやりを表します。'},
+  {mondai:4,num:27,text:'このへやはとてもひろいです。',q:'「ひろい」の反対語は？',choices:['せまい','おおきい','たかい','ながい'],ans:0,explain:'「広い（ひろい）」の反対は「狭い（せまい）」。スペースが少ない状態を表します。'},
+  {mondai:4,num:28,text:'はやくおきてください。',q:'「はやく」の反対語は？',choices:['ゆっくり','すこし','もっと','まだ'],ans:0,explain:'「早く（はやく）」の反対は「ゆっくり」。急がずにという意味です。'},
+  // もんだい５ 正しい使い方
+  {mondai:5,num:29,text:'「すき」を正しく使っている文は？',q:'「すき」の正しい使い方は？',choices:['このりんごはすきです','あのひとはすきなひとです','にほんごがすきです','このケーキはとてもすきです'],ans:2,explain:'「好き（すき）」は「〜が好きです」の形で使います。「日本語が好きです」が正しい形です。'},
+  {mondai:5,num:30,text:'「あたたかい」を正しく使っている文は？',q:'「あたたかい」の正しい使い方は？',choices:['このスープはあたたかいです','あのひとはあたたかいひとです','あたたかいことばをもらいました','全部正しい'],ans:3,explain:'「温かい（あたたかい）」はスープ（物理的な温度）にも、人柄や言葉（比喩的な温もり）にも使えます。全部正しい表現です。'},
+  {mondai:5,num:31,text:'「かう」を正しく使っている文は？',q:'「かう」の正しい使い方は？',choices:['くるまをかいました','いぬをかっています','スーパーでやさいをかいました','全部正しい'],ans:3,explain:'「買う（かう）」は①物を購入する、「飼う（かう）」は②動物を育てる、の両方の意味があります。文脈で漢字が変わります。全部正しい。'},
+  {mondai:5,num:32,text:'「もう」を正しく使っている文は？',q:'「もう」の正しい使い方は？',choices:['もうあかちゃんです','もうしゅくだいをしました','もうたべたいです','もうすきです'],ans:1,explain:'「もう」は「already（すでに）」の意味。「もう宿題をしました（already did homework）」が正しい使い方です。'},
+  {mondai:5,num:33,text:'「〜ましょう」を正しく使っている文は？',q:'「〜ましょう」の正しい使い方は？',choices:['たべましょうか、ひとりで','いっしょにたべましょう','たべましょうが、むずかしい','たべましょう、なぜなら'],ans:1,explain:'「〜ましょう（Let\'s〜）」は誘う表現。「一緒に食べましょう（Let\'s eat together）」が正しい使い方です。'},
+  {mondai:5,num:34,text:'「〜たい」を正しく使っている文は？',q:'「〜たい」の正しい使い方は？',choices:['かれはたべたいです（他人の気持ち）','わたしはたべたいです（自分）','あなたはたべたいですか（聞く時）','②と③だけ正しい'],ans:3,explain:'「〜たい」は自分の希望を表す（②）か、相手に聞く時（③）に使います。他人の気持ちには通常「〜たがっています」を使います。'},
+  {mondai:5,num:35,text:'「〜てください」を正しく使っている文は？',q:'「〜てください」の正しい使い方は？',choices:['はやくきてください','まどをあけてください','しずかにしてください','全部正しい'],ans:3,explain:'「〜てください（Please〜）」は丁寧なお願いの表現。①急いで来て、②窓を開けて、③静かにして、どれも正しい使い方です。'},
+];
+
+const n5GrammarData = [
+  {mondai:1,num:1,text:'これ（　）わたしのかばんです。',q:'（　）に入る言葉は？',choices:['が','は','を','に'],ans:1,explain:'「これは〜です」は主題を示す「は」。主語を「は」で提示し、「〜です」で説明します。'},
+  {mondai:1,num:2,text:'きのう友達（　）えいがを見ました。',q:'（　）に入る言葉は？',choices:['に','が','と','で'],ans:2,explain:'「〜と（一緒に）」は誰かと一緒に何かをする時に使います。「友達と映画を見た」が正しい表現です。'},
+  {mondai:1,num:3,text:'わたしは毎朝7時（　）おきます。',q:'（　）に入る言葉は？',choices:['で','に','を','が'],ans:1,explain:'時間の「に」は特定の時刻に使います。「7時に起きる」は「at 7 o\'clock wake up」の意味です。'},
+  {mondai:1,num:4,text:'バス（　）学校に行きます。',q:'（　）に入る言葉は？',choices:['を','に','で','が'],ans:2,explain:'手段・方法の「で」は乗り物や道具に使います。「バスで行く（go by bus）」が正しい表現です。'},
+  {mondai:1,num:5,text:'つくえの上（　）本があります。',q:'（　）に入る言葉は？',choices:['が','は','に','を'],ans:2,explain:'存在の場所を示す「に」。「〜にあります（there is〜）」で場所を表します。「机の上に本がある」が正しい形です。'},
+  {mondai:1,num:6,text:'このりんごは（　）おいしいですね。',q:'（　）に入る言葉は？',choices:['あまり','とても','すこし','まだ'],ans:1,explain:'「とても（very）」は程度が高いことを示す副詞。「とても美味しい（very delicious）」が自然な表現です。'},
+  {mondai:1,num:7,text:'わたしはコーヒーが（　）すきじゃないです。',q:'（　）に入る言葉は？（それほど好きじゃない）',choices:['とても','すこし','あまり','もっと'],ans:2,explain:'「あまり〜ない」は「not very〜」の意味。「あまり好きじゃない（not very fond of）」が正しい使い方です。'},
+  {mondai:1,num:8,text:'むずかしい（　）、もういちどやってみます。',q:'（　）に入る言葉は？',choices:['けど','から','なので','ので'],ans:0,explain:'「〜けど（but）」は逆接を表します。「難しいけど、もう一度やってみる（It\'s hard but I\'ll try again）」が正しい表現です。'},
+  {mondai:1,num:9,text:'あしたは早く（　）ください。',q:'（　）に入る言葉は？',choices:['おきて','おきます','おきる','おきた'],ans:0,explain:'「〜てください（Please〜）」の形。「起きる」のて形は「起きて」。「早く起きてください」が正しい命令の表現です。'},
+  {mondai:1,num:10,text:'この映画は（　）見たことがありません。',q:'（　）に入る言葉は？',choices:['まだ','もう','また','いつも'],ans:0,explain:'「まだ〜ていません（have not yet〜）」は経験がないことを表します。「まだ見たことがない（never seen yet）」が正しい表現です。'},
+  {mondai:1,num:11,text:'じかんが（　）ので、急ぎましょう。',q:'（　）に入る言葉は？',choices:['ない','いない','ありません','ないです'],ans:0,explain:'「〜ので」の前は普通体。「時間がない（ので）」と普通体を使います。「ないので急ぎましょう」が正しい形です。'},
+  {mondai:1,num:12,text:'この問題は（　）むずかしくないです。',q:'（　）に入る言葉は？',choices:['あまり','とても','すごく','ずっと'],ans:0,explain:'「あまり〜ない」は「not so much〜」の意味。否定文と一緒に使う副詞です。「あまり難しくない」が正しい表現です。'},
+  {mondai:1,num:13,text:'えき（　）バスていまで歩きました。',q:'（　）に入る言葉は？',choices:['から','まで','に','で'],ans:0,explain:'「〜から（from）」は出発点を示します。「駅から（from the station）バス停まで」と「から〜まで」の組み合わせが自然です。'},
+  {mondai:1,num:14,text:'ははは料理（　）じょうずです。',q:'（　）に入る言葉は？',choices:['に','が','は','を'],ans:1,explain:'「〜が上手（じょうず）です」は能力を表す表現。「料理が上手（good at cooking）」が正しい形です。'},
+  {mondai:1,num:15,text:'この本を読ん（　）ください。',q:'（　）に入る言葉は？',choices:['て','で','に','を'],ans:0,explain:'「〜てください（Please〜）」の形。「読む」のて形は「読んで」。「読んでください」が正しい依頼の表現です。'},
+  // もんだい２ 並べ替え
+  {mondai:2,num:16,text:'私は毎日日本語を勉強する。',q:'正しい語順は？「まいにち ＿ ＿ ★ ＿」',choices:['にほんごをまいにちべんきょうします','わたしはまいにち★にほんごをべんきょうします','まいにちわたしは★べんきょうします','わたし★はにほんごを'],ans:1,explain:'日本語の基本語順：主語（わたしは）→時間（まいにち）→目的語（にほんごを）→動詞（べんきょうします）。★は「にほんごを」の前です。'},
+  {mondai:2,num:17,text:'昨日は何も食べませんでした。',q:'★はどれ？「きのう ＿ ★ たべませんでした」',choices:['なにも★たべ','★なにも','きのうは★なにも','なに★もたべ'],ans:1,explain:'「なにも〜ない（nothing〜）」の表現。★は「なにも」の前、つまり「きのうは」の直後に来ます。'},
+  {mondai:2,num:18,text:'どのくらい日本語を勉強しましたか。',q:'★はどれ？「にほんごを ＿ ＿ ★ べんきょうしましたか」',choices:['どのくらい★べんきょう','にほんごを★どのくらい','★どのくらいにほんごを','べんきょうを★どのくらい'],ans:1,explain:'疑問詞「どのくらい（how much/how long）」は動詞の前に来ます。「にほんごをどのくらい★べんきょうしましたか」の語順です。'},
+  {mondai:2,num:19,text:'友達と一緒に映画を見ました。',q:'★はどれ？「ともだちと ＿ ★ えいがをみました」',choices:['いっしょに★えいがを','★いっしょに','ともだちと★えいがを','えいがを★みました'],ans:1,explain:'「一緒に（いっしょに）」は誰かと一緒に行動する時の副詞。「友達と★一緒に映画を見た」の語順です。'},
+  {mondai:2,num:20,text:'もっと速く走れますか。',q:'★はどれ？「もっと ＿ ★ はしれますか」',choices:['はやく★はしれ','もっと★はやく','★もっとはやく','はやく★もっと'],ans:1,explain:'「もっと速く（faster）」は比較の表現。「もっと★はやく走れますか（Can you run faster？）」の語順です。'},
+];
+
+const n5ReadingData = [
+  {mondai:4,num:21,
+   text:'たなかさんへ\n\nあしたのパーティーは6時からです。わたしのいえにきてください。じゅうしょは「さくらちょう3-2」です。でんわばんごうは090-1234-5678です。よろしくおねがいします。\n\nすずきより',
+   q:'このてがみについて、ただしいものはどれですか。',
+   choices:[
+    'パーティーは5じからです。',
+    'パーティーはたなかさんのいえであります。',
+    'パーティーはあしたあります。',
+    'すずきさんがたなかさんにでんわします。',
+   ],ans:2,explain:'手紙の内容：①パーティーは6時（5時ではない）、②場所は鈴木さんの家（田中さんの家ではない）、③明日のパーティー（正解）、④電話番号は書いてあるが電話するとは書いていない。'},
+  {mondai:4,num:22,
+   text:'【スーパーのちらし】\nやさい：トマト 100円、キャベツ 150円\nくだもの：りんご 3こ 200円、バナナ 1ふさ 120円\n※火曜日はポイント2倍！',
+   q:'このちらしについて、ただしいものはどれですか。',
+   choices:[
+    'トマトは200えんです。',
+    'りんごは1こ200えんです。',
+    'かようびはポイントがふえます。',
+    'キャベツはやすいです。',
+   ],ans:2,explain:'①トマトは100円（200円ではない）、②りんごは3個で200円（1個ではない）、③火曜日はポイント2倍（正解）、④キャベツが安いかは比較対象がないので不明。'},
+  {mondai:4,num:23,
+   text:'わたしはまいあさ7じにおきます。シャワーをあびてから、あさごはんをたべます。8じに家をでて、バスで学校にいきます。',
+   q:'この人はまず何をしますか。',
+   choices:[
+    'あさごはんをたべます。',
+    'バスにのります。',
+    'シャワーをあびます。',
+    '学校にいきます。',
+   ],ans:2,explain:'順番：①7時に起きる→②シャワーを浴びる→③朝ごはんを食べる→④バスで学校へ。「まず（first）」は最初の行動なのでシャワーが正解です。'},
+  {mondai:4,num:24,
+   text:'きょうはとてもいいてんきです。そとはあたたかくて、そらはあおいです。こんなひにはそとであそびたいです。でも、しゅくだいがたくさんあります。',
+   q:'この人はいまどんなきもちですか。',
+   choices:[
+    'そとであそびたいですが、しゅくだいがあります。',
+    'しゅくだいがたのしいです。',
+    'てんきがわるくてかなしいです。',
+    'そとであそびます。',
+   ],ans:0,explain:'「外で遊びたい（でも）宿題がたくさんある」という逆接の気持ちを表しています。①「遊びたいが宿題がある」が正確な気持ちです。'},
+  {mondai:5,num:25,
+   text:'わたしはかいものがすきです。まいしゅうどようびにかいものをします。いつもスーパーかデパートにいきます。やさいやくだものをかいます。ときどきふくもかいます。',
+   q:'この人はいつかいものをしますか。',
+   choices:[
+    'まいにち',
+    'まいしゅうどようび',
+    'まいしゅうにちようび',
+    'ときどき',
+   ],ans:1,explain:'「毎週土曜日（まいしゅうどようび）に買い物をします」と書かれています。②が正解です。'},
+  {mondai:5,num:26,
+   text:'わたしはかいものがすきです。まいしゅうどようびにかいものをします。いつもスーパーかデパートにいきます。やさいやくだものをかいます。ときどきふくもかいます。',
+   q:'この人はなにをかいますか。（ふたつえらんでください）',
+   choices:[
+    'やさいとくだもの',
+    'やさいとふく',
+    'ほんとふく',
+    'くだものとでんきせいひん',
+   ],ans:0,explain:'「野菜や果物を買います。ときどき服も買います」とあります。「野菜と果物（やさいとくだもの）」が定期的に買うもので①が正解です。'},
+  {mondai:6,num:27,
+   text:'【図書館のご案内】\n開館時間：9:00〜20:00\n休館日：月曜日\n本は2週間かりることができます。\nかえすときはカウンターへ。',
+   q:'月曜日に図書館に行くとどうなりますか。',
+   choices:[
+    '本をかりることができます。',
+    'としょかんはしまっています。',
+    '9じからあいています。',
+    '本を2しゅうかんかりられます。',
+   ],ans:1,explain:'「休館日：月曜日」と書いてあります。月曜日は図書館が閉まっています（②正解）。'},
+  {mondai:6,num:28,
+   text:'【図書館のご案内】\n開館時間：9:00〜20:00\n休館日：月曜日\n本は2週間かりることができます。\nかえすときはカウンターへ。',
+   q:'本をかえすとき、どこへいきますか。',
+   choices:[
+    'いりぐち','まどぐち','カウンター','じむしつ',
+   ],ans:2,explain:'「返すときはカウンターへ」と明示されています。③カウンターが正解です。'},
+  {mondai:6,num:29,
+   text:'【バス時刻表】\nえき→こうえん\n8:00 / 8:30 / 9:00 / 9:30\n料金：おとな200円、こども100円',
+   q:'こどもはバスでいくらはらいますか。',
+   choices:['200えん','150えん','100えん','むりょう'],
+   ans:2,explain:'「子供：100円」と書いてあります。③100円が正解です。'},
+  {mondai:6,num:30,
+   text:'【バス時刻表】\nえき→こうえん\n8:00 / 8:30 / 9:00 / 9:30\n料金：おとな200円、こども100円',
+   q:'8:15にえきについたひとは、つぎのバスはなんじですか。',
+   choices:['8:00','8:30','9:00','9:30'],
+   ans:1,explain:'8:15に駅に着いた人は8:00のバスには乗れません。次は8:30のバスです。②8:30が正解です。'},
+];
+
+// N5 config & state (N4エンジンを流用)
+const n5Config = {
+  vocab:   { data:null, total:35, timeSec:25*60, scoreId:'n5v-score', pctId:'n5v-pct', barId:'n5v-bar', containerId:'n5-vocab-qs',   timerId:'n5v-timer', navId:'n5v-nav', prevId:'n5v-prev', nextId:'n5v-next', counterId:'n5v-counter', singleBtnId:'n5v-single-btn', reviewBtnId:'n5v-review-btn', furiId:'n5v-furi-btn', section:'n5-vocab' },
+  grammar: { data:null, total:20, timeSec:50*60, scoreId:'n5g-score', pctId:'n5g-pct', barId:'n5g-bar', containerId:'n5-grammar-qs', timerId:'n5g-timer', navId:'n5g-nav', prevId:'n5g-prev', nextId:'n5g-next', counterId:'n5g-counter', singleBtnId:'n5g-single-btn', reviewBtnId:'n5g-review-btn', furiId:'n5g-furi-btn', section:'n5-grammar' },
+  reading: { data:null, total:10, timeSec:50*60, scoreId:'n5r-score', pctId:'n5r-pct', barId:'n5r-bar', containerId:'n5-reading-qs', timerId:'n5r-timer', navId:'n5r-nav', prevId:'n5r-prev', nextId:'n5r-next', counterId:'n5r-counter', singleBtnId:'n5r-single-btn', reviewBtnId:'n5r-review-btn', furiId:'n5r-furi-btn', section:'n5-reading' },
+};
+n5Config.vocab.data   = n5VocabData;
+n5Config.grammar.data = n5GrammarData;
+n5Config.reading.data = n5ReadingData;
+
+let n5State = {
+  vocab:   { answers:{}, score:0, timeLeft:25*60, timerRunning:false, singleMode:false, singleIdx:0, reviewMode:false, furiganaHidden:false },
+  grammar: { answers:{}, score:0, timeLeft:50*60, timerRunning:false, singleMode:false, singleIdx:0, reviewMode:false, furiganaHidden:false },
+  reading: { answers:{}, score:0, timeLeft:50*60, timerRunning:false, singleMode:false, singleIdx:0, reviewMode:false, furiganaHidden:false },
+};
+const n5Timers = { vocab:null, grammar:null, reading:null };
+
+function n5SaveProgress(){
+  try {
+    const save={};
+    ['vocab','grammar','reading'].forEach(k=>{const s=n5State[k];save[k]={answers:s.answers,score:s.score,timeLeft:s.timeLeft};});
+    localStorage.setItem('n5_progress',JSON.stringify(save));
+  }catch(e){}
+}
+function n5LoadProgress(){
+  try {
+    const raw=localStorage.getItem('n5_progress');if(!raw)return;
+    const save=JSON.parse(raw);
+    ['vocab','grammar','reading'].forEach(k=>{if(save[k]){n5State[k].answers=save[k].answers||{};n5State[k].score=save[k].score||0;n5State[k].timeLeft=save[k].timeLeft!==undefined?save[k].timeLeft:n5Config[k].timeSec;}});
+  }catch(e){}
+}
+
+function n5FmtTime(sec){const m=Math.floor(sec/60),s=sec%60;return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
+function n5UpdateTimerDisplay(tab){
+  const cfg=n5Config[tab],s=n5State[tab];
+  const el=document.getElementById(cfg.timerId);if(!el)return;
+  el.textContent=n5FmtTime(s.timeLeft);
+  el.className='n4-timer';
+  if(s.timeLeft<=60)el.classList.add('danger');
+  else if(s.timeLeft<=5*60)el.classList.add('warn');
+}
+function n5StartTimer(tab){
+  const s=n5State[tab];if(s.timerRunning)return;s.timerRunning=true;
+  n5Timers[tab]=setInterval(()=>{
+    if(s.timeLeft<=0){n5StopTimer(tab);n5TimeUp(tab);return;}
+    s.timeLeft--;n5UpdateTimerDisplay(tab);n5SaveProgress();
+  },1000);
+}
+function n5StopTimer(tab){clearInterval(n5Timers[tab]);n5Timers[tab]=null;n5State[tab].timerRunning=false;}
+function n5TimeUp(tab){
+  const cfg=n5Config[tab],s=n5State[tab];
+  cfg.data.forEach((q,i)=>{if(s.answers[i]===undefined)s.answers[i]=-1;});
+  n5RenderQuestions(tab);n5ShowSummary(tab);
+}
+
+function n5RenderQuestions(tab){
+  const cfg=n5Config[tab],s=n5State[tab];
+  const container=document.getElementById(cfg.containerId);if(!container)return;
+  const data=cfg.data;
+  const sectionEl=document.getElementById(cfg.section);
+  let indices=data.map((_,i)=>i);
+  if(s.reviewMode){
+    indices=indices.filter(i=>s.answers[i]!==undefined&&s.answers[i]!==data[i].ans);
+    if(indices.length===0){container.innerHTML='<div style="padding:24px;text-align:center;color:var(--muted);">🎉 Tidak ada jawaban yang salah!</div>';return;}
+  }
+  if(s.singleMode){
+    if(s.singleIdx>=indices.length)s.singleIdx=0;
+    const i=indices[s.singleIdx];
+    container.innerHTML=n5BuildQHtml(tab,data[i],i,cfg.total);
+    if(s.furiganaHidden)sectionEl?.classList.add('n4-furigana-off');
+    else sectionEl?.classList.remove('n4-furigana-off');
+    const nav=document.getElementById(cfg.navId);if(nav)nav.style.display='flex';
+    const prevBtn=document.getElementById(cfg.prevId);if(prevBtn)prevBtn.disabled=s.singleIdx<=0;
+    const nextBtn=document.getElementById(cfg.nextId);if(nextBtn)nextBtn.disabled=s.singleIdx>=indices.length-1;
+    const counter=document.getElementById(cfg.counterId);if(counter)counter.textContent=(s.singleIdx+1)+'/'+indices.length;
+  } else {
+    const nav=document.getElementById(cfg.navId);if(nav)nav.style.display='none';
+    let html='',lastMondai=0;
+    indices.forEach(i=>{
+      const q=data[i];
+      if(q.mondai!==lastMondai){lastMondai=q.mondai;html+=`<div class="n4-mondai-title">${n4MondaiNames[q.mondai]} — ${n4MondaiDesc[q.mondai]||''}</div>`;}
+      html+=n5BuildQHtml(tab,q,i,cfg.total);
+    });
+    container.innerHTML=html;
+    if(s.furiganaHidden)sectionEl?.classList.add('n4-furigana-off');
+    else sectionEl?.classList.remove('n4-furigana-off');
+  }
+  n5UpdateScore(tab);
+  const answeredCount=Object.keys(s.answers).length;
+  const reviewBtn=document.getElementById(cfg.reviewBtnId);
+  if(reviewBtn)reviewBtn.style.display=answeredCount>0?'inline-block':'none';
+  if(answeredCount>=cfg.total&&!s.summaryShown){s.summaryShown=true;setTimeout(()=>n5ShowSummary(tab),500);}
+}
+
+function n5BuildQHtml(tab,q,i,total){
+  const s=n5State[tab];
+  const answered=s.answers[i]!==undefined,userAns=s.answers[i];
+  let html=`<div class="n4-q" id="${tab}-n5-q-${i}">
+    <div class="n4-q-num">N5 Q${q.num}</div>
+    <div class="n4-q-text">${q.text.replace(/\n/g,'<br>')}</div>
+    ${q.q?`<div style="font-size:13px;color:var(--muted);margin-bottom:10px;">${q.q}</div>`:''}
+    <div class="n4-choices">`;
+  q.choices.forEach((c,ci)=>{
+    let cls='n4-choice';
+    if(answered){if(ci===q.ans)cls+=' correct';else if(ci===userAns)cls+=' wrong';}
+    html+=`<button class="${cls}" ${answered?'disabled':''} onclick="answerN5('${tab}',${i},${ci},${q.ans},${total})">${ci+1}. ${c}</button>`;
+  });
+  html+=`</div>`;
+  if(answered){
+    const correct=userAns===q.ans;
+    html+=`<div class="n4-feedback ${correct?'correct':'wrong'}">${correct?'✅ Benar!':'❌ Salah. Jawaban: '+q.choices[q.ans]}</div>`;
+    if(q.explain)html+=`<div class="n4-explain">💡 ${q.explain}</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+
+function answerN5(tab,qIdx,chosen,correct,total){
+  const s=n5State[tab];if(s.answers[qIdx]!==undefined)return;
+  s.answers[qIdx]=chosen;if(chosen===correct)s.score++;
+  if(!s.timerRunning)n5StartTimer(tab);
+  n5SaveProgress();n5RenderQuestions(tab);
+}
+function n5UpdateScore(tab){
+  const cfg=n5Config[tab],s=n5State[tab];
+  const answered=Object.keys(s.answers).length,pct=cfg.total>0?Math.round((s.score/cfg.total)*100):0;
+  const el=document.getElementById(cfg.scoreId);if(el)el.textContent=s.score+'/'+cfg.total;
+  const pctEl=document.getElementById(cfg.pctId);if(pctEl)pctEl.textContent=pct+'%';
+  const barEl=document.getElementById(cfg.barId);if(barEl)barEl.style.width=(answered/cfg.total*100)+'%';
+}
+function resetN5(tab){
+  n5StopTimer(tab);
+  n5State[tab]={answers:{},score:0,timeLeft:n5Config[tab].timeSec,timerRunning:false,singleMode:false,singleIdx:0,reviewMode:false,furiganaHidden:false,summaryShown:false};
+  n5SaveProgress();n5UpdateTimerDisplay(tab);
+  const rb=document.getElementById(n5Config[tab].reviewBtnId);if(rb){rb.style.display='none';rb.classList.remove('active');}
+  const sb=document.getElementById(n5Config[tab].singleBtnId);if(sb)sb.classList.remove('active');
+  const fb=document.getElementById(n5Config[tab].furiId);if(fb)fb.textContent='あ Sembunyikan Furigana';
+  n5RenderQuestions(tab);
+}
+function toggleN5SingleMode(tab){
+  const s=n5State[tab];s.singleMode=!s.singleMode;s.singleIdx=0;
+  const btn=document.getElementById(n5Config[tab].singleBtnId);
+  if(btn){btn.classList.toggle('active',s.singleMode);btn.textContent=s.singleMode?'📋 Semua Soal':'📖 Satu per satu';}
+  n5RenderQuestions(tab);
+}
+function n5NavGo(tab,dir){
+  const s=n5State[tab],cfg=n5Config[tab];
+  let indices=cfg.data.map((_,i)=>i);
+  if(s.reviewMode)indices=indices.filter(i=>s.answers[i]!==undefined&&s.answers[i]!==cfg.data[i].ans);
+  s.singleIdx=Math.max(0,Math.min(indices.length-1,s.singleIdx+dir));
+  n5RenderQuestions(tab);
+}
+function toggleN5ReviewMode(tab){
+  const s=n5State[tab];s.reviewMode=!s.reviewMode;s.singleIdx=0;
+  const btn=document.getElementById(n5Config[tab].reviewBtnId);
+  if(btn){btn.classList.toggle('active',s.reviewMode);btn.textContent=s.reviewMode?'👁 Mode Review ON':'👁 Review Salah';}
+  n5RenderQuestions(tab);
+}
+function toggleN5Furigana(tab){
+  const s=n5State[tab];s.furiganaHidden=!s.furiganaHidden;
+  const btn=document.getElementById(n5Config[tab].furiId);
+  if(btn)btn.textContent=s.furiganaHidden?'あ Tampilkan Furigana':'あ Sembunyikan Furigana';
+  n5RenderQuestions(tab);
+}
+function n5ShowSummary(tab){
+  const vS=n5State.vocab,gS=n5State.grammar,rS=n5State.reading;
+  n5StopTimer(tab);
+  const totalScore=vS.score+gS.score+rS.score,totalQ=35+20+10;
+  const pct=Math.round((totalScore/totalQ)*100),pass=pct>=55;
+  const html=`<div class="n4-summary-overlay" id="n5-summary-modal" onclick="if(event.target===this)closeN5Summary()">
+    <div class="n4-summary-box">
+      <div class="n4-summary-title">📊 Hasil Ujian N5</div>
+      <div class="n4-summary-row"><span>語彙 Kosakata (35問)</span><span><b>${vS.score}/35</b> (${Math.round(vS.score/35*100)}%)</span></div>
+      <div class="n4-summary-row"><span>文法 Tata Bahasa (20問)</span><span><b>${gS.score}/20</b> (${Math.round(gS.score/20*100)}%)</span></div>
+      <div class="n4-summary-row"><span>読解 Membaca (10問)</span><span><b>${rS.score}/10</b> (${Math.round(rS.score/10*100)}%)</span></div>
+      <div class="n4-summary-total ${pass?'pass':'fail'}">
+        Total: ${totalScore}/${totalQ} (${pct}%)<br>
+        ${pass?'🎉 LULUS! Skor ≥55% — Selamat!':'😔 Belum lulus. Skor <55% — Terus semangat!'}
+      </div>
+      <button class="n4-summary-close" onclick="closeN5Summary()">Tutup</button>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+function closeN5Summary(){const el=document.getElementById('n5-summary-modal');if(el)el.remove();}
+function switchN5Tab(tab,btn){
+  document.querySelectorAll('#n5ujian .n4-tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#n5ujian .n4-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('n5-'+tab)?.classList.add('active');
+  if(!document.querySelector('#'+n5Config[tab].containerId+' .n4-q'))n5RenderQuestions(tab);
+  n5UpdateTimerDisplay(tab);
+}
 
 // ── INIT ──
 // Restore theme
