@@ -5126,6 +5126,8 @@ showTab=function(id,btn){
   if(id==='kamus'){ renderKamusResult(''); setTimeout(()=>document.getElementById('kamus-input')?.focus(),200); }
   if(id==='nhk'){ renderNHK(''); setTimeout(()=>document.getElementById('nhk-search')?.focus(),200); }
   if(id==='n4ujian'){ if(!document.querySelector('#n4-vocab-qs .n4-q')) renderN4Vocab(); }
+  if(id==='kuisharian'){ const c=document.getElementById('kuisharian-container'); if(c&&!c.querySelector('.kh-wrap')) renderKuisHarian(); }
+  if(id==='strokeorder'){ const c=document.getElementById('strokeorder-container'); if(c&&!c.querySelector('.so-grid')) renderStrokeOrder(); }
 };
 
 // ── NHK PELAJARAN ──
@@ -6499,8 +6501,6 @@ renderPolaKalimat();
 renderQuizLanjutanHome();
 renderNHK('');
 renderN4Vocab();
-renderKuisHarian();
-renderStrokeOrder();
 allVocabRendered=true;
 
 // ══════════════════════════════════════════
