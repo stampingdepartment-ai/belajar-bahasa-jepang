@@ -103,7 +103,7 @@ body::before {
   display:none; background:none; border:none; cursor:pointer;
   color:var(--fg); font-size:24px; padding:6px 10px; line-height:1;
 }
-.sb-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:8; }
+.sb-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:11; }
 .sb-close-btn {
   display:none; width:100%; background:none; border:none; border-bottom:1px solid var(--border);
   padding:14px 18px; font-size:14px; font-weight:600; color:var(--muted);
@@ -117,9 +117,10 @@ body::before {
 
 @media(max-width:768px){
   .sidebar {
-    position:fixed; top:0; left:0; height:100vh; z-index:9;
+    position:fixed; top:0; left:0; height:100vh; z-index:12;
     width:240px;
-    transform:translateX(-100%); padding-top:10px;
+    transform:translateX(-100%); padding-top:0;
+    overflow-y:auto;
   }
   .sidebar.open { transform:translateX(0); }
   .sb-overlay.open { display:block; }
