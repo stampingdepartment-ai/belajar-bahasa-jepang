@@ -105,9 +105,10 @@ body::before {
 }
 .sb-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:11; }
 .sb-close-btn {
-  display:none; width:100%; background:none; border:none; border-bottom:1px solid var(--border);
-  padding:14px 18px; font-size:14px; font-weight:600; color:var(--muted);
-  cursor:pointer; text-align:right; letter-spacing:.03em;
+  display:none; position:absolute; top:8px; right:10px; z-index:1;
+  background:var(--border); border:none; border-radius:8px;
+  padding:6px 12px; font-size:13px; font-weight:700; color:var(--muted);
+  cursor:pointer; line-height:1;
 }
 
 /* MAIN CONTENT */
@@ -119,7 +120,8 @@ body::before {
   .sidebar {
     position:fixed; top:0; left:0; height:100vh; z-index:12;
     width:240px;
-    transform:translateX(-100%); padding-top:0;
+    transform:translateX(-100%);
+    padding-top:env(safe-area-inset-top,0px);
     overflow-y:auto;
   }
   .sidebar.open { transform:translateX(0); }
@@ -1049,7 +1051,9 @@ body::before {
   <div class="sb-group">
     <div class="sb-group-label">Latihan</div>
     <button class="tab-btn" onclick="showTab('quiz',this)"><span class="sb-icon">✏️</span>Quiz Pemula</button>
-    <button class="tab-btn" onclick="showTab('quizlanjutan',this)"><span class="sb-icon">🎯</span>Quiz Lanjutan<span class="sb-badge">NEW</span></button>
+    <button class="tab-btn" onclick="showTab('quizlanjutan',this)"><span class="sb-icon">🎯</span>Quiz Lanjutan</button>
+    <button class="tab-btn" onclick="showTab('kuisharian',this)"><span class="sb-icon">⚡</span>Kuis Harian<span class="sb-badge">NEW</span></button>
+    <button class="tab-btn" onclick="showTab('strokeorder',this)"><span class="sb-icon">✍️</span>Stroke Order<span class="sb-badge">NEW</span></button>
   </div>
   <div class="sb-group">
     <div class="sb-group-label">Lainnya</div>
@@ -1774,6 +1778,20 @@ F：じゃあ、黄色いボタンを押してください。薄くするとき�
     <p>Ringkasan progres hafalan dan latihan quiz kamu.</p>
   </div>
   <div id="statistik-container"></div>
+</section>
+
+<!-- ===== KUIS HARIAN ===== -->
+<section id="kuisharian" class="section">
+  <div id="kuisharian-container"></div>
+</section>
+
+<!-- ===== STROKE ORDER ===== -->
+<section id="strokeorder" class="section">
+  <div class="section-intro">
+    <h2>✍️ Stroke Order 筆順</h2>
+    <p>Urutan goresan yang benar saat menulis Hiragana dan Katakana.</p>
+  </div>
+  <div id="strokeorder-container"></div>
 </section>
 
 <!-- ===== FAVORIT ===== -->
@@ -6481,7 +6499,482 @@ renderPolaKalimat();
 renderQuizLanjutanHome();
 renderNHK('');
 renderN4Vocab();
+renderKuisHarian();
+renderStrokeOrder();
 allVocabRendered=true;
+
+// ══════════════════════════════════════════
+// KUIS HARIAN
+// ══════════════════════════════════════════
+const KH_DATA = {
+  "Anggota Tubuh":[
+    {e:"👃",q:"hidung",a:"はな",r:"hana",opts:[{k:"はな",r:"hana"},{k:"め",r:"me"},{k:"みみ",r:"mimi"},{k:"くち",r:"kuchi"}]},
+    {e:"👁️",q:"mata",a:"め",r:"me",opts:[{k:"め",r:"me"},{k:"は",r:"ha"},{k:"て",r:"te"},{k:"あし",r:"ashi"}]},
+    {e:"👂",q:"telinga",a:"みみ",r:"mimi",opts:[{k:"みみ",r:"mimi"},{k:"はな",r:"hana"},{k:"くち",r:"kuchi"},{k:"かみ",r:"kami"}]},
+    {e:"👄",q:"mulut",a:"くち",r:"kuchi",opts:[{k:"くち",r:"kuchi"},{k:"め",r:"me"},{k:"て",r:"te"},{k:"あたま",r:"atama"}]},
+    {e:"✋",q:"tangan",a:"て",r:"te",opts:[{k:"て",r:"te"},{k:"あし",r:"ashi"},{k:"かた",r:"kata"},{k:"むね",r:"mune"}]},
+    {e:"🦶",q:"kaki",a:"あし",r:"ashi",opts:[{k:"あし",r:"ashi"},{k:"て",r:"te"},{k:"こし",r:"koshi"},{k:"のど",r:"nodo"}]},
+    {e:"🧠",q:"kepala",a:"あたま",r:"atama",opts:[{k:"あたま",r:"atama"},{k:"かお",r:"kao"},{k:"くび",r:"kubi"},{k:"せなか",r:"senaka"}]},
+    {e:"😊",q:"wajah",a:"かお",r:"kao",opts:[{k:"かお",r:"kao"},{k:"あたま",r:"atama"},{k:"ほほ",r:"hoho"},{k:"め",r:"me"}]},
+    {e:"🦷",q:"gigi",a:"は",r:"ha",opts:[{k:"は",r:"ha"},{k:"くち",r:"kuchi"},{k:"した",r:"shita"},{k:"くびれ",r:"kubire"}]},
+    {e:"👅",q:"lidah",a:"した",r:"shita",opts:[{k:"した",r:"shita"},{k:"くち",r:"kuchi"},{k:"は",r:"ha"},{k:"のど",r:"nodo"}]},
+  ],
+  "Makanan":[
+    {e:"🍚",q:"nasi",a:"ごはん",r:"gohan",opts:[{k:"ごはん",r:"gohan"},{k:"みず",r:"mizu"},{k:"パン",r:"pan"},{k:"にく",r:"niku"}]},
+    {e:"🍜",q:"mie ramen",a:"ラーメン",r:"raamen",opts:[{k:"ラーメン",r:"raamen"},{k:"うどん",r:"udon"},{k:"そば",r:"soba"},{k:"ごはん",r:"gohan"}]},
+    {e:"🐟",q:"ikan",a:"さかな",r:"sakana",opts:[{k:"さかな",r:"sakana"},{k:"にく",r:"niku"},{k:"とり",r:"tori"},{k:"たまご",r:"tamago"}]},
+    {e:"🥚",q:"telur",a:"たまご",r:"tamago",opts:[{k:"たまご",r:"tamago"},{k:"さかな",r:"sakana"},{k:"やさい",r:"yasai"},{k:"くだもの",r:"kudamono"}]},
+    {e:"🥩",q:"daging",a:"にく",r:"niku",opts:[{k:"にく",r:"niku"},{k:"やさい",r:"yasai"},{k:"さかな",r:"sakana"},{k:"くだもの",r:"kudamono"}]},
+    {e:"🍎",q:"buah-buahan",a:"くだもの",r:"kudamono",opts:[{k:"くだもの",r:"kudamono"},{k:"やさい",r:"yasai"},{k:"みず",r:"mizu"},{k:"にく",r:"niku"}]},
+    {e:"🥦",q:"sayuran",a:"やさい",r:"yasai",opts:[{k:"やさい",r:"yasai"},{k:"くだもの",r:"kudamono"},{k:"にく",r:"niku"},{k:"たまご",r:"tamago"}]},
+    {e:"💧",q:"air",a:"みず",r:"mizu",opts:[{k:"みず",r:"mizu"},{k:"おちゃ",r:"ocha"},{k:"コーヒー",r:"koohii"},{k:"ジュース",r:"juusu"}]},
+    {e:"🍱",q:"bekal",a:"べんとう",r:"bentou",opts:[{k:"べんとう",r:"bentou"},{k:"ごはん",r:"gohan"},{k:"しょくじ",r:"shokuji"},{k:"りょうり",r:"ryouri"}]},
+    {e:"🧂",q:"garam",a:"しお",r:"shio",opts:[{k:"しお",r:"shio"},{k:"さとう",r:"satou"},{k:"こしょう",r:"koshou"},{k:"あぶら",r:"abura"}]},
+  ],
+  "Rumah & Benda":[
+    {e:"🪑",q:"kursi",a:"いす",r:"isu",opts:[{k:"いす",r:"isu"},{k:"つくえ",r:"tsukue"},{k:"とびら",r:"tobira"},{k:"まど",r:"mado"}]},
+    {e:"🪟",q:"jendela",a:"まど",r:"mado",opts:[{k:"まど",r:"mado"},{k:"とびら",r:"tobira"},{k:"かべ",r:"kabe"},{k:"ゆか",r:"yuka"}]},
+    {e:"🚪",q:"pintu",a:"とびら",r:"tobira",opts:[{k:"とびら",r:"tobira"},{k:"まど",r:"mado"},{k:"かべ",r:"kabe"},{k:"てんじょう",r:"tenjou"}]},
+    {e:"📖",q:"buku",a:"ほん",r:"hon",opts:[{k:"ほん",r:"hon"},{k:"ペン",r:"pen"},{k:"かみ",r:"kami"},{k:"つくえ",r:"tsukue"}]},
+    {e:"📱",q:"ponsel",a:"けいたい",r:"keitai",opts:[{k:"けいたい",r:"keitai"},{k:"テレビ",r:"terebi"},{k:"パソコン",r:"pasokon"},{k:"とけい",r:"tokei"}]},
+    {e:"⏰",q:"jam dinding",a:"とけい",r:"tokei",opts:[{k:"とけい",r:"tokei"},{k:"けいたい",r:"keitai"},{k:"テレビ",r:"terebi"},{k:"かみ",r:"kami"}]},
+    {e:"🛏️",q:"tempat tidur",a:"ベッド",r:"beddo",opts:[{k:"ベッド",r:"beddo"},{k:"いす",r:"isu"},{k:"つくえ",r:"tsukue"},{k:"まど",r:"mado"}]},
+    {e:"💡",q:"lampu",a:"でんき",r:"denki",opts:[{k:"でんき",r:"denki"},{k:"まど",r:"mado"},{k:"かべ",r:"kabe"},{k:"ゆか",r:"yuka"}]},
+    {e:"🚿",q:"kamar mandi",a:"おふろ",r:"ofuro",opts:[{k:"おふろ",r:"ofuro"},{k:"トイレ",r:"toire"},{k:"だいどころ",r:"daidokoro"},{k:"しんしつ",r:"shinshitsu"}]},
+    {e:"🍳",q:"dapur",a:"だいどころ",r:"daidokoro",opts:[{k:"だいどころ",r:"daidokoro"},{k:"おふろ",r:"ofuro"},{k:"リビング",r:"ribingu"},{k:"げんかん",r:"genkan"}]},
+  ],
+  "Aktivitas":[
+    {e:"😴",q:"tidur",a:"ねる",r:"neru",opts:[{k:"ねる",r:"neru"},{k:"おきる",r:"okiru"},{k:"たべる",r:"taberu"},{k:"のむ",r:"nomu"}]},
+    {e:"🏃",q:"berlari",a:"はしる",r:"hashiru",opts:[{k:"はしる",r:"hashiru"},{k:"あるく",r:"aruku"},{k:"とぶ",r:"tobu"},{k:"およぐ",r:"oyogu"}]},
+    {e:"📚",q:"belajar",a:"べんきょうする",r:"benkyou suru",opts:[{k:"べんきょうする",r:"benkyou suru"},{k:"よむ",r:"yomu"},{k:"かく",r:"kaku"},{k:"きく",r:"kiku"}]},
+    {e:"🍽️",q:"makan",a:"たべる",r:"taberu",opts:[{k:"たべる",r:"taberu"},{k:"のむ",r:"nomu"},{k:"つくる",r:"tsukuru"},{k:"かう",r:"kau"}]},
+    {e:"🚶",q:"berjalan",a:"あるく",r:"aruku",opts:[{k:"あるく",r:"aruku"},{k:"はしる",r:"hashiru"},{k:"とまる",r:"tomaru"},{k:"すわる",r:"suwaru"}]},
+    {e:"💬",q:"berbicara",a:"はなす",r:"hanasu",opts:[{k:"はなす",r:"hanasu"},{k:"きく",r:"kiku"},{k:"よむ",r:"yomu"},{k:"かく",r:"kaku"}]},
+    {e:"✍️",q:"menulis",a:"かく",r:"kaku",opts:[{k:"かく",r:"kaku"},{k:"よむ",r:"yomu"},{k:"きく",r:"kiku"},{k:"みる",r:"miru"}]},
+    {e:"🎵",q:"mendengarkan",a:"きく",r:"kiku",opts:[{k:"きく",r:"kiku"},{k:"みる",r:"miru"},{k:"はなす",r:"hanasu"},{k:"かく",r:"kaku"}]},
+    {e:"🛒",q:"membeli",a:"かう",r:"kau",opts:[{k:"かう",r:"kau"},{k:"うる",r:"uru"},{k:"もらう",r:"morau"},{k:"あげる",r:"ageru"}]},
+    {e:"🧹",q:"membersihkan",a:"そうじする",r:"souji suru",opts:[{k:"そうじする",r:"souji suru"},{k:"あらう",r:"arau"},{k:"かたづける",r:"katazukeru"},{k:"せんたくする",r:"sentaku suru"}]},
+  ],
+  "Warna & Sifat":[
+    {e:"🔴",q:"merah",a:"あか",r:"aka",opts:[{k:"あか",r:"aka"},{k:"あお",r:"ao"},{k:"きいろ",r:"kiiro"},{k:"しろ",r:"shiro"}]},
+    {e:"🔵",q:"biru",a:"あお",r:"ao",opts:[{k:"あお",r:"ao"},{k:"あか",r:"aka"},{k:"みどり",r:"midori"},{k:"きいろ",r:"kiiro"}]},
+    {e:"🟡",q:"kuning",a:"きいろ",r:"kiiro",opts:[{k:"きいろ",r:"kiiro"},{k:"あお",r:"ao"},{k:"あか",r:"aka"},{k:"くろ",r:"kuro"}]},
+    {e:"⚫",q:"hitam",a:"くろ",r:"kuro",opts:[{k:"くろ",r:"kuro"},{k:"しろ",r:"shiro"},{k:"あか",r:"aka"},{k:"あお",r:"ao"}]},
+    {e:"⚪",q:"putih",a:"しろ",r:"shiro",opts:[{k:"しろ",r:"shiro"},{k:"くろ",r:"kuro"},{k:"きいろ",r:"kiiro"},{k:"みどり",r:"midori"}]},
+    {e:"🟢",q:"hijau",a:"みどり",r:"midori",opts:[{k:"みどり",r:"midori"},{k:"あお",r:"ao"},{k:"きいろ",r:"kiiro"},{k:"むらさき",r:"murasaki"}]},
+    {e:"🔥",q:"panas",a:"あつい",r:"atsui",opts:[{k:"あつい",r:"atsui"},{k:"さむい",r:"samui"},{k:"つめたい",r:"tsumetai"},{k:"あたたかい",r:"atatakai"}]},
+    {e:"❄️",q:"dingin",a:"さむい",r:"samui",opts:[{k:"さむい",r:"samui"},{k:"あつい",r:"atsui"},{k:"すずしい",r:"suzushii"},{k:"あたたかい",r:"atatakai"}]},
+    {e:"😄",q:"senang/gembira",a:"たのしい",r:"tanoshii",opts:[{k:"たのしい",r:"tanoshii"},{k:"かなしい",r:"kanashii"},{k:"うれしい",r:"ureshii"},{k:"こわい",r:"kowai"}]},
+    {e:"😢",q:"sedih",a:"かなしい",r:"kanashii",opts:[{k:"かなしい",r:"kanashii"},{k:"たのしい",r:"tanoshii"},{k:"さびしい",r:"sabishii"},{k:"こわい",r:"kowai"}]},
+  ]
+};
+
+let kh_selectedCats=[...Object.keys(KH_DATA)];
+let kh_questions=[],kh_qi=0,kh_score=0,kh_streak=0,kh_maxStreak=0;
+let kh_timer=null,kh_timeLeft=10,kh_answered=false,kh_wrongList=[];
+let kh_totalQ=10;
+
+function renderKuisHarian(){
+  const el=document.getElementById('kuisharian-container');
+  if(!el) return;
+  el.innerHTML=`
+<style>
+.kh-wrap{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:16px;}
+.kh-screen{display:flex;flex-direction:column;gap:16px;}
+.kh-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;}
+.kh-title{font-size:22px;font-weight:800;margin-bottom:6px;}
+.kh-sub{font-size:14px;color:var(--muted);line-height:1.6;}
+.kh-cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.kh-chip{background:var(--bg);border:1.5px solid var(--border);border-radius:99px;padding:6px 14px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;}
+.kh-chip.on{border-color:var(--s1);color:var(--s1);background:rgba(224,53,53,.08);}
+.kh-btn{width:100%;background:var(--s1);color:#fff;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s;}
+.kh-btn:hover{opacity:.88;}
+.kh-btn-out{background:none;border:1.5px solid var(--border);color:var(--fg);}
+.kh-btn-out:hover{border-color:var(--s1);color:var(--s1);opacity:1;}
+.kh-status{display:flex;align-items:center;gap:10px;}
+.kh-pill{display:flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:5px 12px;font-size:14px;font-weight:700;}
+.kh-prog{flex:1;height:7px;background:var(--border);border-radius:99px;overflow:hidden;}
+.kh-prog-fill{height:100%;background:var(--s1);border-radius:99px;transition:width .4s;}
+.kh-timer-wrap{display:flex;align-items:center;justify-content:center;}
+.kh-timer-box{width:56px;height:56px;border-radius:50%;border:4px solid var(--s1);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;font-variant-numeric:tabular-nums;transition:border-color .3s,color .3s;}
+.kh-timer-box.warn{border-color:#ea7a10;color:#ea7a10;}
+.kh-timer-box.danger{border-color:#e03535;color:#e03535;}
+.kh-q-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.kh-emoji{font-size:68px;line-height:1;}
+.kh-q-text{font-size:14px;color:var(--muted);font-weight:600;}
+.kh-combo{font-size:13px;font-weight:700;color:#ea7a10;background:rgba(234,122,16,.1);border:1px solid rgba(234,122,16,.3);border-radius:99px;padding:3px 12px;}
+.kh-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.kh-opt{background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:14px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:border-color .15s,background .15s;user-select:none;}
+.kh-opt:hover{border-color:var(--s2);}
+.kh-opt-k{font-family:'Noto Sans JP',sans-serif;font-size:20px;font-weight:700;}
+.kh-opt-r{font-size:11px;color:var(--muted);font-weight:600;}
+.kh-opt.correct{border-color:#16a34a;background:rgba(22,163,74,.1);}
+.kh-opt.correct .kh-opt-k{color:#16a34a;}
+.kh-opt.wrong{border-color:#e03535;background:rgba(224,53,53,.1);}
+.kh-opt.wrong .kh-opt-k{color:#e03535;}
+.kh-fb{padding:12px 16px;border-radius:10px;font-size:14px;font-weight:700;text-align:center;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;}
+.kh-fb.show{opacity:1;transform:translateY(0);}
+.kh-fb.ok{background:rgba(22,163,74,.12);color:#16a34a;border:1px solid rgba(22,163,74,.3);}
+.kh-fb.bad{background:rgba(224,53,53,.1);color:#e03535;border:1px solid rgba(224,53,53,.3);}
+.kh-score-big{font-size:52px;font-weight:900;color:var(--s1);line-height:1;}
+.kh-stats{display:flex;gap:10px;}
+.kh-stat{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;}
+.kh-stat-v{font-size:20px;font-weight:900;}
+.kh-stat-l{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.kh-review{display:flex;flex-direction:column;gap:7px;max-height:180px;overflow-y:auto;}
+.kh-rev-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;display:flex;align-items:center;gap:9px;}
+.kh-rev-q{font-size:11px;color:var(--muted);}
+.kh-rev-a{font-family:'Noto Sans JP',sans-serif;font-size:15px;font-weight:700;color:#16a34a;}
+.kh-btn-row{display:flex;gap:8px;}
+.kh-btn-row .kh-btn{flex:1;}
+</style>
+<div class="kh-wrap">
+  <div id="kh-start">
+    <div class="kh-card">
+      <div style="font-size:36px;margin-bottom:10px;">⚡</div>
+      <div class="kh-title">Kuis Harian</div>
+      <div class="kh-sub">Uji kosakata Jepang sehari-hari. Jawab sebelum waktu habis dan raih combo streak!</div>
+      <div style="margin-top:16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">Pilih Kategori</div>
+        <div class="kh-cats" id="kh-cat-list"></div>
+      </div>
+      <div style="margin-top:14px;">
+        <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px;">
+          <span style="color:var(--muted);">Jumlah Soal</span>
+          <span id="kh-qlabel" style="color:var(--s1);">10 soal</span>
+        </div>
+        <input type="range" id="kh-qcount" min="5" max="20" step="5" value="10" style="width:100%;accent-color:var(--s1);">
+      </div>
+      <button class="kh-btn" style="margin-top:16px;" onclick="khStart()">Mulai Kuis ▶</button>
+    </div>
+  </div>
+
+  <div id="kh-quiz" style="display:none;flex-direction:column;gap:14px;">
+    <div class="kh-status">
+      <div class="kh-pill">🔥 <span id="kh-streak">0</span></div>
+      <div class="kh-prog"><div class="kh-prog-fill" id="kh-prog" style="width:0%"></div></div>
+      <div class="kh-pill">⭐ <span id="kh-score">0</span></div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;" id="kh-catname"></span>
+      <span style="font-size:13px;color:var(--muted);font-weight:700;" id="kh-qlabel2"></span>
+    </div>
+    <div class="kh-timer-wrap"><div class="kh-timer-box" id="kh-timer">10</div></div>
+    <div class="kh-q-card">
+      <div class="kh-emoji" id="kh-emoji">?</div>
+      <div class="kh-q-text">Ini apa dalam bahasa Jepang?</div>
+      <div class="kh-combo" id="kh-combo" style="display:none;"></div>
+    </div>
+    <div class="kh-opts" id="kh-opts"></div>
+    <div class="kh-fb" id="kh-fb"></div>
+  </div>
+
+  <div id="kh-result" style="display:none;">
+    <div class="kh-card" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;">
+      <div style="font-size:52px;" id="kh-res-icon">🎉</div>
+      <div class="kh-title" id="kh-res-title">Kerja Bagus!</div>
+      <div class="kh-score-big" id="kh-res-score">0</div>
+      <div style="font-size:12px;color:var(--muted);font-weight:700;margin-top:-10px;">POIN</div>
+      <div class="kh-stats">
+        <div class="kh-stat"><div class="kh-stat-v" style="color:#16a34a;" id="kh-res-benar">0</div><div class="kh-stat-l">Benar</div></div>
+        <div class="kh-stat"><div class="kh-stat-v" style="color:#e03535;" id="kh-res-salah">0</div><div class="kh-stat-l">Salah</div></div>
+        <div class="kh-stat"><div class="kh-stat-v" style="color:#ea7a10;" id="kh-res-streak">0</div><div class="kh-stat-l">Streak</div></div>
+      </div>
+      <div style="width:100%;text-align:left;">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">Yang Salah 📝</div>
+        <div class="kh-review" id="kh-review"></div>
+      </div>
+      <div class="kh-btn-row">
+        <button class="kh-btn kh-btn-out" onclick="khShowStart()">↩ Kategori</button>
+        <button class="kh-btn" onclick="khStart()">Main Lagi ↺</button>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+  // Build category chips
+  const cl=document.getElementById('kh-cat-list');
+  if(cl){
+    Object.keys(KH_DATA).forEach(c=>{
+      const ch=document.createElement('div');
+      ch.className='kh-chip on';
+      ch.textContent=c;
+      ch.onclick=()=>{
+        const i=kh_selectedCats.indexOf(c);
+        if(i>=0){if(kh_selectedCats.length===1)return;kh_selectedCats.splice(i,1);ch.classList.remove('on');}
+        else{kh_selectedCats.push(c);ch.classList.add('on');}
+      };
+      cl.appendChild(ch);
+    });
+  }
+  document.getElementById('kh-qcount').oninput=function(){
+    kh_totalQ=+this.value;
+    document.getElementById('kh-qlabel').textContent=this.value+' soal';
+  };
+}
+
+function khShowStart(){
+  document.getElementById('kh-start').style.display='block';
+  document.getElementById('kh-quiz').style.display='none';
+  document.getElementById('kh-result').style.display='none';
+}
+
+function khShuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function khStart(){
+  let pool=[];
+  kh_selectedCats.forEach(c=>KH_DATA[c].forEach(q=>pool.push({...q,cat:c})));
+  kh_questions=khShuffle(pool).slice(0,kh_totalQ);
+  kh_qi=0;kh_score=0;kh_streak=0;kh_maxStreak=0;kh_wrongList=[];
+  document.getElementById('kh-start').style.display='none';
+  document.getElementById('kh-quiz').style.display='flex';
+  document.getElementById('kh-result').style.display='none';
+  khShowQ();
+}
+
+function khShowQ(){
+  kh_answered=false;
+  const q=kh_questions[kh_qi];
+  document.getElementById('kh-emoji').textContent=q.e;
+  document.getElementById('kh-catname').textContent=q.cat;
+  document.getElementById('kh-qlabel2').textContent=(kh_qi+1)+' / '+kh_questions.length;
+  document.getElementById('kh-prog').style.width=(kh_qi/kh_questions.length*100)+'%';
+  document.getElementById('kh-score').textContent=kh_score;
+  document.getElementById('kh-streak').textContent=kh_streak;
+  const combo=document.getElementById('kh-combo');
+  if(kh_streak>=3){combo.style.display='inline-block';combo.textContent='🔥 '+kh_streak+'× Combo!';}
+  else combo.style.display='none';
+
+  // Options
+  const opts=document.getElementById('kh-opts');
+  opts.innerHTML='';
+  khShuffle([...q.opts]).forEach(o=>{
+    const b=document.createElement('button');
+    b.className='kh-opt';
+    b.innerHTML=`<div class="kh-opt-k">${o.k}</div><div class="kh-opt-r">${o.r}</div>`;
+    b.onclick=()=>khAnswer(o.k,q,b);
+    opts.appendChild(b);
+  });
+
+  // Feedback reset
+  const fb=document.getElementById('kh-fb');
+  fb.textContent='';fb.className='kh-fb';
+
+  // Timer
+  clearInterval(kh_timer);
+  kh_timeLeft=10;khUpdateTimer();
+  kh_timer=setInterval(()=>{
+    kh_timeLeft--;khUpdateTimer();
+    if(kh_timeLeft<=0){clearInterval(kh_timer);if(!kh_answered)khTimeUp(q);}
+  },1000);
+}
+
+function khUpdateTimer(){
+  const t=document.getElementById('kh-timer');
+  t.textContent=kh_timeLeft;
+  t.className='kh-timer-box'+(kh_timeLeft<=3?' danger':kh_timeLeft<=5?' warn':'');
+}
+
+function khTimeUp(q){
+  kh_answered=true;kh_streak=0;
+  kh_wrongList.push({q:q.q,a:q.a,r:q.r});
+  document.querySelectorAll('.kh-opt').forEach(b=>{if(b.querySelector('.kh-opt-k').textContent===q.a)b.classList.add('correct');});
+  khFeedback(false,'⏰ Waktu habis! Jawaban: '+q.a+' ('+q.r+')');
+  setTimeout(khNext,1800);
+}
+
+function khAnswer(chosen,q,btn){
+  if(kh_answered)return;
+  kh_answered=true;clearInterval(kh_timer);
+  const ok=chosen===q.a;
+  if(ok){
+    kh_streak++;kh_maxStreak=Math.max(kh_maxStreak,kh_streak);
+    const bonus=kh_streak>=3?15:10;
+    kh_score+=bonus+Math.ceil(kh_timeLeft*.5);
+    btn.classList.add('correct');
+    khFeedback(true,kh_streak>=3?'🔥 Combo +'+kh_streak+'! Benar!':'✅ Benar! +'+( bonus+Math.ceil(kh_timeLeft*.5))+' poin');
+  } else {
+    kh_streak=0;btn.classList.add('wrong');
+    kh_wrongList.push({q:q.q,a:q.a,r:q.r});
+    document.querySelectorAll('.kh-opt').forEach(b=>{if(b.querySelector('.kh-opt-k').textContent===q.a)b.classList.add('correct');});
+    khFeedback(false,'❌ Salah! Jawaban: '+q.a+' ('+q.r+')');
+  }
+  document.getElementById('kh-score').textContent=kh_score;
+  document.getElementById('kh-streak').textContent=kh_streak;
+  setTimeout(khNext,1600);
+}
+
+function khFeedback(ok,msg){
+  const fb=document.getElementById('kh-fb');
+  fb.textContent=msg;fb.className='kh-fb '+(ok?'ok':'bad');
+  requestAnimationFrame(()=>fb.classList.add('show'));
+}
+
+function khNext(){
+  kh_qi++;
+  if(kh_qi>=kh_questions.length){khResult();return;}
+  khShowQ();
+}
+
+function khResult(){
+  clearInterval(kh_timer);
+  document.getElementById('kh-quiz').style.display='none';
+  document.getElementById('kh-result').style.display='block';
+  const total=kh_questions.length,benar=total-kh_wrongList.length,pct=Math.round(benar/total*100);
+  document.getElementById('kh-res-score').textContent=kh_score;
+  document.getElementById('kh-res-benar').textContent=benar;
+  document.getElementById('kh-res-salah').textContent=kh_wrongList.length;
+  document.getElementById('kh-res-streak').textContent=kh_maxStreak;
+  const icon=pct>=80?'🏆':pct>=60?'👍':'📖';
+  const title=pct>=80?'Luar Biasa!':pct>=60?'Bagus! Terus berlatih':'Yuk belajar lagi!';
+  document.getElementById('kh-res-icon').textContent=icon;
+  document.getElementById('kh-res-title').textContent=title;
+  const rl=document.getElementById('kh-review');
+  rl.innerHTML=kh_wrongList.length===0
+    ?'<div class="kh-rev-item">🎯 <div class="kh-rev-a">Sempurna! Tidak ada yang salah</div></div>'
+    :kh_wrongList.map(w=>`<div class="kh-rev-item"><span>❌</span><div><div class="kh-rev-q">${w.q}</div><div class="kh-rev-a">${w.a} · ${w.r}</div></div></div>`).join('');
+
+  // Simpan ke statistik
+  try{
+    const qs=JSON.parse(localStorage.getItem('quiz_stats')||'{}');
+    qs.kuisHarian=qs.kuisHarian||{total:0,benar:0,sesi:0};
+    qs.kuisHarian.total+=total;qs.kuisHarian.benar+=benar;qs.kuisHarian.sesi++;
+    localStorage.setItem('quiz_stats',JSON.stringify(qs));
+  }catch(e){}
+}
+
+// ══════════════════════════════════════════
+// STROKE ORDER
+// ══════════════════════════════════════════
+const SO_DATA = {
+  hiragana:[
+    {char:'あ',strokes:['M20,30 Q30,10 50,20 Q65,28 55,45','M50,20 Q55,55 45,70 Q35,80 20,75','M38,42 Q55,42 65,55 Q70,70 60,78'],hint:'3 goresan'},
+    {char:'い',strokes:['M25,20 Q22,45 28,65 Q32,75 38,78','M55,20 Q52,42 48,58 Q44,72 50,78'],hint:'2 goresan'},
+    {char:'う',strokes:['M42,15 Q48,10 52,15','M30,28 Q48,22 60,30 Q68,38 58,55 Q50,68 42,72'],hint:'2 goresan'},
+    {char:'え',strokes:['M20,35 Q48,28 68,35','M42,20 Q38,38 32,52 Q28,62 32,70','M42,38 Q55,50 58,62 Q60,72 55,78'],hint:'3 goresan'},
+    {char:'お',strokes:['M35,18 Q32,35 28,50 Q25,62 30,70','M18,35 Q42,28 62,35','M50,35 Q55,50 52,62 Q50,72 42,78 Q32,82 28,75'],hint:'3 goresan'},
+    {char:'か',strokes:['M25,20 Q22,45 25,68','M22,42 Q42,38 58,42','M50,30 Q55,48 50,60 Q44,72 38,76'],hint:'3 goresan'},
+    {char:'き',strokes:['M20,25 Q48,20 65,28','M20,42 Q48,38 65,45','M42,20 Q38,45 32,62 Q28,72 32,78','M48,48 Q55,58 55,70 Q52,78 45,80'],hint:'4 goresan'},
+    {char:'く',strokes:['M55,22 Q38,42 42,60 Q46,72 58,78'],hint:'1 goresan'},
+    {char:'け',strokes:['M28,15 Q25,42 28,70','M25,38 Q45,32 58,38','M52,32 Q55,52 50,65 Q44,75 38,78'],hint:'3 goresan'},
+    {char:'こ',strokes:['M22,28 Q52,25 62,30','M22,62 Q52,58 62,65'],hint:'2 goresan'},
+    {char:'さ',strokes:['M20,30 Q48,25 65,32','M38,22 Q35,45 30,60','M35,48 Q48,55 55,65 Q58,74 52,80 Q44,84 36,80'],hint:'3 goresan'},
+    {char:'し',strokes:['M42,18 Q38,45 38,62 Q40,74 50,78 Q58,80 62,74'],hint:'1 goresan'},
+    {char:'す',strokes:['M20,25 Q52,20 65,28','M42,22 Q38,42 35,55','M32,48 Q48,42 60,52 Q65,62 58,72 Q50,80 42,78'],hint:'3 goresan'},
+    {char:'せ',strokes:['M22,38 Q48,32 62,40','M38,20 Q35,42 32,58 Q30,68 35,74','M48,40 Q52,55 50,65 Q48,74 42,78'],hint:'3 goresan'},
+    {char:'そ',strokes:['M22,22 Q48,18 62,25','M38,22 Q42,38 38,52 Q32,65 22,72','M38,52 Q52,55 60,65 Q64,75 56,80 Q46,84 38,80'],hint:'3 goresan'},
+  ],
+  katakana:[
+    {char:'ア',strokes:['M22,30 Q48,25 65,32','M38,28 Q35,52 32,68'],hint:'2 goresan'},
+    {char:'イ',strokes:['M32,22 Q28,52 32,72','M55,22 Q48,42 35,60'],hint:'2 goresan'},
+    {char:'ウ',strokes:['M42,15 Q48,10 52,15','M22,30 Q48,25 65,32','M42,32 Q38,52 42,70 Q44,78 50,80'],hint:'3 goresan'},
+    {char:'エ',strokes:['M22,28 Q52,25 65,30','M42,28 Q38,52 42,70','M22,70 Q52,66 65,72'],hint:'3 goresan'},
+    {char:'オ',strokes:['M22,28 Q52,25 65,30','M22,52 Q52,48 65,54','M42,20 Q38,52 42,72 Q44,80 52,82'],hint:'3 goresan'},
+    {char:'カ',strokes:['M22,28 Q38,25 55,32 Q62,38 58,55 Q52,68 42,74','M48,28 Q45,52 48,70'],hint:'2 goresan'},
+    {char:'キ',strokes:['M22,25 Q52,22 65,28','M22,42 Q52,38 65,45','M42,22 Q38,52 42,75'],hint:'3 goresan'},
+    {char:'ク',strokes:['M42,20 Q55,25 60,38 Q62,50 55,58','M42,20 Q28,38 25,55 Q25,68 35,74'],hint:'2 goresan'},
+    {char:'ケ',strokes:['M28,15 Q25,42 28,75','M25,38 Q48,32 62,40','M50,32 Q55,52 50,68 Q44,78 36,80'],hint:'3 goresan'},
+    {char:'コ',strokes:['M25,22 Q55,18 65,25 Q65,42 25,42','M25,22 Q22,52 25,75'],hint:'2 goresan'},
+  ]
+};
+
+function renderStrokeOrder(){
+  const el=document.getElementById('strokeorder-container');
+  if(!el) return;
+  let html=`
+<style>
+.so-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.so-tab{padding:8px 20px;border-radius:99px;border:1.5px solid var(--border);font-size:13px;font-weight:700;cursor:pointer;background:none;color:var(--muted);font-family:'Inter',sans-serif;}
+.so-tab.active{background:var(--s1);border-color:var(--s1);color:#fff;}
+.so-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;}
+.so-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;text-align:center;transition:box-shadow .15s;}
+.so-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
+.so-char{font-family:'Noto Sans JP',sans-serif;font-size:38px;font-weight:700;line-height:1.1;}
+.so-hint{font-size:11px;color:var(--muted);margin-top:4px;}
+.so-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.so-modal.open{display:flex;}
+.so-modal-box{background:var(--surface);border-radius:16px;padding:24px;max-width:340px;width:100%;text-align:center;}
+.so-modal-char{font-family:'Noto Sans JP',sans-serif;font-size:28px;font-weight:700;margin-bottom:12px;}
+.so-canvas-wrap{position:relative;margin:0 auto 16px;}
+.so-canvas-wrap svg{border:1px solid var(--border);border-radius:10px;background:var(--bg);}
+.so-stroke-btn{background:var(--s1);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-right:8px;}
+.so-reset-btn{background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:10px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+.so-close-btn{position:absolute;top:12px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);}
+.so-stroke-info{font-size:13px;color:var(--muted);margin-bottom:12px;}
+</style>
+<div class="so-tabs">
+  <button class="so-tab active" onclick="soSetTab('hiragana',this)">Hiragana ひ</button>
+  <button class="so-tab" onclick="soSetTab('katakana',this)">Katakana カ</button>
+</div>
+<div class="so-grid" id="so-grid"></div>
+<div class="so-modal" id="so-modal">
+  <div class="so-modal-box" style="position:relative;">
+    <button class="so-close-btn" onclick="soClose()">✕</button>
+    <div class="so-modal-char" id="so-modal-char"></div>
+    <div class="so-stroke-info" id="so-stroke-info"></div>
+    <div class="so-canvas-wrap">
+      <svg id="so-svg" viewBox="0 0 80 95" width="160" height="190"></svg>
+    </div>
+    <div>
+      <button class="so-stroke-btn" onclick="soNextStroke()">Goresan Berikut ▶</button>
+      <button class="so-reset-btn" onclick="soReset()">↺ Ulang</button>
+    </div>
+  </div>
+</div>`;
+  el.innerHTML=html;
+  soSetTab('hiragana',el.querySelector('.so-tab.active'));
+}
+
+let so_currentChar=null,so_strokeIdx=0;
+function soSetTab(type,btn){
+  document.querySelectorAll('.so-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const grid=document.getElementById('so-grid');
+  if(!grid) return;
+  grid.innerHTML=SO_DATA[type].map((c,i)=>`
+    <div class="so-card" onclick="soOpen('${type}',${i})">
+      <div class="so-char">${c.char}</div>
+      <div class="so-hint">${c.hint}</div>
+    </div>`).join('');
+}
+
+function soOpen(type,idx){
+  so_currentChar={...SO_DATA[type][idx]};
+  so_strokeIdx=0;
+  document.getElementById('so-modal').classList.add('open');
+  document.getElementById('so-modal-char').textContent=so_currentChar.char;
+  soDrawStrokes();
+}
+
+function soDrawStrokes(){
+  const svg=document.getElementById('so-svg');
+  const c=so_currentChar;
+  const info=document.getElementById('so-stroke-info');
+  info.textContent='Goresan '+(so_strokeIdx)+' / '+c.strokes.length+' — '+c.hint;
+
+  // Grid lines
+  let paths=`<line x1="40" y1="0" x2="40" y2="95" stroke="rgba(100,100,100,.15)" stroke-width=".5"/>
+    <line x1="0" y1="47" x2="80" y2="47" stroke="rgba(100,100,100,.15)" stroke-width=".5"/>`;
+
+  // Draw completed strokes in dark
+  for(let i=0;i<so_strokeIdx;i++){
+    paths+=`<path d="${c.strokes[i]}" fill="none" stroke="var(--fg)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+  // Draw current stroke in accent color (animated-ish)
+  if(so_strokeIdx<c.strokes.length){
+    paths+=`<path d="${c.strokes[so_strokeIdx]}" fill="none" stroke="var(--s1)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/>`;
+  }
+  svg.innerHTML=paths;
+}
+
+function soNextStroke(){
+  if(!so_currentChar) return;
+  if(so_strokeIdx<so_currentChar.strokes.length) so_strokeIdx++;
+  soDrawStrokes();
+}
+
+function soReset(){so_strokeIdx=0;soDrawStrokes();}
+function soClose(){document.getElementById('so-modal').classList.remove('open');}
 
 // ── SERVICE WORKER ──
 if('serviceWorker' in navigator){
