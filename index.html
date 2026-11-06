@@ -998,6 +998,7 @@ body::before {
         <input type="text" id="global-search" placeholder="🔍 Cari..." oninput="globalSearch(this.value)" autocomplete="off">
         <div id="global-results" class="global-dropdown"></div>
       </div>
+      <img id="hdr-dev-avatar" onclick="showTab('about',document.querySelector('[onclick*=\'about\']'))" style="width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--s1);cursor:pointer;flex-shrink:0;display:none;" alt="Ansah" title="Tentang Developer">
       <button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 9px;cursor:pointer;font-size:16px;color:var(--fg);transition:background .2s;flex-shrink:0;">🌙</button>
       <button class="btn-keluar" id="btn-keluar" onclick="doLogout()" style="display:none;">Keluar</button>
     </div>
@@ -1073,9 +1074,14 @@ body::before {
     <button class="tab-btn" onclick="showTab('listening',this)"><span class="sb-icon">🎧</span>Latihan Dengar<span class="sb-badge">NEW</span></button>
     <button class="tab-btn" onclick="showTab('n3materi',this)"><span class="sb-icon" style="font-size:10px;font-family:'Inter',sans-serif;font-weight:700;">N3</span>Materi N3<span class="sb-badge">NEW</span></button>
     <button class="tab-btn" onclick="showTab('pengaturan',this)"><span class="sb-icon">⚙️</span>Pengaturan</button>
+    <button class="tab-btn" onclick="showTab('about',this)"><span class="sb-icon">👤</span>Tentang Developer</button>
   </div>
-  <div style="padding:16px 18px 0;border-top:1px solid var(--border);margin-top:8px;">
-    <div style="font-size:10px;color:var(--muted);line-height:1.6;">Developer: Yayan Romansah<br><span style="font-family:'Noto Sans JP',sans-serif;">（開発者：ヤヤン・ロマンサー）</span></div>
+  <div style="padding:12px 18px 16px;border-top:1px solid var(--border);margin-top:8px;display:flex;align-items:center;gap:10px;">
+    <img id="sb-dev-photo" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--s1);cursor:pointer;flex-shrink:0;" onclick="showTab('about',document.querySelector('[onclick*=\'about\']'))" alt="Ansah">
+    <div style="font-size:11px;color:var(--muted);line-height:1.6;min-width:0;">
+      <div style="font-weight:800;color:var(--fg);font-size:12px;">Ansah</div>
+      <div>Developer &amp; Creator</div>
+    </div>
   </div>
 </nav>
 
@@ -1845,6 +1851,11 @@ F：じゃあ、黄色いボタンを押してください。薄くするとき�
     <p>Urutan goresan yang benar saat menulis Hiragana dan Katakana.</p>
   </div>
   <div id="strokeorder-container"></div>
+</section>
+
+<!-- ===== ABOUT DEVELOPER ===== -->
+<section id="about" class="section">
+  <div id="about-container"></div>
 </section>
 
 <!-- ===== FAVORIT ===== -->
@@ -5186,6 +5197,7 @@ showTab=function(id,btn){
   if(id==='listening'){ const c=document.getElementById('listening-container'); if(c&&!c.querySelector('.ls-wrap')) renderListening(); }
   if(id==='n3materi'){ const c=document.getElementById('n3materi-container'); if(c&&!c.querySelector('.n3-tabs')) renderN3Materi(); }
   if(id==='pengaturan'){ const c=document.getElementById('pengaturan-container'); if(c&&!c.querySelector('.sett-section')) renderPengaturan(); }
+  if(id==='about'){ const c=document.getElementById('about-container'); if(c&&!c.querySelector('.about-dev-card')) renderAbout(); }
 };
 
 // ── NHK PELAJARAN ──
@@ -6562,6 +6574,11 @@ renderN4Vocab();
 allVocabRendered=true;
 
 // ══════════════════════════════════════════
+// DEVELOPER PHOTO
+// ══════════════════════════════════════════
+const PHOTO_DEV = "data:image/jpeg;base64,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";
+
+// ══════════════════════════════════════════
 // KANJI N4
 // ══════════════════════════════════════════
 const kanjiN4Data = [
@@ -7756,9 +7773,55 @@ function soNextStroke(){
 function soReset(){so_strokeIdx=0;soDrawStrokes();}
 function soClose(){document.getElementById('so-modal').classList.remove('open');}
 
+// ══════════════════════════════════════════
+// ABOUT DEVELOPER
+// ══════════════════════════════════════════
+function renderAbout(){
+  const el=document.getElementById('about-container');
+  if(!el) return;
+  el.innerHTML=`<style>
+.about-dev-wrap{max-width:480px;margin:0 auto;}
+.about-dev-card{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border-radius:20px;padding:32px 24px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden;}
+.about-dev-card::before{content:'🇯🇵';position:absolute;font-size:120px;opacity:.05;right:-20px;top:-20px;line-height:1;}
+.about-dev-photo{width:100px;height:100px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid #e03535;margin:0 auto 14px;display:block;box-shadow:0 6px 24px rgba(224,53,53,.4);}
+.about-dev-name{font-size:22px;font-weight:900;color:#fff;margin-bottom:4px;}
+.about-dev-role{font-size:12px;color:#e03535;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em;}
+.about-dev-desc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.75;max-width:320px;margin:0 auto;}
+.about-dev-info{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.about-dev-row{display:flex;align-items:center;gap:14px;padding:13px 16px;border-bottom:1px solid var(--border);}
+.about-dev-row:last-child{border-bottom:none;}
+.about-dev-icon{font-size:18px;width:28px;text-align:center;flex-shrink:0;}
+.about-dev-label{font-size:11px;color:var(--muted);font-weight:600;min-width:72px;}
+.about-dev-val{font-weight:700;font-size:14px;}
+.about-dev-ver{text-align:center;font-size:12px;color:var(--muted);padding:8px 0;}
+</style>
+<div class="about-dev-wrap">
+  <div class="about-dev-card">
+    <img class="about-dev-photo" src="${PHOTO_DEV}" alt="Ansah">
+    <div class="about-dev-name">Ansah</div>
+    <div class="about-dev-role">Developer &amp; Creator</div>
+    <div class="about-dev-desc">Aplikasi belajar bahasa Jepang mandiri, dibuat dengan ❤️ untuk membantu teman-teman belajar Nihongo dari N5 sampai N3.</div>
+  </div>
+  <div class="about-dev-info">
+    <div class="about-dev-row"><span class="about-dev-icon">👤</span><span class="about-dev-label">Nama</span><span class="about-dev-val">Ansah</span></div>
+    <div class="about-dev-row"><span class="about-dev-icon">📱</span><span class="about-dev-label">Aplikasi</span><span class="about-dev-val">Belajar Bahasa Jepang PWA</span></div>
+  </div>
+  <div class="about-dev-ver">Versi 1.0.0 · 2026 · Made with ❤️</div>
+</div>`;
+}
+
 // ── INIT THEME & NOTIF ──
 applyStoredTheme();
 scheduleNotifCheck();
+
+// ── INIT DEVELOPER PHOTO ──
+(function(){
+  const imgs=['hdr-dev-avatar','sb-dev-photo'];
+  imgs.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){ el.src=PHOTO_DEV; el.style.display='block'; }
+  });
+})();
 
 // ── SERVICE WORKER ──
 if('serviceWorker' in navigator){
