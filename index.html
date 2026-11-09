@@ -1018,6 +1018,10 @@ body::before {
 <nav class="sidebar" id="sidebar">
   <button class="sb-close-btn" onclick="toggleSidebar()" aria-label="Tutup menu">✕ Tutup</button>
   <div class="sb-group">
+    <div class="sb-group-label">Kurikulum</div>
+    <button class="tab-btn" onclick="showTab('mnnkurikulum',this)"><span class="sb-icon">み</span>Kurikulum MnN<span class="sb-badge">NEW</span></button>
+  </div>
+  <div class="sb-group">
     <div class="sb-group-label">Huruf</div>
     <button class="tab-btn active" onclick="showTab('hiragana',this)"><span class="sb-icon">ひ</span>Hiragana</button>
     <button class="tab-btn" onclick="showTab('katakana',this)"><span class="sb-icon">カ</span>Katakana</button>
@@ -1851,6 +1855,11 @@ F：じゃあ、黄色いボタンを押してください。薄くするとき�
     <p>Urutan goresan yang benar saat menulis Hiragana dan Katakana.</p>
   </div>
   <div id="strokeorder-container"></div>
+</section>
+
+<!-- ===== KURIKULUM MINNA NO NIHONGO ===== -->
+<section id="mnnkurikulum" class="section">
+  <div id="mnnkurikulum-container"></div>
 </section>
 
 <!-- ===== ABOUT DEVELOPER ===== -->
@@ -5198,6 +5207,7 @@ showTab=function(id,btn){
   if(id==='n3materi'){ const c=document.getElementById('n3materi-container'); if(c&&!c.querySelector('.n3-tabs')) renderN3Materi(); }
   if(id==='pengaturan'){ const c=document.getElementById('pengaturan-container'); if(c&&!c.querySelector('.sett-section')) renderPengaturan(); }
   if(id==='about'){ const c=document.getElementById('about-container'); if(c&&!c.querySelector('.about-dev-card')) renderAbout(); }
+  if(id==='mnnkurikulum'){ const c=document.getElementById('mnnkurikulum-container'); if(c&&!c.querySelector('.mnn-wrap')) renderMnnKurikulum(); }
 };
 
 // ── NHK PELAJARAN ──
@@ -7772,6 +7782,170 @@ function soNextStroke(){
 
 function soReset(){so_strokeIdx=0;soDrawStrokes();}
 function soClose(){document.getElementById('so-modal').classList.remove('open');}
+
+// ══════════════════════════════════════════
+// KURIKULUM MINNA NO NIHONGO
+// ══════════════════════════════════════════
+const mnnData = [
+  {stage:'Persiapan Awal',dur:56,focus:'Hafal dan lancar huruf dasar sebelum masuk buku utama',babs:[
+    {n:'ひ/カ',title:'Hiragana & Katakana',desc:'Hafal dan lancar kedua sistem huruf dasar bahasa Jepang.',focus:'Dasar membaca dan menulis sebelum masuk buku teks.',poin:['46 karakter Hiragana','46 karakter Katakana + tenten/maru','Kombinasi huruf (きゃ、しゅ、ちょ dll)','Latihan menulis dan membaca cepat'],tags:['Hiragana','Katakana']},
+  ]},
+  {stage:'Tahap 1',dur:30,sub:'Bab 1–5',focus:'Fondasi Kalimat & Identitas',babs:[
+    {n:1,title:'Kalimat Dasar & Perkenalan',desc:'Pola A wa B desu, kalimat positif, negatif, dan tanya.',focus:'Memperkenalkan diri dan orang lain.',poin:['Pola: ～は ～です','Bentuk negatif: ～じゃ ありません','Bentuk tanya: ～ですか','Kosakata: nama, negara, pekerjaan, angka'],tags:['～desu','～ka','wa']},
+    {n:2,title:'Kata Penunjuk Benda',desc:'Kata penunjuk kore, sore, are untuk benda dekat, sedang, jauh.',focus:'Menunjuk dan menanyakan benda berdasarkan jarak.',poin:['kore (ini) — dekat pembicara','sore (itu) — dekat lawan bicara','are (itu) — jauh dari keduanya','Tanya: kore wa nan desu ka?'],tags:['kore/sore/are','nan/nani']},
+    {n:3,title:'Tempat & Transaksi',desc:'Penunjuk tempat, letak benda/bangunan, menanyakan harga.',focus:'Menanyakan letak dan berbelanja sederhana.',poin:['Kata penunjuk tempat: koko, soko, asoko','Partikel no untuk kepemilikan','Menanyakan harga: ikura desu ka','Angka 1–10.000'],tags:['koko/soko/asoko','ikura','no']},
+    {n:4,title:'Waktu & Aktivitas Harian',desc:'Menyatakan jam, menit, dan kegiatan sehari-hari.',focus:'Menyusun jadwal dan bercerita aktivitas harian.',poin:['Jam: ～ji (時)','Menit: ～fun/pun (分)','Partikel kara (dari) dan made (sampai)','Kata kerja dasar: tabemasu, nomimasu, nemasu'],tags:['～ji','～fun','kara/made']},
+    {n:5,title:'Kata Kerja Perpindahan',desc:'ikimasu, kimasu, kaerimasu dan penggunaan transportasi.',focus:'Menceritakan pergi ke suatu tempat dengan kendaraan.',poin:['ikimasu (pergi), kimasu (datang), kaerimasu (pulang)','Partikel e/ni (ke), de (dengan/naik)','Menyebut alat transportasi','Menanyakan tujuan: doko e ikimasu ka'],tags:['ikimasu','e/ni/de']},
+  ]},
+  {stage:'Tahap 2',dur:30,sub:'Bab 6–10',focus:'Aktivitas Harian & Objek',babs:[
+    {n:6,title:'Kata Kerja Transitif',desc:'Partikel wo (o), ajakan sopan ～masenka.',focus:'Menyatakan apa yang dilakukan dan mengajak orang lain.',poin:['Partikel wo — menandai objek langsung','Kata kerja: tabemasu, nomimasu, kaimasu','Ajakan: ～masenka (maukah kita ～?)','Menerima/menolak ajakan'],tags:['wo','～masenka','～mashou']},
+    {n:7,title:'Memberi & Menerima',desc:'Penggunaan alat/sarana dan konsep memberi-menerima barang.',focus:'Menyatakan memberi dan menerima benda.',poin:['agemasu (memberi)', 'moraimasu (menerima)','Partikel ni (kepada), kara (dari)','Menyatakan alat: de (menggunakan)'],tags:['agemasu','moraimasu','ni/kara']},
+    {n:8,title:'Kata Sifat',desc:'Kata sifat-na dan kata sifat-i, bentuk lampau dan sekarang.',focus:'Mendeskripsikan benda, orang, dan tempat.',poin:['i-keiyōshi (adjektiva-i): ookii, chiisai, takai','na-keiyōshi (adjektiva-na): kirei, shizuka, benri','Bentuk lampau: ～katta, ～deshita','Bentuk negatif sifat'],tags:['i-adj','na-adj','lampau']},
+    {n:9,title:'Kesukaan & Kemampuan',desc:'Menyatakan suka, tidak suka, dan bisa melakukan sesuatu.',focus:'Mengekspresikan preferensi dan kemampuan.',poin:['～が すきです (suka)','～が きらいです (tidak suka)','～が じょうずです (pandai)','～が できます (bisa melakukan)'],tags:['ga suki','ga dekimasu','jouzu']},
+    {n:10,title:'Keberadaan',desc:'Menyatakan ada/tidaknya benda mati dan makhluk hidup.',focus:'Menanyakan dan menyatakan lokasi seseorang atau benda.',poin:['arimasu — benda mati/tanaman ada','imasu — makhluk hidup ada','Kata posisi: ue, shita, mae, ushiro, naka, soto','Pola: ～wa ～ni arimasu/imasu'],tags:['arimasu','imasu','posisi']},
+  ]},
+  {stage:'Tahap 3',dur:30,sub:'Bab 11–15',focus:'Kuantitas, Keinginan & Perintah Halus',babs:[
+    {n:'11-12',title:'Kata Bilangan & Cuaca',desc:'Penghitung benda, menanyakan kondisi fisik dan cuaca.',focus:'Menghitung berbagai benda dan menggambarkan keadaan.',poin:['Kata bilangan: hon (benda panjang), mai (lembaran), hiki (hewan kecil)','Menanyakan jumlah: ～wa ikutsu arimasu ka','Kondisi cuaca: ame, hare, kumori','Kondisi fisik: atama ga itai, netsu ga arimasu'],tags:['～hon/mai/hiki','cuaca','kondisi']},
+    {n:13,title:'Menyatakan Keinginan',desc:'Menyatakan keinginan memiliki atau melakukan sesuatu.',focus:'Mengekspresikan apa yang diinginkan.',poin:['～が ほしいです (ingin memiliki)','～たいです (ingin melakukan)','Bentuk negatif dan lampau','Menanyakan keinginan orang lain'],tags:['～tai desu','～hoshii']},
+    {n:14,title:'Bentuk-Te & Izin',desc:'Perubahan ke bentuk-te, memberi izin dan larangan.',focus:'Meminta dan memberi izin, menyatakan larangan.',poin:['Konjugasi ke bentuk-te (～て)','Izin: ～ても いいです (boleh)','Larangan: ～ては いけません (tidak boleh)','Permintaan: ～て ください (tolong lakukan)'],tags:['～te','～te mo ii','～te wa ikemasen']},
+    {n:15,title:'Gabungan Bentuk-Te',desc:'Menyambung kalimat dengan bentuk-te dan izin dasar.',focus:'Menyatakan serangkaian kegiatan berurutan.',poin:['Menyambung kata kerja: ～te, ～te, ～masu','Menyatakan cara/metode melakukan sesuatu','Menggabungkan sifat dengan bentuk-te','Pola: ～てから (setelah melakukan)'],tags:['～te kara','rangkaian kegiatan']},
+  ]},
+  {stage:'Tahap 4',dur:30,sub:'Bab 16–20',focus:'Rangkaian Kegiatan & Pengalaman',babs:[
+    {n:16,title:'Urutan Kata Kerja',desc:'Menyambung beberapa kata kerja secara berurutan.',focus:'Menceritakan urutan aktivitas yang dilakukan.',poin:['Menyambung kata kerja dengan bentuk-te','Menyatakan bersamaan: ～ながら (sambil)','Larangan dan anjuran dengan bentuk-nai','Pola natural untuk narasi'],tags:['～nagara','urutan kegiatan']},
+    {n:17,title:'Bentuk Negatif & Kewajiban',desc:'Kata kerja bentuk-nai dan instruksi pencegahan/kewajiban.',focus:'Menyatakan apa yang tidak boleh dan apa yang harus dilakukan.',poin:['Konjugasi bentuk-nai (negatif kamus)','Kewajiban: ～なければなりません (harus)','Tidak perlu: ～なくてもいいです','Larangan sopan'],tags:['～nakereba','～nakute mo ii']},
+    {n:18,title:'Hobi & Kemampuan Lanjut',desc:'Menyatakan hobi dan kemampuan dengan bentuk kamus.',focus:'Berbicara tentang hobi dan aktivitas yang disukai.',poin:['Bentuk kamus (jisho-kei / bentuk dasar)','Hobi: ～のが すきです','Kemampuan: ～ことが できます','Sebelum kata benda: ～koto/no'],tags:['jisho-kei','～koto ga dekimasu']},
+    {n:19,title:'Pengalaman Masa Lalu',desc:'Menceritakan pengalaman yang pernah dilakukan.',focus:'Berbagi pengalaman dan cerita masa lalu.',poin:['Pola: ～たことがあります (pernah)','Bentuk lampau biasa (ta-kei)','Menceritakan frekuensi: ichido, nandomo','Menyatakan belum pernah: ～たことがありません'],tags:['～ta koto ga arimasu','pengalaman']},
+    {n:20,title:'Bahasa Akrab (Futsū-kei)',desc:'Perubahan dari bentuk sopan ke bentuk biasa.',focus:'Berkomunikasi dengan teman sebaya secara natural.',poin:['Kata kerja bentuk biasa: iku, taberu, suru','Kata sifat bentuk biasa','Penggunaan dalam percakapan sehari-hari','Perbedaan situasi formal vs informal'],tags:['futsū-kei','bentuk biasa']},
+  ]},
+  {stage:'Tahap 5',dur:40,sub:'Bab 21–25',focus:'Pengandaian & Pendapat',babs:[
+    {n:21,title:'Menyatakan Pendapat',desc:'Menyampaikan opini dan mengutip perkataan orang lain.',focus:'Berbagi pendapat dan melaporkan ucapan orang.',poin:['Pendapat: ～とおもいます (saya pikir)','Kutipan: ～といいました (dia berkata)','Kata penghubung: dakara, demo, sorekara','Menyatakan setuju/tidak setuju'],tags:['～to omoimasu','～to iimashita']},
+    {n:22,title:'Kalimat Penjelas Kata Benda',desc:'Menggunakan klausa untuk menjelaskan kata benda.',focus:'Membuat kalimat yang lebih kompleks dan deskriptif.',poin:['Klausa relatif sebelum kata benda','Pola: [kalimat] + kata benda','Contoh: kinou katta hon (buku yang dibeli kemarin)','Mendeskripsikan orang dan benda secara detail'],tags:['klausa relatif','noun modifier']},
+    {n:23,title:'Pengandaian Waktu/Situasi',desc:'Menyatakan kondisi dengan ～to.',focus:'Mendeskripsikan hubungan sebab-akibat alami.',poin:['Pola: ～と (jika/ketika, selalu)','Digunakan untuk fakta/kondisi umum','Petunjuk arah: hidari ni miru to…','Perbedaan dengan ～たら'],tags:['～to','kondisi alami']},
+    {n:24,title:'Memberi & Menerima Tindakan',desc:'Konsep memberi dan menerima dalam bentuk tindakan.',focus:'Mengungkapkan kebaikan yang dilakukan atau diterima.',poin:['～て あげます (melakukan untuk orang lain)','～て もらいます (meminta orang melakukan)','～て くれます (orang melakukan untuk saya)','Nuansa rasa terima kasih dan kebaikan'],tags:['～te agemasu','～te moraimasu','～te kuremasu']},
+    {n:25,title:'Kalimat Pengandaian ～tara',desc:'Kalimat bersyarat lanjutan dengan ～tara.',focus:'Menyatakan kondisi hipotetis dan saran.',poin:['Pola: ～たら (jika/kalau/setelah)','Saran: ～たら どうですか (bagaimana kalau)','Perbedaan ～tara vs ～to vs ～ba','Penggunaan dalam percakapan nyata'],tags:['～tara','～ba','saran']},
+  ]},
+];
+
+let mnnActiveStage='all', mnnOpenBab=null;
+
+function renderMnnKurikulum(){
+  const el=document.getElementById('mnnkurikulum-container');
+  if(!el) return;
+  const totalBab=mnnData.reduce((s,st)=>s+st.babs.length,0);
+  const totalDur=mnnData.reduce((s,st)=>s+st.dur,0);
+  el.innerHTML=`<style>
+.mnn-wrap{max-width:900px;}
+.mnn-hdr{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:16px;padding:22px 20px;margin-bottom:18px;position:relative;overflow:hidden;}
+.mnn-hdr::before{content:'日';position:absolute;font-family:'Noto Sans JP',sans-serif;font-size:150px;opacity:.05;right:-10px;bottom:-30px;line-height:1;}
+.mnn-hdr-top{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.mnn-logo{width:46px;height:46px;background:var(--s1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Noto Sans JP',sans-serif;font-size:22px;font-weight:900;color:#fff;flex-shrink:0;}
+.mnn-hdr-title{font-size:19px;font-weight:900;color:#fff;}
+.mnn-hdr-sub{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px;}
+.mnn-stats{display:flex;gap:10px;flex-wrap:wrap;}
+.mnn-stat{background:rgba(255,255,255,.08);border-radius:10px;padding:8px 16px;text-align:center;min-width:70px;}
+.mnn-stat-n{font-size:20px;font-weight:900;color:var(--s1);}
+.mnn-stat-l{font-size:10px;color:rgba(255,255,255,.55);margin-top:1px;}
+.mnn-filter{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
+.mnn-fbtn{padding:7px 14px;border-radius:99px;border:1.5px solid var(--border);font-size:12px;font-weight:700;cursor:pointer;background:var(--surface);color:var(--muted);font-family:'Inter',sans-serif;transition:all .15s;}
+.mnn-fbtn.active{background:var(--s1);border-color:var(--s1);color:#fff;}
+.mnn-stage{margin-bottom:22px;}
+.mnn-stage-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:10px 14px;background:var(--surface);border-radius:10px;border-left:4px solid var(--s1);}
+.mnn-stage-tag{font-size:11px;font-weight:800;color:var(--s1);text-transform:uppercase;letter-spacing:.05em;}
+.mnn-stage-ttl{font-size:14px;font-weight:800;}
+.mnn-stage-dur{margin-left:auto;font-size:11px;color:var(--muted);font-weight:700;background:var(--bg);border-radius:6px;padding:3px 9px;white-space:nowrap;}
+.mnn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;}
+.mnn-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px 15px;cursor:pointer;transition:all .15s;}
+.mnn-card:hover{border-color:var(--s1);box-shadow:0 2px 14px rgba(224,53,53,.13);}
+.mnn-card-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.mnn-card-num{width:32px;height:32px;border-radius:8px;background:rgba(224,53,53,.08);font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;color:var(--s1);flex-shrink:0;font-family:'Noto Sans JP',sans-serif;}
+.mnn-card-title{font-size:13px;font-weight:800;line-height:1.3;}
+.mnn-card-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px;}
+.mnn-card-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.mnn-card-tag{background:rgba(224,53,53,.07);color:var(--s1);border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;}
+.mnn-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;}
+.mnn-modal-bg.open{display:flex;}
+.mnn-modal{background:var(--surface);border-radius:16px;max-width:460px;width:100%;max-height:82vh;overflow-y:auto;padding:22px;}
+.mnn-modal-close{float:right;background:var(--bg);border:none;border-radius:8px;padding:5px 12px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:700;color:var(--muted);}
+.mnn-modal-bab{font-size:11px;font-weight:800;color:var(--s1);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.mnn-modal-title{font-size:18px;font-weight:900;margin-bottom:10px;}
+.mnn-modal-focus{background:rgba(224,53,53,.06);border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:14px;border-left:3px solid var(--s1);line-height:1.6;}
+.mnn-modal-poin-ttl{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:8px;}
+.mnn-modal-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.mnn-modal-list li{font-size:13px;color:var(--fg);padding-left:18px;position:relative;line-height:1.5;}
+.mnn-modal-list li::before{content:'▸';position:absolute;left:0;color:var(--s1);}
+.mnn-modal-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px;}
+.mnn-modal-tag{background:rgba(224,53,53,.08);color:var(--s1);border-radius:7px;padding:3px 10px;font-size:11px;font-weight:700;}
+</style>
+<div class="mnn-wrap">
+<div class="mnn-hdr">
+  <div class="mnn-hdr-top">
+    <div class="mnn-logo">み</div>
+    <div>
+      <div class="mnn-hdr-title">Minna no Nihongo</div>
+      <div class="mnn-hdr-sub">Kurikulum Lengkap N5 — Bab 1 sampai 25</div>
+    </div>
+  </div>
+  <div class="mnn-stats">
+    <div class="mnn-stat"><div class="mnn-stat-n">${totalBab}</div><div class="mnn-stat-l">Total Bab</div></div>
+    <div class="mnn-stat"><div class="mnn-stat-n">${totalDur}</div><div class="mnn-stat-l">Jam Belajar</div></div>
+    <div class="mnn-stat"><div class="mnn-stat-n">5</div><div class="mnn-stat-l">Tahapan</div></div>
+    <div class="mnn-stat"><div class="mnn-stat-n">N5</div><div class="mnn-stat-l">Level Target</div></div>
+  </div>
+</div>
+<div class="mnn-filter" id="mnn-filter">
+  <button class="mnn-fbtn active" onclick="mnnFilter('all',this)">Semua</button>
+  ${mnnData.map((s,i)=>`<button class="mnn-fbtn" onclick="mnnFilter(${i},this)">${s.stage}</button>`).join('')}
+</div>
+<div id="mnn-stages"></div>
+</div>
+<div class="mnn-modal-bg" id="mnn-modal-bg" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="mnn-modal" id="mnn-modal"></div>
+</div>`;
+  mnnRenderStages('all');
+}
+
+function mnnRenderStages(active){
+  const el=document.getElementById('mnn-stages');
+  if(!el) return;
+  const stages=active==='all'?mnnData:[mnnData[active]];
+  el.innerHTML=stages.map(s=>`
+<div class="mnn-stage">
+  <div class="mnn-stage-hdr">
+    <div>
+      <div class="mnn-stage-tag">${s.stage}${s.sub?' — '+s.sub:''}</div>
+      <div class="mnn-stage-ttl">${s.focus}</div>
+    </div>
+    <div class="mnn-stage-dur">${s.dur} jam</div>
+  </div>
+  <div class="mnn-grid">${s.babs.map(b=>`
+  <div class="mnn-card" onclick="mnnOpenDetail(${JSON.stringify(b).replace(/"/g,'&quot;')})">
+    <div class="mnn-card-top">
+      <div class="mnn-card-num">${b.n}</div>
+      <div class="mnn-card-title">${b.title}</div>
+    </div>
+    <div class="mnn-card-desc">${b.desc}</div>
+    <div class="mnn-card-tags">${b.tags.map(t=>`<span class="mnn-card-tag">${t}</span>`).join('')}</div>
+  </div>`).join('')}</div>
+</div>`).join('');
+}
+
+function mnnFilter(idx,btn){
+  document.querySelectorAll('.mnn-fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  mnnRenderStages(idx);
+}
+
+function mnnOpenDetail(b){
+  const m=document.getElementById('mnn-modal');
+  m.innerHTML=`<button class="mnn-modal-close" onclick="document.getElementById('mnn-modal-bg').classList.remove('open')">✕ Tutup</button>
+<div class="mnn-modal-bab">Bab ${b.n}</div>
+<div class="mnn-modal-title">${b.title}</div>
+<div class="mnn-modal-focus">${b.focus}</div>
+<div class="mnn-modal-poin-ttl">Poin Pembelajaran</div>
+<ul class="mnn-modal-list">${b.poin.map(p=>`<li>${p}</li>`).join('')}</ul>
+<div class="mnn-modal-tags">${b.tags.map(t=>`<span class="mnn-modal-tag">${t}</span>`).join('')}</div>`;
+  document.getElementById('mnn-modal-bg').classList.add('open');
+}
 
 // ══════════════════════════════════════════
 // ABOUT DEVELOPER
