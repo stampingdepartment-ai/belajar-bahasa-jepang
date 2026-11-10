@@ -1,4 +1,4 @@
-const CACHE_NAME = 'belajar-jepang-v22';
+const CACHE_NAME = 'belajar-jepang-v24';
 const ASSETS = [
   '/',
   '/index.html'

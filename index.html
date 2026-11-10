@@ -370,6 +370,14 @@ body::before {
 }
 .btn-hapus-user:hover { background:#fef2f2; }
 .btn-hapus-user:disabled { opacity:.35; cursor:not-allowed; }
+.btn-edit-user {
+  background:none; border:1px solid #bfdbfe; color:#2563eb;
+  border-radius:6px; padding:4px 10px; font:600 11px/1 'Inter',sans-serif; cursor:pointer;
+}
+.btn-edit-user:hover { background:#eff6ff; }
+[data-theme="dark"] .btn-edit-user { border-color:#1e3a5f; color:#60a5fa; }
+[data-theme="dark"] .btn-edit-user:hover { background:#1e3a5f; }
+[data-theme="dark"] .btn-hapus-user:hover { background:#2d1515; }
 
 /* ── MODAL ── */
 .modal-bg {
@@ -965,6 +973,21 @@ body::before {
   </div>
 </div>
 
+<!-- ══════════ EDIT PASSWORD USER (ADMIN) MODAL ══════════ -->
+<div class="modal-bg" id="modal-editpass">
+  <div class="modal-box" style="max-width:360px;">
+    <h3>✏️ Edit Password User</h3>
+    <p id="ep-username-label" style="font-size:13px;color:var(--muted);margin:-4px 0 12px;"></p>
+    <div class="mfield"><label>Password Baru</label><input type="password" id="ep-new" placeholder="Min. 6 karakter"></div>
+    <div class="mfield"><label>Konfirmasi Password Baru</label><input type="password" id="ep-confirm" placeholder="Ulangi password baru"></div>
+    <div class="login-msg" id="ep-msg" style="text-align:left;"></div>
+    <div class="modal-actions">
+      <button class="btn-batal" onclick="closeEditPass()">Batal</button>
+      <button class="btn-simpan" onclick="submitEditPass()">Simpan</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════ GANTI PASSWORD MODAL ══════════ -->
 <div class="modal-bg" id="modal-changepass">
   <div class="modal-box">
@@ -988,7 +1011,7 @@ body::before {
     </div>
     <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
       <div id="user-chip-wrap" style="display:none;">
-        <div class="user-chip" onclick="document.getElementById('modal-changepass').classList.add('open')" title="Klik untuk ganti password" style="cursor:pointer;">
+        <div class="user-chip" onclick="if(authSession&&authSession.role==='admin'){document.getElementById('modal-changepass').classList.add('open');}else{alert('Fitur ganti password hanya tersedia untuk admin.');}" title="Info akun" style="cursor:pointer;">
           <div class="user-avatar" id="hdr-avatar">Y</div>
           <span id="hdr-name">Yayan</span>
           <span class="user-role-badge" id="hdr-role-badge" style="display:none;">ADMIN</span>
@@ -5132,7 +5155,10 @@ async function loadUsers(){
           <td>${u.nama}</td>
           <td>${u.username}</td>
           <td><span class="role-pill ${u.role==='admin'?'rp-admin':'rp-user'}">${u.role==='admin'?'Admin':'User'}</span></td>
-          <td><button class="btn-hapus-user" onclick="deleteUser('${u.username}')" ${u.username===authSession.username?'disabled title="Tidak bisa hapus diri sendiri"':''}>Hapus</button></td>
+          <td style="display:flex;gap:6px;align-items:center;">
+            <button class="btn-edit-user" onclick="openEditPass('${u.username}','${u.nama}')">Edit</button>
+            <button class="btn-hapus-user" onclick="deleteUser('${u.username}')" ${u.username===authSession.username?'disabled title="Tidak bisa hapus diri sendiri"':''}>Hapus</button>
+          </td>
         </tr>`).join('');
     } else {
       if(lmsg) lmsg.textContent='Gagal: '+data.msg;
@@ -5140,6 +5166,41 @@ async function loadUsers(){
   } catch(e){
     if(lmsg) lmsg.textContent='Gagal terhubung ke server';
   }
+}
+
+function openEditPass(username, nama){
+  document.getElementById('ep-username-label').textContent = 'User: '+nama+' ('+username+')';
+  document.getElementById('ep-new').value='';
+  document.getElementById('ep-confirm').value='';
+  document.getElementById('ep-msg').textContent='';
+  document.getElementById('modal-editpass')._targetUsername = username;
+  document.getElementById('modal-editpass').classList.add('open');
+}
+function closeEditPass(){
+  document.getElementById('modal-editpass').classList.remove('open');
+}
+async function submitEditPass(){
+  const modal = document.getElementById('modal-editpass');
+  const username = modal._targetUsername;
+  const newP = document.getElementById('ep-new').value.trim();
+  const cnf  = document.getElementById('ep-confirm').value.trim();
+  const msg  = document.getElementById('ep-msg');
+  if(!newP){ setMsg(msg,'Password baru tidak boleh kosong','err'); return; }
+  if(newP.length < 6){ setMsg(msg,'Password minimal 6 karakter','err'); return; }
+  if(newP !== cnf){ setMsg(msg,'Konfirmasi password tidak cocok','err'); return; }
+  setMsg(msg,'Menyimpan...','');
+  try {
+    const url = GAS_URL+'?action=adminResetPassword&token='+encodeURIComponent(authSession.token)
+      +'&username='+encodeURIComponent(username)+'&newPass='+encodeURIComponent(newP);
+    const res  = await fetch(url);
+    const data = await res.json();
+    if(data.ok){
+      setMsg(msg,'✅ Password berhasil diubah','ok');
+      setTimeout(()=>closeEditPass(), 1500);
+    } else {
+      setMsg(msg,'❌ '+data.msg,'err');
+    }
+  } catch(e){ setMsg(msg,'❌ Gagal terhubung ke server','err'); }
 }
 
 async function deleteUser(username){
