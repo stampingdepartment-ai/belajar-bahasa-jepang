@@ -7788,41 +7788,1124 @@ function soClose(){document.getElementById('so-modal').classList.remove('open');
 // ══════════════════════════════════════════
 const mnnData = [
   {stage:'Persiapan Awal',dur:56,focus:'Hafal dan lancar huruf dasar sebelum masuk buku utama',babs:[
-    {n:'ひ/カ',title:'Hiragana & Katakana',desc:'Hafal dan lancar kedua sistem huruf dasar bahasa Jepang.',focus:'Dasar membaca dan menulis sebelum masuk buku teks.',poin:['46 karakter Hiragana','46 karakter Katakana + tenten/maru','Kombinasi huruf (きゃ、しゅ、ちょ dll)','Latihan menulis dan membaca cepat'],tags:['Hiragana','Katakana']},
+    {n:'ひ/カ',title:'Hiragana & Katakana',desc:'Hafal dan lancar kedua sistem huruf dasar bahasa Jepang.',focus:'Dasar membaca dan menulis sebelum masuk buku teks.',poin:['46 karakter Hiragana','46 karakter Katakana + tenten/maru','Kombinasi huruf (きゃ、しゅ、ちょ dll)','Latihan menulis dan membaca cepat'],tags:['Hiragana','Katakana'],
+     vocab:[
+      {j:'あ行',r:'a-gyo',a:'Baris A: あいうえお'},
+      {j:'か行',r:'ka-gyo',a:'Baris KA: かきくけこ'},
+      {j:'さ行',r:'sa-gyo',a:'Baris SA: さしすせそ'},
+      {j:'た行',r:'ta-gyo',a:'Baris TA: たちつてと'},
+      {j:'な行',r:'na-gyo',a:'Baris NA: なにぬねの'},
+      {j:'は行',r:'ha-gyo',a:'Baris HA: はひふへほ'},
+      {j:'ま行',r:'ma-gyo',a:'Baris MA: まみむめも'},
+      {j:'や行',r:'ya-gyo',a:'Baris YA: やゆよ'},
+      {j:'ら行',r:'ra-gyo',a:'Baris RA: らりるれろ'},
+      {j:'わ行',r:'wa-gyo',a:'Baris WA: わをん'},
+      {j:'ア行',r:'a-gyo kata',a:'Katakana: アイウエオ'},
+      {j:'カ行',r:'ka-gyo kata',a:'Katakana: カキクケコ'},
+      {j:'きゃ',r:'kya',a:'Kombinasi: きゃ きゅ きょ'},
+      {j:'しゃ',r:'sha',a:'Kombinasi: しゃ しゅ しょ'},
+      {j:'ちゃ',r:'cha',a:'Kombinasi: ちゃ ちゅ ちょ'},
+     ],
+     grammar:[]
+    },
   ]},
   {stage:'Tahap 1',dur:30,sub:'Bab 1–5',focus:'Fondasi Kalimat & Identitas',babs:[
-    {n:1,title:'Kalimat Dasar & Perkenalan',desc:'Pola A wa B desu, kalimat positif, negatif, dan tanya.',focus:'Memperkenalkan diri dan orang lain.',poin:['Pola: ～は ～です','Bentuk negatif: ～じゃ ありません','Bentuk tanya: ～ですか','Kosakata: nama, negara, pekerjaan, angka'],tags:['～desu','～ka','wa']},
-    {n:2,title:'Kata Penunjuk Benda',desc:'Kata penunjuk kore, sore, are untuk benda dekat, sedang, jauh.',focus:'Menunjuk dan menanyakan benda berdasarkan jarak.',poin:['kore (ini) — dekat pembicara','sore (itu) — dekat lawan bicara','are (itu) — jauh dari keduanya','Tanya: kore wa nan desu ka?'],tags:['kore/sore/are','nan/nani']},
-    {n:3,title:'Tempat & Transaksi',desc:'Penunjuk tempat, letak benda/bangunan, menanyakan harga.',focus:'Menanyakan letak dan berbelanja sederhana.',poin:['Kata penunjuk tempat: koko, soko, asoko','Partikel no untuk kepemilikan','Menanyakan harga: ikura desu ka','Angka 1–10.000'],tags:['koko/soko/asoko','ikura','no']},
-    {n:4,title:'Waktu & Aktivitas Harian',desc:'Menyatakan jam, menit, dan kegiatan sehari-hari.',focus:'Menyusun jadwal dan bercerita aktivitas harian.',poin:['Jam: ～ji (時)','Menit: ～fun/pun (分)','Partikel kara (dari) dan made (sampai)','Kata kerja dasar: tabemasu, nomimasu, nemasu'],tags:['～ji','～fun','kara/made']},
-    {n:5,title:'Kata Kerja Perpindahan',desc:'ikimasu, kimasu, kaerimasu dan penggunaan transportasi.',focus:'Menceritakan pergi ke suatu tempat dengan kendaraan.',poin:['ikimasu (pergi), kimasu (datang), kaerimasu (pulang)','Partikel e/ni (ke), de (dengan/naik)','Menyebut alat transportasi','Menanyakan tujuan: doko e ikimasu ka'],tags:['ikimasu','e/ni/de']},
+    {n:1,title:'Kalimat Dasar & Perkenalan',desc:'Pola A wa B desu, kalimat positif, negatif, dan tanya.',focus:'Memperkenalkan diri dan orang lain.',poin:['Pola: ～は ～です','Bentuk negatif: ～じゃ ありません','Bentuk tanya: ～ですか','Kosakata: nama, negara, pekerjaan, angka'],tags:['～desu','～ka','wa'],
+     vocab:[
+      {j:'わたし',r:'watashi',a:'saya'},
+      {j:'わたしたち',r:'watashitachi',a:'kami / kita'},
+      {j:'あなた',r:'anata',a:'kamu / Anda'},
+      {j:'あのひと',r:'ano hito',a:'orang itu'},
+      {j:'みなさん',r:'minasan',a:'semua orang / hadirin'},
+      {j:'～さん',r:'~san',a:'sebutan hormat (Tn./Ny./Nona...)'},
+      {j:'～ちゃん',r:'~chan',a:'sebutan akrab untuk anak/wanita'},
+      {j:'～くん',r:'~kun',a:'sebutan akrab untuk laki-laki muda'},
+      {j:'せんせい',r:'sensei',a:'guru / dokter'},
+      {j:'きょうし',r:'kyoushi',a:'pengajar (profesi)'},
+      {j:'がくせい',r:'gakusei',a:'pelajar / mahasiswa'},
+      {j:'かいしゃいん',r:'kaishain',a:'karyawan perusahaan'},
+      {j:'しゃいん',r:'shain',a:'staf perusahaan'},
+      {j:'ぎんこういん',r:'ginkouin',a:'pegawai bank'},
+      {j:'いしゃ',r:'isha',a:'dokter'},
+      {j:'けんきゅうしゃ',r:'kenkyuusha',a:'peneliti'},
+      {j:'エンジニア',r:'enjinia',a:'insinyur / engineer'},
+      {j:'だいがく',r:'daigaku',a:'universitas'},
+      {j:'びょういん',r:'byouin',a:'rumah sakit'},
+      {j:'でんき',r:'denki',a:'listrik / elektronik'},
+      {j:'なん / なに',r:'nan / nani',a:'apa'},
+      {j:'～さい',r:'~sai',a:'...tahun (usia)'},
+      {j:'はい',r:'hai',a:'ya / betul'},
+      {j:'いいえ',r:'iie',a:'tidak / bukan'},
+      {j:'しつれいですが',r:'shitsurei desu ga',a:'maaf mengganggu, boleh tanya...'},
+      {j:'おなまえは？',r:'onamae wa?',a:'siapa nama Anda?'},
+      {j:'はじめまして',r:'hajimemashite',a:'salam kenal'},
+      {j:'どうぞよろしく',r:'douzo yoroshiku',a:'senang berkenalan dengan Anda'},
+     ],
+     grammar:[
+      {pola:'N は N です',romaji:'N wa N desu',arti:'N adalah N (kalimat pernyataan)',penjelasan:'Pola dasar untuk memperkenalkan diri atau menyatakan identitas. は (wa) adalah partikel topik, です (desu) adalah kata kerja kopula sopan.',contoh:[
+        {j:'わたしはマイクです。',r:'Watashi wa Maiku desu.',a:'Saya adalah Mike.'},
+        {j:'かれはがくせいです。',r:'Kare wa gakusei desu.',a:'Dia (laki-laki) adalah pelajar.'},
+        {j:'やまださんはいしゃです。',r:'Yamada-san wa isha desu.',a:'Pak Yamada adalah dokter.'},
+      ]},
+      {pola:'N は N じゃ ありません',romaji:'N wa N ja arimasen',arti:'N bukan N (bentuk negatif)',penjelasan:'Bentuk negatif dari ～です. じゃ ありません adalah bentuk percakapan; bentuk formal は ではありません.',contoh:[
+        {j:'わたしはせんせいじゃ ありません。',r:'Watashi wa sensei ja arimasen.',a:'Saya bukan guru.'},
+        {j:'これはほんじゃ ありません。',r:'Kore wa hon ja arimasen.',a:'Ini bukan buku.'},
+      ]},
+      {pola:'N は N ですか',romaji:'N wa N desu ka',arti:'Apakah N adalah N? (kalimat tanya)',penjelasan:'Tambahkan か (ka) di akhir kalimat untuk membuat pertanyaan. Intonasi naik di akhir.',contoh:[
+        {j:'やまださんはにほんじんですか。',r:'Yamada-san wa nihonjin desu ka.',a:'Apakah Yamada-san orang Jepang?'},
+        {j:'あなたはがくせいですか。',r:'Anata wa gakusei desu ka.',a:'Apakah kamu pelajar?'},
+        {j:'これはほんですか。',r:'Kore wa hon desu ka.',a:'Apakah ini buku?'},
+      ]},
+      {pola:'N も N です',romaji:'N mo N desu',arti:'N juga N',penjelasan:'も (mo) menggantikan は untuk menyatakan "juga". Digunakan ketika fakta yang sama berlaku untuk subjek lain.',contoh:[
+        {j:'わたしもがくせいです。',r:'Watashi mo gakusei desu.',a:'Saya juga pelajar.'},
+        {j:'やまださんもにほんじんです。',r:'Yamada-san mo nihonjin desu.',a:'Yamada-san juga orang Jepang.'},
+      ]},
+     ]
+    },
+    {n:2,title:'Kata Penunjuk Benda',desc:'Kata penunjuk kore, sore, are untuk benda dekat, sedang, jauh.',focus:'Menunjuk dan menanyakan benda berdasarkan jarak.',poin:['kore (ini) — dekat pembicara','sore (itu) — dekat lawan bicara','are (itu) — jauh dari keduanya','Tanya: kore wa nan desu ka?'],tags:['kore/sore/are','nan/nani'],
+     vocab:[
+      {j:'これ',r:'kore',a:'ini (dekat pembicara)'},
+      {j:'それ',r:'sore',a:'itu (dekat lawan bicara)'},
+      {j:'あれ',r:'are',a:'itu (jauh dari keduanya)'},
+      {j:'この',r:'kono',a:'ini ~ (sebelum kata benda)'},
+      {j:'その',r:'sono',a:'itu ~ (sebelum kata benda)'},
+      {j:'あの',r:'ano',a:'itu ~ jauh (sebelum kata benda)'},
+      {j:'ほん',r:'hon',a:'buku'},
+      {j:'じしょ',r:'jisho',a:'kamus'},
+      {j:'ざっし',r:'zasshi',a:'majalah'},
+      {j:'しんぶん',r:'shinbun',a:'koran / surat kabar'},
+      {j:'ノート',r:'nooto',a:'buku catatan'},
+      {j:'てちょう',r:'techou',a:'agenda / buku saku'},
+      {j:'カード',r:'kaado',a:'kartu'},
+      {j:'えんぴつ',r:'enpitsu',a:'pensil'},
+      {j:'ボールペン',r:'boorupen',a:'bolpoin'},
+      {j:'シャープペンシル',r:'shaapu penshiru',a:'pensil mekanik'},
+      {j:'かさ',r:'kasa',a:'payung'},
+      {j:'かばん',r:'kaban',a:'tas'},
+      {j:'テレビ',r:'terebi',a:'televisi'},
+      {j:'ラジオ',r:'rajio',a:'radio'},
+      {j:'カメラ',r:'kamera',a:'kamera'},
+      {j:'パソコン',r:'pasokon',a:'komputer / laptop'},
+      {j:'じどうしゃ',r:'jidousha',a:'mobil'},
+      {j:'つくえ',r:'tsukue',a:'meja'},
+      {j:'いす',r:'isu',a:'kursi'},
+      {j:'～の',r:'~no',a:'partikel kepemilikan (～punya～)'},
+      {j:'そうです',r:'sou desu',a:'ya, betul'},
+      {j:'ちがいます',r:'chigaimasu',a:'bukan / salah'},
+     ],
+     grammar:[
+      {pola:'これ / それ / あれ は N です',romaji:'Kore/Sore/Are wa N desu',arti:'Ini/Itu adalah N',penjelasan:'Kata penunjuk berdasarkan jarak. これ = dekat pembicara, それ = dekat pendengar, あれ = jauh dari keduanya.',contoh:[
+        {j:'これはほんです。',r:'Kore wa hon desu.',a:'Ini adalah buku.'},
+        {j:'それはわたしのかばんです。',r:'Sore wa watashi no kaban desu.',a:'Itu adalah tas saya.'},
+        {j:'あれはやまださんのじどうしゃです。',r:'Are wa Yamada-san no jidousha desu.',a:'Itu adalah mobil Yamada-san.'},
+      ]},
+      {pola:'N の N',romaji:'N no N',arti:'N punya N / N milik N',penjelasan:'Partikel の (no) menyatakan kepemilikan atau hubungan antara dua kata benda. Seperti tanda apostrof-s dalam bahasa Inggris.',contoh:[
+        {j:'これはわたしのほんです。',r:'Kore wa watashi no hon desu.',a:'Ini adalah buku saya.'},
+        {j:'やまださんのつくえはどれですか。',r:'Yamada-san no tsukue wa dore desu ka.',a:'Yang mana meja Yamada-san?'},
+      ]},
+      {pola:'これ は N の です',romaji:'Kore wa N no desu',arti:'Ini milik N',penjelasan:'の di akhir kalimat bisa menggantikan kata benda yang sudah diketahui konteksnya.',contoh:[
+        {j:'このかばんはやまださんのです。',r:'Kono kaban wa Yamada-san no desu.',a:'Tas ini milik Yamada-san.'},
+        {j:'そのほんはだれのですか。',r:'Sono hon wa dare no desu ka.',a:'Buku itu milik siapa?'},
+      ]},
+     ]
+    },
+    {n:3,title:'Tempat & Transaksi',desc:'Penunjuk tempat, letak benda/bangunan, menanyakan harga.',focus:'Menanyakan letak dan berbelanja sederhana.',poin:['Kata penunjuk tempat: koko, soko, asoko','Partikel no untuk kepemilikan','Menanyakan harga: ikura desu ka','Angka 1–10.000'],tags:['koko/soko/asoko','ikura','no'],
+     vocab:[
+      {j:'ここ',r:'koko',a:'di sini (dekat pembicara)'},
+      {j:'そこ',r:'soko',a:'di situ (dekat pendengar)'},
+      {j:'あそこ',r:'asoko',a:'di sana (jauh dari keduanya)'},
+      {j:'どこ',r:'doko',a:'di mana'},
+      {j:'こちら',r:'kochira',a:'ke sini / sisi ini (sopan)'},
+      {j:'そちら',r:'sochira',a:'ke situ / sisi itu (sopan)'},
+      {j:'あちら',r:'achira',a:'ke sana / sisi itu (sopan)'},
+      {j:'どちら',r:'dochira',a:'ke mana / yang mana (sopan)'},
+      {j:'うえ',r:'ue',a:'atas'},
+      {j:'した',r:'shita',a:'bawah'},
+      {j:'まえ',r:'mae',a:'depan'},
+      {j:'うしろ',r:'ushiro',a:'belakang'},
+      {j:'みぎ',r:'migi',a:'kanan'},
+      {j:'ひだり',r:'hidari',a:'kiri'},
+      {j:'なか',r:'naka',a:'dalam / tengah'},
+      {j:'デパート',r:'depaato',a:'department store'},
+      {j:'スーパー',r:'suupaa',a:'supermarket'},
+      {j:'コンビニ',r:'konbini',a:'minimarket / convenience store'},
+      {j:'レストラン',r:'resutoran',a:'restoran'},
+      {j:'ぎんこう',r:'ginkou',a:'bank'},
+      {j:'ゆうびんきょく',r:'yuubinkyoku',a:'kantor pos'},
+      {j:'えき',r:'eki',a:'stasiun'},
+      {j:'トイレ',r:'toire',a:'toilet / kamar kecil'},
+      {j:'いくら',r:'ikura',a:'berapa harga?'},
+      {j:'ひゃく',r:'hyaku',a:'100'},
+      {j:'せん',r:'sen',a:'1.000'},
+      {j:'まん',r:'man',a:'10.000'},
+      {j:'えん',r:'en',a:'yen (mata uang Jepang)'},
+      {j:'ください',r:'kudasai',a:'tolong berikan (saya mau beli ini)'},
+     ],
+     grammar:[
+      {pola:'N は どこ ですか',romaji:'N wa doko desu ka',arti:'Di mana N?',penjelasan:'Menanyakan lokasi suatu tempat atau benda. どこ = di mana.',contoh:[
+        {j:'トイレはどこですか。',r:'Toire wa doko desu ka.',a:'Di mana toilet?'},
+        {j:'ゆうびんきょくはどこですか。',r:'Yuubinkyoku wa doko desu ka.',a:'Di mana kantor pos?'},
+        {j:'えきはあそこです。',r:'Eki wa asoko desu.',a:'Stasiun ada di sana.'},
+      ]},
+      {pola:'N は N の ちかく です',romaji:'N wa N no chikaku desu',arti:'N berada di dekat N',penjelasan:'Menyatakan posisi relatif suatu tempat terhadap tempat lain.',contoh:[
+        {j:'ぎんこうはデパートのまえです。',r:'Ginkou wa depaato no mae desu.',a:'Bank ada di depan department store.'},
+        {j:'コンビニはえきのちかくです。',r:'Konbini wa eki no chikaku desu.',a:'Minimarket ada di dekat stasiun.'},
+      ]},
+      {pola:'N を ください',romaji:'N o kudasai',arti:'Tolong berikan N / Saya mau N',penjelasan:'Digunakan saat berbelanja untuk meminta barang yang diinginkan.',contoh:[
+        {j:'これをください。',r:'Kore o kudasai.',a:'Saya mau ini.'},
+        {j:'そのほんをください。',r:'Sono hon o kudasai.',a:'Tolong berikan buku itu.'},
+      ]},
+      {pola:'N は いくら ですか',romaji:'N wa ikura desu ka',arti:'Berapa harga N?',penjelasan:'Menanyakan harga suatu barang.',contoh:[
+        {j:'このかばんはいくらですか。',r:'Kono kaban wa ikura desu ka.',a:'Berapa harga tas ini?'},
+        {j:'――せんえんです。',r:'-- Sen en desu.',a:'Seribu yen.'},
+      ]},
+     ]
+    },
+    {n:4,title:'Waktu & Aktivitas Harian',desc:'Menyatakan jam, menit, dan kegiatan sehari-hari.',focus:'Menyusun jadwal dan bercerita aktivitas harian.',poin:['Jam: ～ji (時)','Menit: ～fun/pun (分)','Partikel kara (dari) dan made (sampai)','Kata kerja dasar: tabemasu, nomimasu, nemasu'],tags:['～ji','～fun','kara/made'],
+     vocab:[
+      {j:'いま',r:'ima',a:'sekarang'},
+      {j:'～じ',r:'~ji',a:'jam... (pukul)'},
+      {j:'～ふん／ぷん',r:'~fun/pun',a:'...menit'},
+      {j:'はん',r:'han',a:'setengah (30 menit)'},
+      {j:'ごぜん',r:'gozen',a:'pagi / AM'},
+      {j:'ごご',r:'gogo',a:'sore/malam / PM'},
+      {j:'あさ',r:'asa',a:'pagi'},
+      {j:'ひる',r:'hiru',a:'siang'},
+      {j:'よる',r:'yoru',a:'malam'},
+      {j:'けさ',r:'kesa',a:'pagi ini'},
+      {j:'こんばん',r:'konban',a:'malam ini'},
+      {j:'おきます',r:'okimasu',a:'bangun tidur'},
+      {j:'ねます',r:'nemasu',a:'tidur'},
+      {j:'はたらきます',r:'hatarakimasu',a:'bekerja'},
+      {j:'やすみます',r:'yasumimasu',a:'beristirahat / libur'},
+      {j:'べんきょうします',r:'benkyou shimasu',a:'belajar'},
+      {j:'たべます',r:'tabemasu',a:'makan'},
+      {j:'のみます',r:'nomimasu',a:'minum'},
+      {j:'みます',r:'mimasu',a:'melihat / menonton'},
+      {j:'ききます',r:'kikimasu',a:'mendengar'},
+      {j:'まいにち',r:'mainichi',a:'setiap hari'},
+      {j:'まいあさ',r:'maiasa',a:'setiap pagi'},
+      {j:'まいばん',r:'maiban',a:'setiap malam'},
+      {j:'きのう',r:'kinou',a:'kemarin'},
+      {j:'きょう',r:'kyou',a:'hari ini'},
+      {j:'あした',r:'ashita',a:'besok'},
+      {j:'から',r:'kara',a:'dari (waktu mulai)'},
+      {j:'まで',r:'made',a:'sampai (waktu selesai)'},
+     ],
+     grammar:[
+      {pola:'いま ～じ ～ふん です',romaji:'Ima ~ji ~fun desu',arti:'Sekarang pukul ...jam ...menit',penjelasan:'Menyatakan waktu sekarang. じ untuk jam, ふん/ぷん untuk menit (pengucapan berubah tergantung angka).',contoh:[
+        {j:'いまなんじですか。',r:'Ima nanji desu ka.',a:'Sekarang pukul berapa?'},
+        {j:'いまごぜんじゅうじです。',r:'Ima gozen juuji desu.',a:'Sekarang pukul 10 pagi.'},
+        {j:'いまごごさんじはんです。',r:'Ima gogo sanji han desu.',a:'Sekarang pukul 3.30 sore.'},
+      ]},
+      {pola:'N は ～じ から ～じ まで です',romaji:'N wa ~ji kara ~ji made desu',arti:'N dari jam... sampai jam...',penjelasan:'から (kara) = mulai dari, まで (made) = sampai. Digunakan untuk menyatakan rentang waktu.',contoh:[
+        {j:'じゅぎょうはくじからじゅうにじまでです。',r:'Jugyou wa kuji kara juuniji made desu.',a:'Pelajaran dari jam 9 sampai jam 12.'},
+        {j:'ぎんこうはくじからさんじまでです。',r:'Ginkou wa kuji kara sanji made desu.',a:'Bank buka dari jam 9 sampai jam 3.'},
+      ]},
+      {pola:'V ます / V ません',romaji:'V masu / V masen',arti:'melakukan V / tidak melakukan V',penjelasan:'Bentuk sopan kata kerja positif (ます) dan negatif (ません). Digunakan untuk aktivitas sehari-hari.',contoh:[
+        {j:'まいあさろくじにおきます。',r:'Maiasa rokuji ni okimasu.',a:'Saya bangun jam 6 setiap pagi.'},
+        {j:'あさごはんをたべません。',r:'Asa gohan o tabemasen.',a:'Saya tidak makan sarapan.'},
+        {j:'まいばんテレビをみます。',r:'Maiban terebi o mimasu.',a:'Setiap malam saya menonton TV.'},
+      ]},
+      {pola:'V ました / V ませんでした',romaji:'V mashita / V masen deshita',arti:'sudah V / tidak V (lampau)',penjelasan:'Bentuk lampau sopan. ました untuk yang sudah dilakukan, ませんでした untuk yang tidak dilakukan.',contoh:[
+        {j:'きのうべんきょうしました。',r:'Kinou benkyou shimashita.',a:'Kemarin saya belajar.'},
+        {j:'きのうやすみませんでした。',r:'Kinou yasumimashendeshita.',a:'Kemarin saya tidak istirahat.'},
+      ]},
+     ]
+    },
+    {n:5,title:'Kata Kerja Perpindahan',desc:'ikimasu, kimasu, kaerimasu dan penggunaan transportasi.',focus:'Menceritakan pergi ke suatu tempat dengan kendaraan.',poin:['ikimasu (pergi), kimasu (datang), kaerimasu (pulang)','Partikel e/ni (ke), de (dengan/naik)','Menyebut alat transportasi','Menanyakan tujuan: doko e ikimasu ka'],tags:['ikimasu','e/ni/de'],
+     vocab:[
+      {j:'いきます',r:'ikimasu',a:'pergi'},
+      {j:'きます',r:'kimasu',a:'datang'},
+      {j:'かえります',r:'kaerimasu',a:'pulang / kembali'},
+      {j:'でんしゃ',r:'densha',a:'kereta listrik'},
+      {j:'ちかてつ',r:'chikatetsu',a:'kereta bawah tanah / MRT'},
+      {j:'バス',r:'basu',a:'bus'},
+      {j:'タクシー',r:'takushii',a:'taksi'},
+      {j:'ひこうき',r:'hikouki',a:'pesawat terbang'},
+      {j:'ふね',r:'fune',a:'kapal'},
+      {j:'くるま',r:'kuruma',a:'mobil'},
+      {j:'バイク',r:'baiku',a:'motor'},
+      {j:'じてんしゃ',r:'jitensha',a:'sepeda'},
+      {j:'あるいて',r:'aruite',a:'berjalan kaki'},
+      {j:'うち',r:'uchi',a:'rumah (sendiri)'},
+      {j:'かいしゃ',r:'kaisha',a:'perusahaan / kantor'},
+      {j:'がっこう',r:'gakkou',a:'sekolah'},
+      {j:'くうこう',r:'kuukou',a:'bandara'},
+      {j:'ひとりで',r:'hitori de',a:'sendiri'},
+      {j:'いっしょに',r:'issho ni',a:'bersama-sama'},
+      {j:'だれと',r:'dare to',a:'dengan siapa'},
+      {j:'いつ',r:'itsu',a:'kapan'},
+      {j:'どうやって',r:'douyatte',a:'dengan cara apa / bagaimana'},
+      {j:'なんで',r:'nande',a:'dengan apa (kendaraan)'},
+     ],
+     grammar:[
+      {pola:'N へ いきます / きます / かえります',romaji:'N e ikimasu/kimasu/kaerimasu',arti:'pergi/datang/pulang ke N',penjelasan:'へ (e) atau に (ni) digunakan sebagai partikel tujuan. Diikuti kata kerja perpindahan.',contoh:[
+        {j:'がっこうへいきます。',r:'Gakkou e ikimasu.',a:'(Saya) pergi ke sekolah.'},
+        {j:'うちへかえります。',r:'Uchi e kaerimasu.',a:'(Saya) pulang ke rumah.'},
+        {j:'にほんへきます。',r:'Nihon e kimasu.',a:'(Dia) datang ke Jepang.'},
+      ]},
+      {pola:'N で いきます',romaji:'N de ikimasu',arti:'pergi dengan/naik N',penjelasan:'で (de) digunakan untuk menyatakan alat transportasi atau cara melakukan sesuatu.',contoh:[
+        {j:'バスでがっこうへいきます。',r:'Basu de gakkou e ikimasu.',a:'Saya pergi ke sekolah naik bus.'},
+        {j:'あるいてえきへいきます。',r:'Aruite eki e ikimasu.',a:'Saya berjalan kaki ke stasiun.'},
+        {j:'ひこうきでにほんへいきました。',r:'Hikouki de nihon e ikimashita.',a:'Saya pergi ke Jepang naik pesawat.'},
+      ]},
+      {pola:'N と いきます',romaji:'N to ikimasu',arti:'pergi bersama N',penjelasan:'と (to) menyatakan "bersama dengan". Digunakan untuk menyebut teman/orang yang pergi bersama.',contoh:[
+        {j:'ともだちといっしょにいきます。',r:'Tomodachi to issho ni ikimasu.',a:'Saya pergi bersama teman.'},
+        {j:'ひとりでいきます。',r:'Hitori de ikimasu.',a:'Saya pergi sendiri.'},
+        {j:'だれとえきへいきますか。',r:'Dare to eki e ikimasu ka.',a:'Kamu pergi ke stasiun dengan siapa?'},
+      ]},
+      {pola:'いつ N へ いきますか',romaji:'Itsu N e ikimasu ka',arti:'Kapan kamu pergi ke N?',penjelasan:'Menanyakan waktu pergi. いつ = kapan, diletakkan di awal atau sebelum kata kerja.',contoh:[
+        {j:'いつにほんへいきますか。',r:'Itsu nihon e ikimasu ka.',a:'Kapan kamu pergi ke Jepang?'},
+        {j:'――らいねんいきます。',r:'-- Rainen ikimasu.',a:'Tahun depan saya akan pergi.'},
+      ]},
+     ]
+    },
   ]},
   {stage:'Tahap 2',dur:30,sub:'Bab 6–10',focus:'Aktivitas Harian & Objek',babs:[
-    {n:6,title:'Kata Kerja Transitif',desc:'Partikel wo (o), ajakan sopan ～masenka.',focus:'Menyatakan apa yang dilakukan dan mengajak orang lain.',poin:['Partikel wo — menandai objek langsung','Kata kerja: tabemasu, nomimasu, kaimasu','Ajakan: ～masenka (maukah kita ～?)','Menerima/menolak ajakan'],tags:['wo','～masenka','～mashou']},
-    {n:7,title:'Memberi & Menerima',desc:'Penggunaan alat/sarana dan konsep memberi-menerima barang.',focus:'Menyatakan memberi dan menerima benda.',poin:['agemasu (memberi)', 'moraimasu (menerima)','Partikel ni (kepada), kara (dari)','Menyatakan alat: de (menggunakan)'],tags:['agemasu','moraimasu','ni/kara']},
-    {n:8,title:'Kata Sifat',desc:'Kata sifat-na dan kata sifat-i, bentuk lampau dan sekarang.',focus:'Mendeskripsikan benda, orang, dan tempat.',poin:['i-keiyōshi (adjektiva-i): ookii, chiisai, takai','na-keiyōshi (adjektiva-na): kirei, shizuka, benri','Bentuk lampau: ～katta, ～deshita','Bentuk negatif sifat'],tags:['i-adj','na-adj','lampau']},
-    {n:9,title:'Kesukaan & Kemampuan',desc:'Menyatakan suka, tidak suka, dan bisa melakukan sesuatu.',focus:'Mengekspresikan preferensi dan kemampuan.',poin:['～が すきです (suka)','～が きらいです (tidak suka)','～が じょうずです (pandai)','～が できます (bisa melakukan)'],tags:['ga suki','ga dekimasu','jouzu']},
-    {n:10,title:'Keberadaan',desc:'Menyatakan ada/tidaknya benda mati dan makhluk hidup.',focus:'Menanyakan dan menyatakan lokasi seseorang atau benda.',poin:['arimasu — benda mati/tanaman ada','imasu — makhluk hidup ada','Kata posisi: ue, shita, mae, ushiro, naka, soto','Pola: ～wa ～ni arimasu/imasu'],tags:['arimasu','imasu','posisi']},
+    {n:6,title:'Kata Kerja Transitif',desc:'Partikel wo (o), ajakan sopan ～masenka.',focus:'Menyatakan apa yang dilakukan dan mengajak orang lain.',poin:['Partikel wo — menandai objek langsung','Kata kerja: tabemasu, nomimasu, kaimasu','Ajakan: ～masenka (maukah kita ～?)','Menerima/menolak ajakan'],tags:['wo','～masenka','～mashou'],
+     vocab:[
+      {j:'たべます',r:'tabemasu',a:'makan'},
+      {j:'のみます',r:'nomimasu',a:'minum'},
+      {j:'すいます',r:'suimasu',a:'menghisap (rokok)'},
+      {j:'みます',r:'mimasu',a:'melihat / menonton'},
+      {j:'ききます',r:'kikimasu',a:'mendengar'},
+      {j:'よみます',r:'yomimasu',a:'membaca'},
+      {j:'かきます',r:'kakimasu',a:'menulis / menggambar'},
+      {j:'かいます',r:'kaimasu',a:'membeli'},
+      {j:'とります',r:'torimasu',a:'mengambil / memotret'},
+      {j:'します',r:'shimasu',a:'melakukan'},
+      {j:'ごはん',r:'gohan',a:'nasi / makanan'},
+      {j:'あさごはん',r:'asa gohan',a:'sarapan'},
+      {j:'ひるごはん',r:'hiru gohan',a:'makan siang'},
+      {j:'ばんごはん',r:'ban gohan',a:'makan malam'},
+      {j:'パン',r:'pan',a:'roti'},
+      {j:'たまご',r:'tamago',a:'telur'},
+      {j:'にく',r:'niku',a:'daging'},
+      {j:'さかな',r:'sakana',a:'ikan'},
+      {j:'やさい',r:'yasai',a:'sayur'},
+      {j:'くだもの',r:'kudamono',a:'buah-buahan'},
+      {j:'みず',r:'mizu',a:'air'},
+      {j:'おちゃ',r:'ocha',a:'teh Jepang'},
+      {j:'こうひー',r:'koohii',a:'kopi'},
+      {j:'ジュース',r:'juusu',a:'jus'},
+      {j:'ビール',r:'biiru',a:'bir'},
+      {j:'おさけ',r:'osake',a:'minuman beralkohol / sake'},
+      {j:'いっしょに',r:'issho ni',a:'bersama-sama'},
+      {j:'ちょっと',r:'chotto',a:'sebentar / sedikit (penolakan halus)'},
+      {j:'いいですね',r:'ii desu ne',a:'bagus ya / setuju'},
+      {j:'ざんねんですが',r:'zannen desu ga',a:'sayang sekali, tapi...'},
+     ],
+     grammar:[
+      {pola:'N を V ます',romaji:'N o V masu',arti:'melakukan V pada N (objek langsung)',penjelasan:'を (o/wo) adalah partikel objek langsung. Menandai kata benda yang menjadi sasaran tindakan.',contoh:[
+        {j:'まいにちコーヒーをのみます。',r:'Mainichi koohii o nomimasu.',a:'Saya minum kopi setiap hari.'},
+        {j:'えをかきます。',r:'E o kakimasu.',a:'Saya menggambar gambar.'},
+        {j:'しんぶんをよみます。',r:'Shinbun o yomimasu.',a:'Saya membaca koran.'},
+      ]},
+      {pola:'V ませんか',romaji:'V masen ka',arti:'Maukah kita ~ ? / Bagaimana kalau ~ ?',penjelasan:'Ajakan sopan. Lebih lembut dari ましょう karena meminta pendapat lawan bicara terlebih dahulu.',contoh:[
+        {j:'いっしょにひるごはんをたべませんか。',r:'Issho ni hiru gohan o tabemasen ka.',a:'Bagaimana kalau kita makan siang bersama?'},
+        {j:'えいがをみませんか。',r:'Eiga o mimasen ka.',a:'Bagaimana kalau kita nonton film?'},
+      ]},
+      {pola:'V ましょう',romaji:'V mashou',arti:'Ayo kita ~ !',penjelasan:'Ajakan yang lebih tegas/antusias. Digunakan ketika sudah yakin lawan bicara setuju.',contoh:[
+        {j:'いっしょにいきましょう。',r:'Issho ni ikimashou.',a:'Ayo pergi bersama!'},
+        {j:'コーヒーをのみましょう。',r:'Koohii o nomimashou.',a:'Ayo minum kopi!'},
+        {j:'はじめましょう。',r:'Hajimemashou.',a:'Ayo mulai!'},
+      ]},
+      {pola:'N で V ます',romaji:'N de V masu',arti:'melakukan V dengan/di N',penjelasan:'で (de) di sini menyatakan tempat berlangsungnya kegiatan, atau alat yang digunakan.',contoh:[
+        {j:'うちでばんごはんをたべます。',r:'Uchi de ban gohan o tabemasu.',a:'Saya makan malam di rumah.'},
+        {j:'はしでたべます。',r:'Hashi de tabemasu.',a:'Saya makan dengan sumpit.'},
+      ]},
+     ]
+    },
+    {n:7,title:'Memberi & Menerima',desc:'Penggunaan alat/sarana dan konsep memberi-menerima barang.',focus:'Menyatakan memberi dan menerima benda.',poin:['agemasu (memberi)','moraimasu (menerima)','Partikel ni (kepada), kara (dari)','Menyatakan alat: de (menggunakan)'],tags:['agemasu','moraimasu','ni/kara'],
+     vocab:[
+      {j:'あげます',r:'agemasu',a:'memberi (dari saya ke orang lain)'},
+      {j:'もらいます',r:'moraimasu',a:'menerima / mendapat'},
+      {j:'かします',r:'kashimasu',a:'meminjamkan'},
+      {j:'かります',r:'karimasu',a:'meminjam'},
+      {j:'おしえます',r:'oshiemasu',a:'mengajar / memberitahu'},
+      {j:'ならいます',r:'naraimasu',a:'belajar (dari seseorang)'},
+      {j:'でんわします',r:'denwa shimasu',a:'menelepon'},
+      {j:'プレゼント',r:'purezento',a:'hadiah'},
+      {j:'てがみ',r:'tegami',a:'surat'},
+      {j:'メール',r:'meeru',a:'email / pesan'},
+      {j:'にもつ',r:'nimotsu',a:'barang bawaan / kargo'},
+      {j:'おかね',r:'okane',a:'uang'},
+      {j:'チケット',r:'chiketto',a:'tiket'},
+      {j:'たんじょうび',r:'tanjoubi',a:'hari ulang tahun'},
+      {j:'クリスマス',r:'kurisumasu',a:'Natal'},
+      {j:'～から',r:'~kara',a:'dari ~ (sumber/asal)'},
+      {j:'だれに',r:'dare ni',a:'kepada siapa'},
+      {j:'だれから',r:'dare kara',a:'dari siapa'},
+      {j:'もう',r:'mou',a:'sudah'},
+      {j:'まだ',r:'mada',a:'belum'},
+     ],
+     grammar:[
+      {pola:'N に N を あげます',romaji:'N ni N o agemasu',arti:'memberikan N kepada N',penjelasan:'に (ni) = kepada siapa. を (o) = apa yang diberikan. あげます digunakan ketika si pemberi adalah "saya" atau orang dekat.',contoh:[
+        {j:'ともだちにプレゼントをあげます。',r:'Tomodachi ni purezento o agemasu.',a:'Saya memberi hadiah kepada teman.'},
+        {j:'やまださんにてがみをあげました。',r:'Yamada-san ni tegami o agemashita.',a:'Saya memberikan surat kepada Yamada-san.'},
+      ]},
+      {pola:'N から N を もらいます',romaji:'N kara N o moraimasu',arti:'menerima N dari N',penjelasan:'から (kara) = dari siapa. もらいます digunakan dari sudut pandang si penerima.',contoh:[
+        {j:'ともだちからプレゼントをもらいました。',r:'Tomodachi kara purezento o moraimashita.',a:'Saya mendapat hadiah dari teman.'},
+        {j:'やまださんからメールをもらいました。',r:'Yamada-san kara meeru o moraimashita.',a:'Saya mendapat email dari Yamada-san.'},
+      ]},
+      {pola:'N に N を かします / かります',romaji:'N ni N o kashimasu / karimasu',arti:'meminjamkan N kepada N / meminjam N dari N',penjelasan:'かします = meminjamkan (dari sudut pandang pemberi pinjaman). かります = meminjam (dari sudut pandang peminjam).',contoh:[
+        {j:'ともだちにほんをかしました。',r:'Tomodachi ni hon o kashimashita.',a:'Saya meminjamkan buku kepada teman.'},
+        {j:'としょかんでほんをかりました。',r:'Toshokan de hon o karimashita.',a:'Saya meminjam buku di perpustakaan.'},
+      ]},
+     ]
+    },
+    {n:8,title:'Kata Sifat',desc:'Kata sifat-na dan kata sifat-i, bentuk lampau dan sekarang.',focus:'Mendeskripsikan benda, orang, dan tempat.',poin:['i-keiyōshi (adjektiva-i): ookii, chiisai, takai','na-keiyōshi (adjektiva-na): kirei, shizuka, benri','Bentuk lampau: ～katta, ～deshita','Bentuk negatif sifat'],tags:['i-adj','na-adj','lampau'],
+     vocab:[
+      {j:'おおきい',r:'ookii',a:'besar'},
+      {j:'ちいさい',r:'chiisai',a:'kecil'},
+      {j:'あたらしい',r:'atarashii',a:'baru'},
+      {j:'ふるい',r:'furui',a:'lama / tua (benda)'},
+      {j:'たかい',r:'takai',a:'mahal / tinggi'},
+      {j:'やすい',r:'yasui',a:'murah'},
+      {j:'いい / よい',r:'ii / yoi',a:'baik / bagus'},
+      {j:'わるい',r:'warui',a:'buruk / jelek'},
+      {j:'あつい',r:'atsui',a:'panas'},
+      {j:'さむい',r:'samui',a:'dingin (cuaca/udara)'},
+      {j:'つめたい',r:'tsumetai',a:'dingin (minuman/benda)'},
+      {j:'あかるい',r:'akarui',a:'terang / ceria'},
+      {j:'くらい',r:'kurai',a:'gelap'},
+      {j:'おもしろい',r:'omoshiroi',a:'menarik / lucu'},
+      {j:'つまらない',r:'tsumaranai',a:'membosankan'},
+      {j:'むずかしい',r:'muzukashii',a:'sulit'},
+      {j:'やさしい',r:'yasashii',a:'mudah / baik hati'},
+      {j:'きれい（な）',r:'kirei (na)',a:'cantik / bersih'},
+      {j:'しずか（な）',r:'shizuka (na)',a:'tenang / sunyi'},
+      {j:'にぎやか（な）',r:'nigiyaka (na)',a:'ramai / meriah'},
+      {j:'べんり（な）',r:'benri (na)',a:'praktis / nyaman'},
+      {j:'ふべん（な）',r:'fuben (na)',a:'tidak praktis'},
+      {j:'すき（な）',r:'suki (na)',a:'suka / favorit'},
+      {j:'きらい（な）',r:'kirai (na)',a:'tidak suka'},
+      {j:'ゆうめい（な）',r:'yuumei (na)',a:'terkenal'},
+      {j:'たいせつ（な）',r:'taisetsu (na)',a:'penting / berharga'},
+      {j:'どんな',r:'donna',a:'seperti apa / macam apa'},
+     ],
+     grammar:[
+      {pola:'i-adj + N / i-adj です',romaji:'i-adj + N / i-adj desu',arti:'N yang ~ / ~ (sifat-i)',penjelasan:'Kata sifat-i langsung diletakkan sebelum kata benda, atau digunakan sebagai predikat dengan です.',contoh:[
+        {j:'おおきいうちです。',r:'Ookii uchi desu.',a:'Ini rumah yang besar.'},
+        {j:'このほんはむずかしいです。',r:'Kono hon wa muzukashii desu.',a:'Buku ini sulit.'},
+        {j:'きのうはさむかったです。',r:'Kinou wa samukatta desu.',a:'Kemarin dingin.'},
+      ]},
+      {pola:'na-adj（な）+ N / na-adj です',romaji:'na-adj(na) + N / na-adj desu',arti:'N yang ~ / ~ (sifat-na)',penjelasan:'Kata sifat-na perlu tambahan な sebelum kata benda, tapi tidak perlu な saat jadi predikat.',contoh:[
+        {j:'きれいなまちです。',r:'Kirei na machi desu.',a:'Ini kota yang cantik.'},
+        {j:'このこうえんはしずかです。',r:'Kono kouen wa shizuka desu.',a:'Taman ini tenang.'},
+        {j:'にぎやかなまちですね。',r:'Nigiyaka na machi desu ne.',a:'Kota yang ramai ya.'},
+      ]},
+      {pola:'i-adj → bentuk lampau: ～かった',romaji:'~i → ~katta desu',arti:'dulu / kemarin ~',penjelasan:'Bentuk lampau sifat-i: ganti い akhir dengan かった. Contoh: たかい→たかかった, おもしろい→おもしろかった.',contoh:[
+        {j:'えいがはおもしろかったです。',r:'Eiga wa omoshirokatta desu.',a:'Filmnya menarik (tadi/kemarin).'},
+        {j:'テストはむずかしくなかったです。',r:'Tesuto wa muzukashiku nakatta desu.',a:'Ujiannya tidak sulit.'},
+      ]},
+      {pola:'na-adj → bentuk lampau: ～でした',romaji:'~desu → ~deshita',arti:'dulu / kemarin ~',penjelasan:'Bentuk lampau sifat-na dan kata benda sama: ganti です menjadi でした.',contoh:[
+        {j:'きのうはにぎやかでした。',r:'Kinou wa nigiyaka deshita.',a:'Kemarin ramai.'},
+        {j:'このまちはしずかじゃなかったです。',r:'Kono machi wa shizuka ja nakatta desu.',a:'Kota ini tidak tenang (dulu).'},
+      ]},
+     ]
+    },
+    {n:9,title:'Kesukaan & Kemampuan',desc:'Menyatakan suka, tidak suka, dan bisa melakukan sesuatu.',focus:'Mengekspresikan preferensi dan kemampuan.',poin:['～が すきです (suka)','～が きらいです (tidak suka)','～が じょうずです (pandai)','～が できます (bisa melakukan)'],tags:['ga suki','ga dekimasu','jouzu'],
+     vocab:[
+      {j:'すきです',r:'suki desu',a:'suka'},
+      {j:'きらいです',r:'kirai desu',a:'tidak suka / benci'},
+      {j:'だいすきです',r:'daisuki desu',a:'sangat suka'},
+      {j:'だいきらいです',r:'daikirai desu',a:'sangat tidak suka'},
+      {j:'じょうずです',r:'jouzu desu',a:'pandai / terampil'},
+      {j:'へたです',r:'heta desu',a:'tidak pandai / kurang terampil'},
+      {j:'できます',r:'dekimasu',a:'bisa / mampu'},
+      {j:'スポーツ',r:'supootsu',a:'olahraga'},
+      {j:'やきゅう',r:'yakyuu',a:'baseball'},
+      {j:'サッカー',r:'sakkaa',a:'sepak bola'},
+      {j:'テニス',r:'tenisu',a:'tenis'},
+      {j:'およぎます',r:'oyogimasu',a:'berenang'},
+      {j:'うたいます',r:'utaimasu',a:'bernyanyi'},
+      {j:'おどります',r:'odorimasu',a:'menari'},
+      {j:'りょうり',r:'ryouri',a:'masakan / memasak'},
+      {j:'うた',r:'uta',a:'lagu / nyanyian'},
+      {j:'え',r:'e',a:'gambar / lukisan'},
+      {j:'かんじ',r:'kanji',a:'huruf kanji'},
+      {j:'ピアノ',r:'piano',a:'piano'},
+      {j:'ギター',r:'gitaa',a:'gitar'},
+      {j:'ドライブ',r:'doraibu',a:'berkendara / jalan-jalan naik mobil'},
+      {j:'かいもの',r:'kaimono',a:'belanja'},
+      {j:'りょこう',r:'ryokou',a:'perjalanan / wisata'},
+      {j:'どんな～がすきですか',r:'donna ~ ga suki desu ka',a:'suka ~ yang seperti apa?'},
+     ],
+     grammar:[
+      {pola:'N が すき / きらい です',romaji:'N ga suki/kirai desu',arti:'suka/tidak suka N',penjelasan:'が (ga) digunakan untuk menyatakan objek dari perasaan suka/tidak suka. Berbeda dengan は yang dipakai untuk topik umum.',contoh:[
+        {j:'わたしはやさいがすきです。',r:'Watashi wa yasai ga suki desu.',a:'Saya suka sayuran.'},
+        {j:'からいたべものがきらいです。',r:'Karai tabemono ga kirai desu.',a:'Saya tidak suka makanan pedas.'},
+        {j:'スポーツがだいすきです。',r:'Supootsu ga daisuki desu.',a:'Saya sangat suka olahraga.'},
+      ]},
+      {pola:'N が じょうず / へた です',romaji:'N ga jouzu/heta desu',arti:'pandai/tidak pandai dalam N',penjelasan:'Menyatakan kemampuan atau keahlian dalam sesuatu. Perhatian: menggunakan じょうず untuk diri sendiri terdengar sombong — lebih baik pakai まあまあ atau へた.',contoh:[
+        {j:'やまださんはりょうりがじょうずです。',r:'Yamada-san wa ryouri ga jouzu desu.',a:'Yamada-san pandai memasak.'},
+        {j:'わたしはえがへたです。',r:'Watashi wa e ga heta desu.',a:'Saya tidak pandai menggambar.'},
+      ]},
+      {pola:'N が できます',romaji:'N ga dekimasu',arti:'bisa melakukan N',penjelasan:'できます menyatakan kemampuan atau ketersediaan. Dapat digunakan untuk bahasa, olahraga, atau aktivitas lainnya.',contoh:[
+        {j:'にほんごができます。',r:'Nihongo ga dekimasu.',a:'Saya bisa bahasa Jepang.'},
+        {j:'ここでたばこがすえますか。',r:'Koko de tabako ga suemasu ka.',a:'Boleh/bisa merokok di sini?'},
+        {j:'ピアノがすこしできます。',r:'Piano ga sukoshi dekimasu.',a:'Saya sedikit bisa main piano.'},
+      ]},
+     ]
+    },
+    {n:10,title:'Keberadaan',desc:'Menyatakan ada/tidaknya benda mati dan makhluk hidup.',focus:'Menanyakan dan menyatakan lokasi seseorang atau benda.',poin:['arimasu — benda mati/tanaman ada','imasu — makhluk hidup ada','Kata posisi: ue, shita, mae, ushiro, naka, soto','Pola: ～wa ～ni arimasu/imasu'],tags:['arimasu','imasu','posisi'],
+     vocab:[
+      {j:'あります',r:'arimasu',a:'ada (benda mati / tanaman)'},
+      {j:'います',r:'imasu',a:'ada (manusia / hewan)'},
+      {j:'うえ',r:'ue',a:'atas / di atas'},
+      {j:'した',r:'shita',a:'bawah / di bawah'},
+      {j:'まえ',r:'mae',a:'depan / di depan'},
+      {j:'うしろ',r:'ushiro',a:'belakang / di belakang'},
+      {j:'みぎ',r:'migi',a:'kanan'},
+      {j:'ひだり',r:'hidari',a:'kiri'},
+      {j:'なか',r:'naka',a:'dalam / di dalam'},
+      {j:'そと',r:'soto',a:'luar / di luar'},
+      {j:'となり',r:'tonari',a:'sebelah / di sebelah'},
+      {j:'ちかく',r:'chikaku',a:'dekat / di dekat'},
+      {j:'あいだ',r:'aida',a:'di antara'},
+      {j:'ねこ',r:'neko',a:'kucing'},
+      {j:'いぬ',r:'inu',a:'anjing'},
+      {j:'き',r:'ki',a:'pohon'},
+      {j:'はな',r:'hana',a:'bunga'},
+      {j:'たてもの',r:'tatemono',a:'gedung / bangunan'},
+      {j:'こうえん',r:'kouen',a:'taman (umum)'},
+      {j:'ちず',r:'chizu',a:'peta'},
+      {j:'ひとり',r:'hitori',a:'satu orang'},
+      {j:'ふたり',r:'futari',a:'dua orang'},
+      {j:'だれも～ません',r:'dare mo ~masen',a:'tidak ada seorang pun'},
+      {j:'なにも～ません',r:'nani mo ~masen',a:'tidak ada apa-apa'},
+     ],
+     grammar:[
+      {pola:'N は N に あります',romaji:'N wa N ni arimasu',arti:'N ada di N (benda mati)',penjelasan:'あります digunakan untuk benda mati, tumbuhan, atau tempat. に (ni) menandai lokasi keberadaan.',contoh:[
+        {j:'ほんはつくえのうえにあります。',r:'Hon wa tsukue no ue ni arimasu.',a:'Buku ada di atas meja.'},
+        {j:'ゆうびんきょくはどこにありますか。',r:'Yuubinkyoku wa doko ni arimasu ka.',a:'Di mana kantor pos?'},
+        {j:'えきのちかくにコンビニがあります。',r:'Eki no chikaku ni konbini ga arimasu.',a:'Ada minimarket dekat stasiun.'},
+      ]},
+      {pola:'N は N に います',romaji:'N wa N ni imasu',arti:'N ada di N (makhluk hidup)',penjelasan:'います digunakan untuk manusia dan hewan. Pola lokasi sama dengan あります.',contoh:[
+        {j:'やまださんはどこにいますか。',r:'Yamada-san wa doko ni imasu ka.',a:'Yamada-san ada di mana?'},
+        {j:'こどもたちはこうえんにいます。',r:'Kodomotachi wa kouen ni imasu.',a:'Anak-anak ada di taman.'},
+        {j:'ねこはソファのしたにいます。',r:'Neko wa sofaa no shita ni imasu.',a:'Kucing ada di bawah sofa.'},
+      ]},
+      {pola:'N に N が あります / います',romaji:'N ni N ga arimasu/imasu',arti:'Di N ada N',penjelasan:'Ketika lokasi menjadi topik utama, posisi に dan が bisa dibalik.',contoh:[
+        {j:'えきのちかくにぎんこうがあります。',r:'Eki no chikaku ni ginkou ga arimasu.',a:'Di dekat stasiun ada bank.'},
+        {j:'あのたてもののなかにだれかいますか。',r:'Ano tatemono no naka ni dareka imasu ka.',a:'Apakah ada seseorang di dalam gedung itu?'},
+      ]},
+      {pola:'だれも / なにも ～ません',romaji:'dare mo / nani mo ~masen',arti:'tidak ada seorang pun / tidak ada apa-apa',penjelasan:'だれも + bentuk negatif = tidak ada seorang pun. なにも + bentuk negatif = tidak ada apa pun.',contoh:[
+        {j:'へやにだれもいません。',r:'Heya ni dare mo imasen.',a:'Di kamar tidak ada seorang pun.'},
+        {j:'れいぞうこになにもありません。',r:'Reizouko ni nani mo arimasen.',a:'Di kulkas tidak ada apa-apa.'},
+      ]},
+     ]
+    },
   ]},
   {stage:'Tahap 3',dur:30,sub:'Bab 11–15',focus:'Kuantitas, Keinginan & Perintah Halus',babs:[
-    {n:'11-12',title:'Kata Bilangan & Cuaca',desc:'Penghitung benda, menanyakan kondisi fisik dan cuaca.',focus:'Menghitung berbagai benda dan menggambarkan keadaan.',poin:['Kata bilangan: hon (benda panjang), mai (lembaran), hiki (hewan kecil)','Menanyakan jumlah: ～wa ikutsu arimasu ka','Kondisi cuaca: ame, hare, kumori','Kondisi fisik: atama ga itai, netsu ga arimasu'],tags:['～hon/mai/hiki','cuaca','kondisi']},
-    {n:13,title:'Menyatakan Keinginan',desc:'Menyatakan keinginan memiliki atau melakukan sesuatu.',focus:'Mengekspresikan apa yang diinginkan.',poin:['～が ほしいです (ingin memiliki)','～たいです (ingin melakukan)','Bentuk negatif dan lampau','Menanyakan keinginan orang lain'],tags:['～tai desu','～hoshii']},
-    {n:14,title:'Bentuk-Te & Izin',desc:'Perubahan ke bentuk-te, memberi izin dan larangan.',focus:'Meminta dan memberi izin, menyatakan larangan.',poin:['Konjugasi ke bentuk-te (～て)','Izin: ～ても いいです (boleh)','Larangan: ～ては いけません (tidak boleh)','Permintaan: ～て ください (tolong lakukan)'],tags:['～te','～te mo ii','～te wa ikemasen']},
-    {n:15,title:'Gabungan Bentuk-Te',desc:'Menyambung kalimat dengan bentuk-te dan izin dasar.',focus:'Menyatakan serangkaian kegiatan berurutan.',poin:['Menyambung kata kerja: ～te, ～te, ～masu','Menyatakan cara/metode melakukan sesuatu','Menggabungkan sifat dengan bentuk-te','Pola: ～てから (setelah melakukan)'],tags:['～te kara','rangkaian kegiatan']},
+    {n:'11-12',title:'Kata Bilangan & Cuaca',desc:'Penghitung benda, menanyakan kondisi fisik dan cuaca.',focus:'Menghitung berbagai benda dan menggambarkan keadaan.',poin:['Kata bilangan: hon (benda panjang), mai (lembaran), hiki (hewan kecil)','Menanyakan jumlah: ～wa ikutsu arimasu ka','Kondisi cuaca: ame, hare, kumori','Kondisi fisik: atama ga itai, netsu ga arimasu'],tags:['～hon/mai/hiki','cuaca','kondisi'],
+     vocab:[
+      {j:'ひとつ',r:'hitotsu',a:'satu (benda umum)'},
+      {j:'ふたつ',r:'futatsu',a:'dua'},
+      {j:'みっつ',r:'mittsu',a:'tiga'},
+      {j:'よっつ',r:'yottsu',a:'empat'},
+      {j:'いつつ',r:'itsutsu',a:'lima'},
+      {j:'むっつ',r:'muttsu',a:'enam'},
+      {j:'ななつ',r:'nanatsu',a:'tujuh'},
+      {j:'やっつ',r:'yattsu',a:'delapan'},
+      {j:'ここのつ',r:'kokonotsu',a:'sembilan'},
+      {j:'とお',r:'too',a:'sepuluh'},
+      {j:'いくつ',r:'ikutsu',a:'berapa banyak'},
+      {j:'～ほん',r:'~hon',a:'...batang (benda panjang: pensil, botol, pohon)'},
+      {j:'～まい',r:'~mai',a:'...lembar (kertas, piring, baju)'},
+      {j:'～だい',r:'~dai',a:'...unit (mesin, kendaraan, alat elektronik)'},
+      {j:'～さつ',r:'~satsu',a:'...buah (buku, majalah)'},
+      {j:'～はい',r:'~hai',a:'...gelas/cangkir (minuman)'},
+      {j:'～ひき',r:'~hiki',a:'...ekor (hewan kecil: ikan, kucing, anjing)'},
+      {j:'～とう',r:'~tou',a:'...ekor (hewan besar: sapi, kuda)'},
+      {j:'～わ',r:'~wa',a:'...ekor (burung)'},
+      {j:'～にん',r:'~nin',a:'...orang'},
+      {j:'～こ',r:'~ko',a:'...buah (benda kecil bulat: apel, telur, batu)'},
+      {j:'てんき',r:'tenki',a:'cuaca'},
+      {j:'はれ',r:'hare',a:'cerah / berawan sedikit'},
+      {j:'くもり',r:'kumori',a:'mendung'},
+      {j:'あめ',r:'ame',a:'hujan'},
+      {j:'ゆき',r:'yuki',a:'salju'},
+      {j:'かぜ',r:'kaze',a:'angin'},
+      {j:'あたたかい',r:'atatakai',a:'hangat'},
+      {j:'すずしい',r:'suzushii',a:'sejuk'},
+      {j:'からだ',r:'karada',a:'tubuh / badan'},
+      {j:'あたま',r:'atama',a:'kepala'},
+      {j:'おなか',r:'onaka',a:'perut'},
+      {j:'いたい',r:'itai',a:'sakit / nyeri'},
+      {j:'ねつ',r:'netsu',a:'demam / panas badan'},
+      {j:'かぜをひきます',r:'kaze o hikimasu',a:'masuk angin / pilek'},
+     ],
+     grammar:[
+      {pola:'N を ～まい / ～ほん / ～だい … かいます',romaji:'N o ~mai/~hon/~dai kaimasu',arti:'membeli ~ lembar/batang/unit N',penjelasan:'Kata bilangan diletakkan setelah partikel を (sebelum kata kerja) atau langsung sebelum kata kerja. Pemilihan counter tergantung jenis benda.',contoh:[
+        {j:'えんぴつをさんぼんかいました。',r:'Enpitsu o sanbon kaimashita.',a:'Saya membeli tiga batang pensil.'},
+        {j:'かみをごまいください。',r:'Kami o gomai kudasai.',a:'Tolong berikan lima lembar kertas.'},
+        {j:'ねこをいっぴきかっています。',r:'Neko o ippiki katte imasu.',a:'Saya memelihara seekor kucing.'},
+      ]},
+      {pola:'きょうのてんきは ～ です',romaji:'Kyou no tenki wa ~ desu',arti:'Cuaca hari ini adalah ~',penjelasan:'Menyatakan kondisi cuaca. Dapat juga menggunakan kata sifat-i langsung.',contoh:[
+        {j:'きょうはいいてんきですね。',r:'Kyou wa ii tenki desu ne.',a:'Hari ini cuacanya bagus ya.'},
+        {j:'あしたはあめですか。',r:'Ashita wa ame desu ka.',a:'Besok hujan?'},
+        {j:'さっぽろはゆきがおおいです。',r:'Sapporo wa yuki ga ooi desu.',a:'Sapporo banyak saljunya.'},
+      ]},
+      {pola:'N が いたいです / ねつがあります',romaji:'N ga itai desu / netsu ga arimasu',arti:'N terasa sakit / ada demam',penjelasan:'Menyatakan kondisi fisik yang tidak sehat. いたい digunakan untuk nyeri, あります untuk kondisi yang "ada".',contoh:[
+        {j:'あたまがいたいです。',r:'Atama ga itai desu.',a:'Kepala saya sakit.'},
+        {j:'ねつがあります。',r:'Netsu ga arimasu.',a:'Saya demam.'},
+        {j:'おなかがいたくて、かいしゃをやすみました。',r:'Onaka ga itakute, kaisha o yasumimashita.',a:'Perut sakit, jadi saya tidak masuk kerja.'},
+      ]},
+     ]
+    },
+    {n:13,title:'Menyatakan Keinginan',desc:'Menyatakan keinginan memiliki atau melakukan sesuatu.',focus:'Mengekspresikan apa yang diinginkan.',poin:['～が ほしいです (ingin memiliki)','～たいです (ingin melakukan)','Bentuk negatif dan lampau','Menanyakan keinginan orang lain'],tags:['～tai desu','～hoshii'],
+     vocab:[
+      {j:'ほしい',r:'hoshii',a:'ingin (memiliki sesuatu)'},
+      {j:'ほしくない',r:'hoshiku nai',a:'tidak ingin (memiliki)'},
+      {j:'たべたい',r:'tabetai',a:'ingin makan'},
+      {j:'のみたい',r:'nomitai',a:'ingin minum'},
+      {j:'いきたい',r:'ikitai',a:'ingin pergi'},
+      {j:'みたい',r:'mitai',a:'ingin melihat / menonton'},
+      {j:'かいたい',r:'kaitai',a:'ingin membeli'},
+      {j:'やすみたい',r:'yasumitai',a:'ingin istirahat'},
+      {j:'あいたい',r:'aitai',a:'ingin bertemu'},
+      {j:'なりたい',r:'naritai',a:'ingin menjadi'},
+      {j:'おかし',r:'okashi',a:'kue / camilan'},
+      {j:'ケーキ',r:'keeki',a:'kue tart'},
+      {j:'アイスクリーム',r:'aisu kuriimu',a:'es krim'},
+      {j:'くるま',r:'kuruma',a:'mobil'},
+      {j:'パソコン',r:'pasokon',a:'laptop / komputer'},
+      {j:'じゆう',r:'jiyuu',a:'kebebasan / bebas'},
+      {j:'しょうらい',r:'shourai',a:'masa depan'},
+      {j:'ゆめ',r:'yume',a:'mimpi / cita-cita'},
+      {j:'いしゃ',r:'isha',a:'dokter'},
+      {j:'かんごし',r:'kangoshi',a:'perawat'},
+      {j:'パイロット',r:'pairotto',a:'pilot'},
+      {j:'どんなものがほしいですか',r:'donna mono ga hoshii desu ka',a:'benda seperti apa yang kamu inginkan?'},
+     ],
+     grammar:[
+      {pola:'N が ほしい です',romaji:'N ga hoshii desu',arti:'ingin memiliki N',penjelasan:'ほしい adalah kata sifat-i yang menyatakan keinginan memiliki sesuatu. が menandai objek yang diinginkan.',contoh:[
+        {j:'あたらしいパソコンがほしいです。',r:'Atarashii pasokon ga hoshii desu.',a:'Saya ingin punya laptop baru.'},
+        {j:'なにがほしいですか。',r:'Nani ga hoshii desu ka.',a:'Kamu mau apa?'},
+        {j:'いまはなにもほしくないです。',r:'Ima wa nani mo hoshiku nai desu.',a:'Sekarang saya tidak mau apa-apa.'},
+      ]},
+      {pola:'V たい です',romaji:'V tai desu',arti:'ingin melakukan V',penjelasan:'たい melekat pada bentuk masu-stem kata kerja. Menyatakan keinginan si pembicara untuk melakukan sesuatu.',contoh:[
+        {j:'にほんへいきたいです。',r:'Nihon e ikitai desu.',a:'Saya ingin pergi ke Jepang.'},
+        {j:'すしをたべたいです。',r:'Sushi o tabetai desu.',a:'Saya ingin makan sushi.'},
+        {j:'はやくかえりたいです。',r:'Hayaku kaeritai desu.',a:'Saya ingin cepat pulang.'},
+      ]},
+      {pola:'V たく ない です / V たかった です',romaji:'V taku nai desu / V takatta desu',arti:'tidak ingin V / dulu ingin V',penjelasan:'たい berkonjugasi seperti kata sifat-i: negatif → たくない, lampau → たかった.',contoh:[
+        {j:'きょうはなにもしたくないです。',r:'Kyou wa nani mo shitaku nai desu.',a:'Hari ini saya tidak ingin melakukan apa-apa.'},
+        {j:'こどものとき、いしゃになりたかったです。',r:'Kodomo no toki, isha ni naritakatta desu.',a:'Waktu kecil, saya ingin menjadi dokter.'},
+      ]},
+     ]
+    },
+    {n:14,title:'Bentuk-Te & Izin',desc:'Perubahan ke bentuk-te, memberi izin dan larangan.',focus:'Meminta dan memberi izin, menyatakan larangan.',poin:['Konjugasi ke bentuk-te (～て)','Izin: ～ても いいです (boleh)','Larangan: ～ては いけません (tidak boleh)','Permintaan: ～て ください (tolong lakukan)'],tags:['～te','～te mo ii','～te wa ikemasen'],
+     vocab:[
+      {j:'はいります',r:'hairimasu',a:'masuk'},
+      {j:'でます',r:'demasu',a:'keluar'},
+      {j:'すわります',r:'suwarimasu',a:'duduk'},
+      {j:'たちます',r:'tachimasu',a:'berdiri'},
+      {j:'つかいます',r:'tsukaimasu',a:'menggunakan'},
+      {j:'あけます',r:'akemasu',a:'membuka (pintu, jendela)'},
+      {j:'しめます',r:'shimemasu',a:'menutup'},
+      {j:'けします',r:'keshimasu',a:'mematikan / menghapus'},
+      {j:'つけます',r:'tsukemasu',a:'menyalakan / menempelkan'},
+      {j:'コピーします',r:'kopii shimasu',a:'memfotokopi'},
+      {j:'でんわします',r:'denwa shimasu',a:'menelepon'},
+      {j:'しゃしんをとります',r:'shashin o torimasu',a:'memotret / foto'},
+      {j:'たばこをすいます',r:'tabako o suimasu',a:'merokok'},
+      {j:'ここ',r:'koko',a:'di sini'},
+      {j:'ちょっとまってください',r:'chotto matte kudasai',a:'tolong tunggu sebentar'},
+      {j:'もういちどいってください',r:'mou ichido itte kudasai',a:'tolong ulangi sekali lagi'},
+      {j:'ゆっくりはなしてください',r:'yukkuri hanashite kudasai',a:'tolong bicara pelan-pelan'},
+      {j:'しつもんしてもいいですか',r:'shitsumon shite mo ii desu ka',a:'boleh saya bertanya?'},
+      {j:'もちろん',r:'mochiron',a:'tentu saja'},
+      {j:'ちょっと…',r:'chotto...',a:'hmm sedikit... (penolakan halus)'},
+     ],
+     grammar:[
+      {pola:'V て ください',romaji:'V te kudasai',arti:'tolong lakukan V',penjelasan:'Permintaan sopan. Bentuk-te + ください. Cara membentuk bentuk-te tergantung golongan kata kerja.',contoh:[
+        {j:'ここになまえをかいてください。',r:'Koko ni namae o kaite kudasai.',a:'Tolong tulis nama di sini.'},
+        {j:'もういちどいってください。',r:'Mou ichido itte kudasai.',a:'Tolong ulangi sekali lagi.'},
+        {j:'ちょっとまってください。',r:'Chotto matte kudasai.',a:'Tolong tunggu sebentar.'},
+      ]},
+      {pola:'V て も いい です',romaji:'V te mo ii desu',arti:'boleh melakukan V',penjelasan:'Menyatakan izin atau kebolehan. Bisa digunakan untuk bertanya (dengan か) atau memberikan izin.',contoh:[
+        {j:'ここにすわってもいいですか。',r:'Koko ni suwatte mo ii desu ka.',a:'Boleh saya duduk di sini?'},
+        {j:'しゃしんをとってもいいですか。',r:'Shashin o totte mo ii desu ka.',a:'Boleh saya foto?'},
+        {j:'はい、どうぞ。',r:'Hai, douzo.',a:'Ya, silakan.'},
+      ]},
+      {pola:'V て は いけません',romaji:'V te wa ikemasen',arti:'tidak boleh melakukan V / dilarang V',penjelasan:'Menyatakan larangan. Lebih tegas dari bentuk negatif biasa. Sering digunakan untuk aturan/peraturan.',contoh:[
+        {j:'ここでたばこをすってはいけません。',r:'Koko de tabako o sutte wa ikemasen.',a:'Di sini dilarang merokok.'},
+        {j:'このへやにはいってはいけません。',r:'Kono heya ni haitte wa ikemasen.',a:'Dilarang masuk ruangan ini.'},
+        {j:'じゅぎょうちゅうにでんわしてはいけません。',r:'Jugyouchuu ni denwa shite wa ikemasen.',a:'Tidak boleh menelepon saat pelajaran berlangsung.'},
+      ]},
+     ]
+    },
+    {n:15,title:'Gabungan Bentuk-Te',desc:'Menyambung kalimat dengan bentuk-te dan izin dasar.',focus:'Menyatakan serangkaian kegiatan berurutan.',poin:['Menyambung kata kerja: ～te, ～te, ～masu','Menyatakan cara/metode melakukan sesuatu','Menggabungkan sifat dengan bentuk-te','Pola: ～てから (setelah melakukan)'],tags:['～te kara','rangkaian kegiatan'],
+     vocab:[
+      {j:'おきます',r:'okimasu',a:'bangun tidur'},
+      {j:'シャワーをあびます',r:'shawaa o abimasu',a:'mandi (shower)'},
+      {j:'かおをあらいます',r:'kao o araimasu',a:'mencuci muka'},
+      {j:'はをみがきます',r:'ha o migakimasu',a:'sikat gigi'},
+      {j:'きがえます',r:'kigaemasu',a:'ganti baju'},
+      {j:'じゅんびします',r:'junbi shimasu',a:'mempersiapkan / bersiap'},
+      {j:'でかけます',r:'dekakemasu',a:'pergi keluar / berangkat'},
+      {j:'つきます',r:'tsukimasu',a:'tiba / sampai'},
+      {j:'かえります',r:'kaerimasu',a:'pulang'},
+      {j:'ばんごはんをつくります',r:'ban gohan o tsukurimasu',a:'memasak makan malam'},
+      {j:'ふろにはいります',r:'furo ni hairimasu',a:'mandi (berendam)'},
+      {j:'ねます',r:'nemasu',a:'tidur'},
+      {j:'まず',r:'mazu',a:'pertama-tama'},
+      {j:'つぎに',r:'tsugi ni',a:'berikutnya / selanjutnya'},
+      {j:'それから',r:'sorekara',a:'setelah itu'},
+      {j:'さいごに',r:'saigo ni',a:'terakhir'},
+      {j:'～てから',r:'~te kara',a:'setelah melakukan ~ (baru kemudian)'},
+      {j:'いつも',r:'itsumo',a:'selalu'},
+      {j:'たいてい',r:'taitei',a:'biasanya'},
+      {j:'ときどき',r:'tokidoki',a:'kadang-kadang'},
+      {j:'あまり～ません',r:'amari ~masen',a:'tidak terlalu ~ / jarang'},
+      {j:'ぜんぜん～ません',r:'zenzen ~masen',a:'sama sekali tidak ~'},
+     ],
+     grammar:[
+      {pola:'V て、V て、V ます',romaji:'V te, V te, V masu',arti:'melakukan V, lalu V, lalu V',penjelasan:'Bentuk-te digunakan untuk menyambung beberapa kata kerja secara berurutan. Yang terakhir memakai bentuk ます/た.',contoh:[
+        {j:'あさ、おきて、シャワーをあびて、かいしゃへいきます。',r:'Asa, okite, shawaa o abite, kaisha e ikimasu.',a:'Pagi, bangun, mandi, lalu pergi ke kantor.'},
+        {j:'えきにつきて、でんわしました。',r:'Eki ni tsuite, denwa shimashita.',a:'Sampai di stasiun, lalu menelepon.'},
+      ]},
+      {pola:'V て から、V ます',romaji:'V te kara, V masu',arti:'setelah melakukan V, baru V',penjelasan:'てから menekankan urutan — aksi pertama harus selesai sebelum aksi berikutnya dimulai.',contoh:[
+        {j:'シャワーをあびてから、ばんごはんをたべます。',r:'Shawaa o abite kara, ban gohan o tabemasu.',a:'Setelah mandi, saya makan malam.'},
+        {j:'しゅくだいをしてから、テレビをみます。',r:'Shukudai o shite kara, terebi o mimasu.',a:'Setelah mengerjakan PR, saya nonton TV.'},
+        {j:'にほんごをならってから、にほんへいきたいです。',r:'Nihongo o naratte kara, nihon e ikitai desu.',a:'Setelah belajar bahasa Jepang, saya ingin pergi ke Jepang.'},
+      ]},
+      {pola:'i-adj くて / na-adj で',romaji:'i-adj kute / na-adj de',arti:'~ dan ~ (menghubungkan sifat)',penjelasan:'Bentuk-te untuk kata sifat. Sifat-i: ganti い dengan くて. Sifat-na: tambahkan で setelah na-adj.',contoh:[
+        {j:'このまちはおおきくてにぎやかです。',r:'Kono machi wa ookikute nigiyaka desu.',a:'Kota ini besar dan ramai.'},
+        {j:'やまださんはやさしくておもしろいです。',r:'Yamada-san wa yasashikute omoshiroi desu.',a:'Yamada-san baik hati dan menyenangkan.'},
+        {j:'このへやはしずかできれいです。',r:'Kono heya wa shizuka de kirei desu.',a:'Kamar ini tenang dan bersih.'},
+      ]},
+     ]
+    },
   ]},
   {stage:'Tahap 4',dur:30,sub:'Bab 16–20',focus:'Rangkaian Kegiatan & Pengalaman',babs:[
-    {n:16,title:'Urutan Kata Kerja',desc:'Menyambung beberapa kata kerja secara berurutan.',focus:'Menceritakan urutan aktivitas yang dilakukan.',poin:['Menyambung kata kerja dengan bentuk-te','Menyatakan bersamaan: ～ながら (sambil)','Larangan dan anjuran dengan bentuk-nai','Pola natural untuk narasi'],tags:['～nagara','urutan kegiatan']},
-    {n:17,title:'Bentuk Negatif & Kewajiban',desc:'Kata kerja bentuk-nai dan instruksi pencegahan/kewajiban.',focus:'Menyatakan apa yang tidak boleh dan apa yang harus dilakukan.',poin:['Konjugasi bentuk-nai (negatif kamus)','Kewajiban: ～なければなりません (harus)','Tidak perlu: ～なくてもいいです','Larangan sopan'],tags:['～nakereba','～nakute mo ii']},
-    {n:18,title:'Hobi & Kemampuan Lanjut',desc:'Menyatakan hobi dan kemampuan dengan bentuk kamus.',focus:'Berbicara tentang hobi dan aktivitas yang disukai.',poin:['Bentuk kamus (jisho-kei / bentuk dasar)','Hobi: ～のが すきです','Kemampuan: ～ことが できます','Sebelum kata benda: ～koto/no'],tags:['jisho-kei','～koto ga dekimasu']},
-    {n:19,title:'Pengalaman Masa Lalu',desc:'Menceritakan pengalaman yang pernah dilakukan.',focus:'Berbagi pengalaman dan cerita masa lalu.',poin:['Pola: ～たことがあります (pernah)','Bentuk lampau biasa (ta-kei)','Menceritakan frekuensi: ichido, nandomo','Menyatakan belum pernah: ～たことがありません'],tags:['～ta koto ga arimasu','pengalaman']},
-    {n:20,title:'Bahasa Akrab (Futsū-kei)',desc:'Perubahan dari bentuk sopan ke bentuk biasa.',focus:'Berkomunikasi dengan teman sebaya secara natural.',poin:['Kata kerja bentuk biasa: iku, taberu, suru','Kata sifat bentuk biasa','Penggunaan dalam percakapan sehari-hari','Perbedaan situasi formal vs informal'],tags:['futsū-kei','bentuk biasa']},
+    {n:16,title:'Urutan Kata Kerja',desc:'Menyambung beberapa kata kerja secara berurutan.',focus:'Menceritakan urutan aktivitas yang dilakukan.',poin:['Menyambung kata kerja dengan bentuk-te','Menyatakan bersamaan: ～ながら (sambil)','Larangan dan anjuran dengan bentuk-nai','Pola natural untuk narasi'],tags:['～nagara','urutan kegiatan'],
+     vocab:[
+      {j:'うんてんします',r:'unten shimasu',a:'mengemudi / mengendarai'},
+      {j:'あるきます',r:'arukimasu',a:'berjalan'},
+      {j:'はしります',r:'hashirimasu',a:'berlari'},
+      {j:'およぎます',r:'oyogimasu',a:'berenang'},
+      {j:'やすみます',r:'yasumimasu',a:'beristirahat'},
+      {j:'おんがくをききます',r:'ongaku o kikimasu',a:'mendengarkan musik'},
+      {j:'うたをうたいます',r:'uta o utaimasu',a:'bernyanyi'},
+      {j:'しんぶんをよみます',r:'shinbun o yomimasu',a:'membaca koran'},
+      {j:'コーヒーをのみます',r:'koohii o nomimasu',a:'minum kopi'},
+      {j:'たばこをすいます',r:'tabako o suimasu',a:'merokok'},
+      {j:'テレビをみます',r:'terebi o mimasu',a:'menonton TV'},
+      {j:'ながら',r:'nagara',a:'sambil (melakukan dua hal sekaligus)'},
+      {j:'いつも',r:'itsumo',a:'selalu'},
+      {j:'よく',r:'yoku',a:'sering'},
+      {j:'ときどき',r:'tokidoki',a:'kadang-kadang'},
+      {j:'たまに',r:'tama ni',a:'sesekali / jarang-jarang'},
+      {j:'あまり～ません',r:'amari ~masen',a:'tidak terlalu ~ / jarang'},
+      {j:'ぜんぜん～ません',r:'zenzen ~masen',a:'sama sekali tidak ~'},
+      {j:'もう～ました',r:'mou ~mashita',a:'sudah (melakukan)'},
+      {j:'まだ～ていません',r:'mada ~te imasen',a:'belum (melakukan)'},
+      {j:'それで',r:'sorede',a:'oleh karena itu'},
+      {j:'でも',r:'demo',a:'tapi / namun'},
+     ],
+     grammar:[
+      {pola:'V ながら V ます',romaji:'V nagara V masu',arti:'sambil V, melakukan V',penjelasan:'ながら menyatakan dua kegiatan yang dilakukan bersamaan. Kata kerja utama (lebih penting) di akhir, kata kerja sampingan + ながら di awal.',contoh:[
+        {j:'おんがくをきながら、べんきょうします。',r:'Ongaku o kikinagara, benkyou shimasu.',a:'Saya belajar sambil mendengarkan musik.'},
+        {j:'コーヒーをのみながら、しんぶんをよみます。',r:'Koohii o nominagara, shinbun o yomimasu.',a:'Saya membaca koran sambil minum kopi.'},
+        {j:'あるきながら、スマホをみてはいけません。',r:'Arukinagara, sumaho o mite wa ikemasen.',a:'Tidak boleh melihat HP sambil berjalan.'},
+      ]},
+      {pola:'もう V ました / まだ V ていません',romaji:'mou V mashita / mada V te imasen',arti:'sudah V / belum V',penjelasan:'もう = sudah (selesai dilakukan). まだ～ていません = belum (dalam konteks yang diharapkan sudah).',contoh:[
+        {j:'もうしゅくだいをしました。',r:'Mou shukudai o shimashita.',a:'Sudah mengerjakan PR.'},
+        {j:'まだたべていません。',r:'Mada tabete imasen.',a:'Belum makan.'},
+        {j:'レポートはもうかきましたか。',r:'Repooto wa mou kakimashita ka.',a:'Laporan sudah ditulis?'},
+      ]},
+      {pola:'V て います (sedang / kebiasaan)',romaji:'V te imasu',arti:'sedang V / selalu V (kebiasaan)',penjelasan:'～ています memiliki dua arti: (1) sedang melakukan sekarang, (2) kebiasaan atau pekerjaan tetap.',contoh:[
+        {j:'いまでんわしています。',r:'Ima denwa shite imasu.',a:'Sekarang sedang menelepon.'},
+        {j:'やまださんはぎんこうではたらいています。',r:'Yamada-san wa ginkou de hataraite imasu.',a:'Yamada-san bekerja di bank (pekerjaan tetap).'},
+        {j:'まいにちジョギングしています。',r:'Mainichi jogingu shite imasu.',a:'Setiap hari saya jogging (kebiasaan).'},
+      ]},
+     ]
+    },
+    {n:17,title:'Bentuk Negatif & Kewajiban',desc:'Kata kerja bentuk-nai dan instruksi pencegahan/kewajiban.',focus:'Menyatakan apa yang tidak boleh dan apa yang harus dilakukan.',poin:['Konjugasi bentuk-nai (negatif kamus)','Kewajiban: ～なければなりません (harus)','Tidak perlu: ～なくてもいいです','Larangan sopan'],tags:['～nakereba','～nakute mo ii'],
+     vocab:[
+      {j:'まもります',r:'mamorimasu',a:'menjaga / mematuhi / melindungi'},
+      {j:'まちます',r:'machimasu',a:'menunggu'},
+      {j:'みせます',r:'misemasu',a:'memperlihatkan'},
+      {j:'しらべます',r:'shirabemasu',a:'memeriksa / meneliti'},
+      {j:'れんらくします',r:'renraku shimasu',a:'menghubungi / memberi kabar'},
+      {j:'もってきます',r:'motte kimasu',a:'membawa (ke sini)'},
+      {j:'もっていきます',r:'motte ikimasu',a:'membawa (ke sana)'},
+      {j:'パスポート',r:'pasupooto',a:'paspor'},
+      {j:'ビザ',r:'biza',a:'visa'},
+      {j:'くすり',r:'kusuri',a:'obat'},
+      {j:'くすりをのみます',r:'kusuri o nomimasu',a:'minum obat'},
+      {j:'やくそく',r:'yakusoku',a:'janji'},
+      {j:'ルール',r:'ruuru',a:'aturan / peraturan'},
+      {j:'しめきり',r:'shimekiri',a:'batas waktu / deadline'},
+      {j:'かならず',r:'kanarazu',a:'pasti / tanpa gagal'},
+      {j:'ぜったいに',r:'zettai ni',a:'sama sekali / mutlak'},
+      {j:'きけん',r:'kiken',a:'berbahaya'},
+      {j:'だいじょうぶ',r:'daijoubu',a:'tidak apa-apa / baik-baik saja'},
+      {j:'むり',r:'muri',a:'tidak mungkin / memaksakan diri'},
+      {j:'だいじ',r:'daiji',a:'penting / berharga'},
+     ],
+     grammar:[
+      {pola:'V なければ なりません',romaji:'V nakereba narimasen',arti:'harus melakukan V',penjelasan:'Menyatakan kewajiban atau keharusan. Dibentuk dari bentuk-nai kata kerja + ければ なりません. Percakapan sehari-hari sering disingkat: ～なきゃ.',contoh:[
+        {j:'まいにちくすりをのまなければなりません。',r:'Mainichi kusuri o nomanakereba narimasen.',a:'Harus minum obat setiap hari.'},
+        {j:'あしたはやくおきなければなりません。',r:'Ashita hayaku okanakereba narimasen.',a:'Besok harus bangun pagi.'},
+        {j:'パスポートをもってこなければなりません。',r:'Pasupooto o motte konakereba narimasen.',a:'Harus membawa paspor.'},
+      ]},
+      {pola:'V なくても いいです',romaji:'V nakute mo ii desu',arti:'tidak perlu melakukan V / tidak apa-apa kalau tidak V',penjelasan:'Kebalikan dari kewajiban — menyatakan tidak ada keharusan. Dibentuk dari bentuk-nai + くても いいです.',contoh:[
+        {j:'あしたはこなくてもいいです。',r:'Ashita wa konakute mo ii desu.',a:'Besok tidak perlu datang.'},
+        {j:'むりしなくてもいいですよ。',r:'Muri shinakute mo ii desu yo.',a:'Tidak perlu memaksakan diri.'},
+        {j:'ネクタイをしなくてもいいですか。',r:'Nekutai o shinakute mo ii desu ka.',a:'Boleh tidak pakai dasi?'},
+      ]},
+      {pola:'V ないで ください',romaji:'V naide kudasai',arti:'tolong jangan melakukan V',penjelasan:'Permintaan untuk tidak melakukan sesuatu. Lebih sopan dari bentuk larangan biasa.',contoh:[
+        {j:'ここでたばこをすわないでください。',r:'Koko de tabako o suwanaide kudasai.',a:'Tolong jangan merokok di sini.'},
+        {j:'しんぱいしないでください。',r:'Shinpai shinaide kudasai.',a:'Tolong jangan khawatir.'},
+        {j:'おそくならないでください。',r:'Osoku naranaide kudasai.',a:'Tolong jangan terlambat.'},
+      ]},
+     ]
+    },
+    {n:18,title:'Hobi & Kemampuan Lanjut',desc:'Menyatakan hobi dan kemampuan dengan bentuk kamus.',focus:'Berbicara tentang hobi dan aktivitas yang disukai.',poin:['Bentuk kamus (jisho-kei / bentuk dasar)','Hobi: ～のが すきです','Kemampuan: ～ことが できます','Sebelum kata benda: ～koto/no'],tags:['jisho-kei','～koto ga dekimasu'],
+     vocab:[
+      {j:'しゅみ',r:'shumi',a:'hobi'},
+      {j:'りょうり',r:'ryouri',a:'masakan / memasak'},
+      {j:'えをかきます',r:'e o kakimasu',a:'melukis / menggambar'},
+      {j:'しゃしんをとります',r:'shashin o torimasu',a:'memotret / fotografi'},
+      {j:'ハイキング',r:'haikingu',a:'hiking / mendaki'},
+      {j:'キャンプ',r:'kyanpu',a:'berkemah'},
+      {j:'ガーデニング',r:'gaadeningu',a:'berkebun'},
+      {j:'つり',r:'tsuri',a:'memancing'},
+      {j:'しょうぎ',r:'shougi',a:'catur Jepang'},
+      {j:'おりがみ',r:'origami',a:'origami (melipat kertas)'},
+      {j:'ドライブ',r:'doraibu',a:'berkendara / jalan-jalan naik mobil'},
+      {j:'かいがい',r:'kaigai',a:'luar negeri'},
+      {j:'こくない',r:'kokunai',a:'dalam negeri'},
+      {j:'たのしむ',r:'tanoshimu',a:'menikmati (bentuk kamus)'},
+      {j:'あつめる',r:'atsumeru',a:'mengumpulkan (bentuk kamus)'},
+      {j:'つくる',r:'tsukuru',a:'membuat (bentuk kamus)'},
+      {j:'うごく',r:'ugoku',a:'bergerak (bentuk kamus)'},
+      {j:'やめる',r:'yameru',a:'berhenti / berhenti melakukan (bentuk kamus)'},
+      {j:'つづける',r:'tsuzukeru',a:'melanjutkan (bentuk kamus)'},
+      {j:'じかん',r:'jikan',a:'waktu'},
+      {j:'きかい',r:'kikai',a:'kesempatan'},
+      {j:'むずかしい',r:'muzukashii',a:'sulit'},
+     ],
+     grammar:[
+      {pola:'V（辞書形）のが すきです',romaji:'V (jisho-kei) no ga suki desu',arti:'suka melakukan V',penjelasan:'Bentuk kamus + の mengubah kata kerja menjadi kata benda (nominalisasi). の が すきです = suka melakukan ~.',contoh:[
+        {j:'えをかくのがすきです。',r:'E o kaku no ga suki desu.',a:'Saya suka menggambar.'},
+        {j:'おんがくをきくのがすきです。',r:'Ongaku o kiku no ga suki desu.',a:'Saya suka mendengarkan musik.'},
+        {j:'りょうりをするのがすきじゃないです。',r:'Ryouri o suru no ga suki ja nai desu.',a:'Saya tidak suka memasak.'},
+      ]},
+      {pola:'V（辞書形）ことが できます',romaji:'V (jisho-kei) koto ga dekimasu',arti:'bisa melakukan V',penjelasan:'Bentuk kamus + こと juga menominalisasi kata kerja. こと が できます menyatakan kemampuan melakukan sesuatu.',contoh:[
+        {j:'にほんごをはなすことができます。',r:'Nihongo o hanasu koto ga dekimasu.',a:'Saya bisa berbicara bahasa Jepang.'},
+        {j:'ピアノをひくことができますか。',r:'Piano o hiku koto ga dekimasu ka.',a:'Bisakah kamu bermain piano?'},
+        {j:'まだかんじをよむことができません。',r:'Mada kanji o yomu koto ga dekimasen.',a:'Saya belum bisa membaca kanji.'},
+      ]},
+      {pola:'V（辞書形）まえに',romaji:'V (jisho-kei) mae ni',arti:'sebelum melakukan V',penjelasan:'Bentuk kamus + まえに = sebelum ~. Berbeda dengan てから (setelah ~).',contoh:[
+        {j:'ねるまえに、はをみがきます。',r:'Neru mae ni, ha o migakimasu.',a:'Sebelum tidur, saya sikat gigi.'},
+        {j:'たべるまえに、てをあらいます。',r:'Taberu mae ni, te o araimasu.',a:'Sebelum makan, cuci tangan.'},
+        {j:'にほんへいくまえに、にほんごをならいます。',r:'Nihon e iku mae ni, nihongo o naraimasu.',a:'Sebelum pergi ke Jepang, saya belajar bahasa Jepang.'},
+      ]},
+     ]
+    },
+    {n:19,title:'Pengalaman Masa Lalu',desc:'Menceritakan pengalaman yang pernah dilakukan.',focus:'Berbagi pengalaman dan cerita masa lalu.',poin:['Pola: ～たことがあります (pernah)','Bentuk lampau biasa (ta-kei)','Menceritakan frekuensi: ichido, nandomo','Menyatakan belum pernah: ～たことがありません'],tags:['～ta koto ga arimasu','pengalaman'],
+     vocab:[
+      {j:'いちど',r:'ichido',a:'sekali / satu kali'},
+      {j:'なんど',r:'nando',a:'beberapa kali'},
+      {j:'なんどか',r:'nando ka',a:'beberapa kali (tidak pasti)'},
+      {j:'いちども',r:'ichido mo',a:'bahkan sekali pun (dengan negatif)'},
+      {j:'はじめて',r:'hajimete',a:'untuk pertama kalinya'},
+      {j:'むかし',r:'mukashi',a:'dahulu kala / dulu'},
+      {j:'こどものとき',r:'kodomo no toki',a:'waktu masih anak-anak'},
+      {j:'がくせいのとき',r:'gakusei no toki',a:'waktu masih pelajar'},
+      {j:'のぼります',r:'noborimashu',a:'naik / mendaki'},
+      {j:'みます',r:'mimasu',a:'melihat / menonton'},
+      {j:'あいます',r:'aimasu',a:'bertemu'},
+      {j:'たいけんします',r:'taiken shimasu',a:'mengalami / mencoba langsung'},
+      {j:'ふじさん',r:'fujisan',a:'Gunung Fuji'},
+      {j:'おんせん',r:'onsen',a:'pemandian air panas'},
+      {j:'かぶき',r:'kabuki',a:'kabuki (seni teater tradisional Jepang)'},
+      {j:'すもう',r:'sumou',a:'sumo'},
+      {j:'にほんりょうり',r:'nihon ryouri',a:'masakan Jepang'},
+      {j:'けいけん',r:'keiken',a:'pengalaman'},
+      {j:'おもいで',r:'omoide',a:'kenangan'},
+      {j:'たのしかった',r:'tanoshikatta',a:'menyenangkan (lampau)'},
+      {j:'びっくりしました',r:'bikkuri shimashita',a:'terkejut'},
+      {j:'かんどうしました',r:'kandou shimashita',a:'terharu'},
+     ],
+     grammar:[
+      {pola:'V た こと が あります',romaji:'V ta koto ga arimasu',arti:'pernah melakukan V',penjelasan:'Menyatakan pengalaman yang pernah terjadi di masa lalu. Bentuk ta (lampau biasa) + ことがあります.',contoh:[
+        {j:'ふじさんにのぼったことがあります。',r:'Fujisan ni nobotta koto ga arimasu.',a:'Saya pernah mendaki Gunung Fuji.'},
+        {j:'すしをたべたことがありますか。',r:'Sushi o tabeta koto ga arimasu ka.',a:'Pernahkah kamu makan sushi?'},
+        {j:'にほんにいったことがありません。',r:'Nihon ni itta koto ga arimasen.',a:'Saya belum pernah ke Jepang.'},
+      ]},
+      {pola:'V た とき、～',romaji:'V ta toki, ~',arti:'ketika sudah V / saat V (lampau)',penjelasan:'とき = ketika/saat. Dengan bentuk ta (lampau) menggambarkan situasi setelah aksi selesai.',contoh:[
+        {j:'にほんへいったとき、おんせんにはいりました。',r:'Nihon e itta toki, onsen ni hairimashita.',a:'Ketika pergi ke Jepang, saya masuk pemandian air panas.'},
+        {j:'こどものとき、なにになりたかったですか。',r:'Kodomo no toki, nani ni naritakatta desu ka.',a:'Waktu kecil, ingin menjadi apa?'},
+      ]},
+      {pola:'はじめて V ました',romaji:'hajimete V mashita',arti:'untuk pertama kalinya melakukan V',penjelasan:'はじめて menyatakan sesuatu yang dilakukan untuk pertama kalinya.',contoh:[
+        {j:'はじめてかぶきをみました。',r:'Hajimete kabuki o mimashita.',a:'Untuk pertama kalinya saya menonton kabuki.'},
+        {j:'はじめてにほんりょうりをつくりました。',r:'Hajimete nihon ryouri o tsukurimashita.',a:'Untuk pertama kalinya saya memasak masakan Jepang.'},
+      ]},
+     ]
+    },
+    {n:20,title:'Bahasa Akrab (Futsū-kei)',desc:'Perubahan dari bentuk sopan ke bentuk biasa.',focus:'Berkomunikasi dengan teman sebaya secara natural.',poin:['Kata kerja bentuk biasa: iku, taberu, suru','Kata sifat bentuk biasa','Penggunaan dalam percakapan sehari-hari','Perbedaan situasi formal vs informal'],tags:['futsū-kei','bentuk biasa'],
+     vocab:[
+      {j:'いく',r:'iku',a:'pergi (bentuk biasa)'},
+      {j:'くる',r:'kuru',a:'datang (bentuk biasa)'},
+      {j:'かえる',r:'kaeru',a:'pulang (bentuk biasa)'},
+      {j:'たべる',r:'taberu',a:'makan (bentuk biasa)'},
+      {j:'のむ',r:'nomu',a:'minum (bentuk biasa)'},
+      {j:'みる',r:'miru',a:'melihat (bentuk biasa)'},
+      {j:'する',r:'suru',a:'melakukan (bentuk biasa)'},
+      {j:'ある',r:'aru',a:'ada / punya (bentuk biasa)'},
+      {j:'いる',r:'iru',a:'ada (makhluk hidup, bentuk biasa)'},
+      {j:'いかない',r:'ikanai',a:'tidak pergi (bentuk biasa negatif)'},
+      {j:'たべない',r:'tabenai',a:'tidak makan (bentuk biasa negatif)'},
+      {j:'いった',r:'itta',a:'pergi (bentuk biasa lampau)'},
+      {j:'たべた',r:'tabeta',a:'makan (bentuk biasa lampau)'},
+      {j:'いかなかった',r:'ikanakatta',a:'tidak pergi (bentuk biasa lampau negatif)'},
+      {j:'ね',r:'ne',a:'ya / kan (mencari persetujuan)'},
+      {j:'よ',r:'yo',a:'lho / nih (menekankan informasi)'},
+      {j:'な',r:'na',a:'ya / deh (pria, monolog)'},
+      {j:'わ',r:'wa',a:'lho (wanita, menekankan)'},
+      {j:'そうだね',r:'sou da ne',a:'ya memang (setuju, akrab)'},
+      {j:'ほんとう？',r:'hontou?',a:'benarkah? / masa?'},
+      {j:'うそ！',r:'uso!',a:'bohong! / masa sih!'},
+      {j:'やばい',r:'yabai',a:'gawat / keren banget (slang)'},
+     ],
+     grammar:[
+      {pola:'bentuk biasa vs bentuk sopan',romaji:'futsuu-kei vs teineigo',arti:'percakapan santai vs percakapan formal',penjelasan:'Bentuk biasa (kamus/ta/nai) digunakan dengan teman, keluarga, atau yang lebih muda. Bentuk sopan (masu/desu) untuk situasi formal, orang yang baru dikenal, atau atasan.',contoh:[
+        {j:'【sopan】あしたどこへいきますか。',r:'[Sopan] Ashita doko e ikimasu ka.',a:'Besok pergi ke mana?'},
+        {j:'【akrab】あしたどこいく？',r:'[Akrab] Ashita doko iku?',a:'Besok pergi ke mana? (santai)'},
+        {j:'【akrab】もうたべた？',r:'[Akrab] Mou tabeta?',a:'Sudah makan? (santai)'},
+      ]},
+      {pola:'V（普通形）と おもいます',romaji:'V (futsuu-kei) to omoimasu',arti:'saya pikir / saya rasa ...',penjelasan:'Bentuk biasa + と おもいます digunakan untuk menyatakan opini atau dugaan.',contoh:[
+        {j:'あしたはあめがふるとおもいます。',r:'Ashita wa ame ga furu to omoimasu.',a:'Saya pikir besok akan hujan.'},
+        {j:'やまださんはいそがしいとおもいます。',r:'Yamada-san wa isogashii to omoimasu.',a:'Saya rasa Yamada-san sibuk.'},
+      ]},
+      {pola:'V（普通形）んです',romaji:'V (futsuu-kei) n desu',arti:'sebenarnya ~ / soalnya ~ (penjelasan)',penjelasan:'んです (んだ dalam bahasa biasa) digunakan untuk memberikan penjelasan atau latar belakang suatu situasi. Menyiratkan "karena / soalnya".',contoh:[
+        {j:'どうしたんですか。',r:'Doushita n desu ka.',a:'Ada apa? / Kenapa?'},
+        {j:'あたまがいたいんです。',r:'Atama ga itai n desu.',a:'Soalnya kepala saya sakit.'},
+        {j:'にほんごをならっているんです。',r:'Nihongo o naratte iru n desu.',a:'Sebenarnya saya sedang belajar bahasa Jepang.'},
+      ]},
+     ]
+    },
   ]},
   {stage:'Tahap 5',dur:40,sub:'Bab 21–25',focus:'Pengandaian & Pendapat',babs:[
-    {n:21,title:'Menyatakan Pendapat',desc:'Menyampaikan opini dan mengutip perkataan orang lain.',focus:'Berbagi pendapat dan melaporkan ucapan orang.',poin:['Pendapat: ～とおもいます (saya pikir)','Kutipan: ～といいました (dia berkata)','Kata penghubung: dakara, demo, sorekara','Menyatakan setuju/tidak setuju'],tags:['～to omoimasu','～to iimashita']},
-    {n:22,title:'Kalimat Penjelas Kata Benda',desc:'Menggunakan klausa untuk menjelaskan kata benda.',focus:'Membuat kalimat yang lebih kompleks dan deskriptif.',poin:['Klausa relatif sebelum kata benda','Pola: [kalimat] + kata benda','Contoh: kinou katta hon (buku yang dibeli kemarin)','Mendeskripsikan orang dan benda secara detail'],tags:['klausa relatif','noun modifier']},
-    {n:23,title:'Pengandaian Waktu/Situasi',desc:'Menyatakan kondisi dengan ～to.',focus:'Mendeskripsikan hubungan sebab-akibat alami.',poin:['Pola: ～と (jika/ketika, selalu)','Digunakan untuk fakta/kondisi umum','Petunjuk arah: hidari ni miru to…','Perbedaan dengan ～たら'],tags:['～to','kondisi alami']},
-    {n:24,title:'Memberi & Menerima Tindakan',desc:'Konsep memberi dan menerima dalam bentuk tindakan.',focus:'Mengungkapkan kebaikan yang dilakukan atau diterima.',poin:['～て あげます (melakukan untuk orang lain)','～て もらいます (meminta orang melakukan)','～て くれます (orang melakukan untuk saya)','Nuansa rasa terima kasih dan kebaikan'],tags:['～te agemasu','～te moraimasu','～te kuremasu']},
-    {n:25,title:'Kalimat Pengandaian ～tara',desc:'Kalimat bersyarat lanjutan dengan ～tara.',focus:'Menyatakan kondisi hipotetis dan saran.',poin:['Pola: ～たら (jika/kalau/setelah)','Saran: ～たら どうですか (bagaimana kalau)','Perbedaan ～tara vs ～to vs ～ba','Penggunaan dalam percakapan nyata'],tags:['～tara','～ba','saran']},
+    {n:21,title:'Menyatakan Pendapat',desc:'Menyampaikan opini dan mengutip perkataan orang lain.',focus:'Berbagi pendapat dan melaporkan ucapan orang.',poin:['Pendapat: ～とおもいます (saya pikir)','Kutipan: ～といいました (dia berkata)','Kata penghubung: dakara, demo, sorekara','Menyatakan setuju/tidak setuju'],tags:['～to omoimasu','～to iimashita'],
+     vocab:[
+      {j:'おもいます',r:'omoimasu',a:'berpikir / merasa'},
+      {j:'いいます',r:'iimasu',a:'berkata / mengatakan'},
+      {j:'しります',r:'shirimasu',a:'tahu / mengetahui'},
+      {j:'しっています',r:'shitte imasu',a:'sudah tahu (sedang dalam kondisi tahu)'},
+      {j:'しりません',r:'shirimasen',a:'tidak tahu'},
+      {j:'わかります',r:'wakarimasu',a:'mengerti / paham'},
+      {j:'かんがえます',r:'kangaemasu',a:'berpikir / mempertimbangkan'},
+      {j:'しんじます',r:'shinjimasu',a:'percaya'},
+      {j:'きめます',r:'kimemasu',a:'memutuskan'},
+      {j:'しつもん',r:'shitsumon',a:'pertanyaan'},
+      {j:'こたえ',r:'kotae',a:'jawaban'},
+      {j:'いけん',r:'iken',a:'pendapat'},
+      {j:'かんがえ',r:'kangae',a:'pikiran / pemikiran'},
+      {j:'だから',r:'dakara',a:'oleh karena itu / makanya'},
+      {j:'でも',r:'demo',a:'tapi / namun'},
+      {j:'それに',r:'soreni',a:'selain itu / lagipula'},
+      {j:'たとえば',r:'tatoeba',a:'misalnya / contohnya'},
+      {j:'もしかしたら',r:'moshikashitara',a:'mungkin saja'},
+      {j:'きっと',r:'kitto',a:'pasti / tentu'},
+      {j:'たぶん',r:'tabun',a:'mungkin / barangkali'},
+      {j:'ぜったいに',r:'zettai ni',a:'pasti / mutlak'},
+      {j:'そうですね',r:'sou desu ne',a:'ya memang / betul juga'},
+      {j:'そうですか',r:'sou desu ka',a:'begitu ya / oh begitu'},
+     ],
+     grammar:[
+      {pola:'V（普通形）と おもいます',romaji:'V (futsuu-kei) to omoimasu',arti:'saya pikir / saya rasa ...',penjelasan:'Menyatakan opini atau dugaan pribadi. Gunakan bentuk biasa sebelum と おもいます.',contoh:[
+        {j:'あしたはあめだとおもいます。',r:'Ashita wa ame da to omoimasu.',a:'Saya pikir besok hujan.'},
+        {j:'やまださんはいそがしいとおもいます。',r:'Yamada-san wa isogashii to omoimasu.',a:'Saya rasa Yamada-san sibuk.'},
+        {j:'このもんだいはむずかしいとおもいません。',r:'Kono mondai wa muzukashii to omoimasen.',a:'Saya tidak pikir masalah ini sulit.'},
+      ]},
+      {pola:'V（普通形）と いいました',romaji:'V (futsuu-kei) to iimashita',arti:'dia berkata bahwa ...',penjelasan:'Melaporkan ucapan orang lain (kutipan tidak langsung). Gunakan bentuk biasa sebelum と.',contoh:[
+        {j:'やまださんはあしたくると いいました。',r:'Yamada-san wa ashita kuru to iimashita.',a:'Yamada-san berkata akan datang besok.'},
+        {j:'せんせいはテストがあると いいました。',r:'Sensei wa tesuto ga aru to iimashita.',a:'Guru berkata akan ada ujian.'},
+        {j:'かのじょはすきじゃないと いいました。',r:'Kanojo wa suki ja nai to iimashita.',a:'Dia (wanita) berkata tidak suka.'},
+      ]},
+      {pola:'～でしょう / ～だろう',romaji:'~deshou / ~darou',arti:'mungkin ~ / kayaknya ~',penjelasan:'Menyatakan dugaan dengan tingkat kepastian sedang. でしょう sopan, だろう akrab.',contoh:[
+        {j:'あしたはいいてんきでしょう。',r:'Ashita wa ii tenki deshou.',a:'Besok mungkin cuacanya bagus.'},
+        {j:'やまださんもしっているでしょう。',r:'Yamada-san mo shitte iru deshou.',a:'Yamada-san juga mungkin sudah tahu.'},
+      ]},
+     ]
+    },
+    {n:22,title:'Kalimat Penjelas Kata Benda',desc:'Menggunakan klausa untuk menjelaskan kata benda.',focus:'Membuat kalimat yang lebih kompleks dan deskriptif.',poin:['Klausa relatif sebelum kata benda','Pola: [kalimat] + kata benda','Contoh: kinou katta hon (buku yang dibeli kemarin)','Mendeskripsikan orang dan benda secara detail'],tags:['klausa relatif','noun modifier'],
+     vocab:[
+      {j:'きのうかった',r:'kinou katta',a:'yang dibeli kemarin'},
+      {j:'むこうにいる',r:'mukou ni iru',a:'yang ada di sana'},
+      {j:'あかいふく',r:'akai fuku',a:'baju merah'},
+      {j:'にほんごをはなすひと',r:'nihongo o hanasu hito',a:'orang yang berbicara bahasa Jepang'},
+      {j:'ふく',r:'fuku',a:'pakaian / baju'},
+      {j:'いみ',r:'imi',a:'arti / makna'},
+      {j:'もの',r:'mono',a:'benda / hal'},
+      {j:'こと',r:'koto',a:'hal / masalah (abstrak)'},
+      {j:'ひと',r:'hito',a:'orang'},
+      {j:'ところ',r:'tokoro',a:'tempat'},
+      {j:'じかん',r:'jikan',a:'waktu'},
+      {j:'りゆう',r:'riyuu',a:'alasan / sebab'},
+      {j:'ほうほう',r:'houhou',a:'cara / metode'},
+      {j:'もんだい',r:'mondai',a:'masalah / soal'},
+      {j:'けっか',r:'kekka',a:'hasil'},
+      {j:'かんけい',r:'kankei',a:'hubungan / keterkaitan'},
+      {j:'せつめいします',r:'setsumei shimasu',a:'menjelaskan'},
+      {j:'しょうかいします',r:'shoukai shimasu',a:'memperkenalkan'},
+      {j:'おぼえます',r:'oboemasu',a:'mengingat / menghafal'},
+      {j:'わすれます',r:'wasuremasu',a:'melupakan'},
+      {j:'さがします',r:'sagashimasu',a:'mencari'},
+      {j:'みつけます',r:'mitsukemasu',a:'menemukan'},
+     ],
+     grammar:[
+      {pola:'[klausa] + N',romaji:'[V futsuu / i-adj / na-adj na / N no] + N',arti:'N yang [klausa]',penjelasan:'Klausa penjelas diletakkan SEBELUM kata benda di bahasa Jepang. Gunakan bentuk biasa di dalam klausa.',contoh:[
+        {j:'きのうかったほんはおもしろいです。',r:'Kinou katta hon wa omoshiroi desu.',a:'Buku yang saya beli kemarin menarik.'},
+        {j:'むこうにいるひとはだれですか。',r:'Mukou ni iru hito wa dare desu ka.',a:'Siapa orang yang ada di sana?'},
+        {j:'にほんごをはなすことができるひとをさがしています。',r:'Nihongo o hanasu koto ga dekiru hito o sagashite imasu.',a:'Saya sedang mencari orang yang bisa berbicara bahasa Jepang.'},
+      ]},
+      {pola:'V（普通形）ので',romaji:'V (futsuu-kei) no de',arti:'karena ~ (alasan objektif)',penjelasan:'ので digunakan untuk menyatakan alasan yang bersifat objektif atau netral. Lebih sopan dari から dalam konteks formal.',contoh:[
+        {j:'あめがふっているので、いえにいます。',r:'Ame ga futte iru node, ie ni imasu.',a:'Karena hujan, saya di rumah.'},
+        {j:'びょうきなので、がっこうをやすみました。',r:'Byouki na node, gakkou o yasumimashita.',a:'Karena sakit, saya tidak masuk sekolah.'},
+        {j:'しごとがいそがしいので、やすめません。',r:'Shigoto ga isogashii node, yasumemasen.',a:'Karena pekerjaan sibuk, saya tidak bisa istirahat.'},
+      ]},
+      {pola:'V（普通形）のに',romaji:'V (futsuu-kei) no ni',arti:'meskipun ~ / padahal ~',penjelasan:'のに menyatakan kontras atau kekecewaan — situasi yang bertentangan dengan harapan.',contoh:[
+        {j:'たくさんべんきょうしたのに、テストにおちました。',r:'Takusan benkyou shita no ni, tesuto ni ochimashita.',a:'Padahal sudah banyak belajar, tapi gagal ujian.'},
+        {j:'やすいのに、おいしいですね。',r:'Yasui no ni, oishii desu ne.',a:'Meskipun murah, tapi enak ya.'},
+      ]},
+     ]
+    },
+    {n:23,title:'Pengandaian Waktu/Situasi',desc:'Menyatakan kondisi dengan ～to.',focus:'Mendeskripsikan hubungan sebab-akibat alami.',poin:['Pola: ～と (jika/ketika, selalu)','Digunakan untuk fakta/kondisi umum','Petunjuk arah: hidari ni miru to…','Perbedaan dengan ～たら'],tags:['～to','kondisi alami'],
+     vocab:[
+      {j:'まがります',r:'magarimasu',a:'berbelok / membelok'},
+      {j:'まっすぐ',r:'massugu',a:'lurus'},
+      {j:'みぎにまがります',r:'migi ni magarimasu',a:'belok kanan'},
+      {j:'ひだりにまがります',r:'hidari ni magarimasu',a:'belok kiri'},
+      {j:'わたります',r:'watarimashu',a:'menyeberang'},
+      {j:'とおります',r:'toorimasu',a:'melewati / melalui'},
+      {j:'つきあたり',r:'tsukiatari',a:'ujung jalan / perempatan buntu'},
+      {j:'しんごう',r:'shingou',a:'lampu lalu lintas'},
+      {j:'こうさてん',r:'kousaten',a:'perempatan / persimpangan'},
+      {j:'はし',r:'hashi',a:'jembatan'},
+      {j:'かど',r:'kado',a:'sudut jalan / tikungan'},
+      {j:'スイッチ',r:'suitchi',a:'saklar / tombol'},
+      {j:'おします',r:'oshimasu',a:'menekan / mendorong'},
+      {j:'まわします',r:'mawashimasu',a:'memutar'},
+      {j:'ひきます',r:'hikimasu',a:'menarik'},
+      {j:'はる',r:'haru',a:'musim semi'},
+      {j:'なつ',r:'natsu',a:'musim panas'},
+      {j:'あき',r:'aki',a:'musim gugur'},
+      {j:'ふゆ',r:'fuyu',a:'musim dingin'},
+      {j:'きせつ',r:'kisetsu',a:'musim'},
+      {j:'あたたかくなります',r:'atatakaku narimasu',a:'menjadi hangat'},
+      {j:'さむくなります',r:'samuku narimasu',a:'menjadi dingin'},
+     ],
+     grammar:[
+      {pola:'V（辞書形）と ～',romaji:'V (jisho-kei) to ~',arti:'kalau/jika V maka ~ (selalu)',penjelasan:'～と digunakan untuk kondisi yang hasilnya SELALU PASTI dan alami — hukum alam, petunjuk arah, cara kerja alat. Tidak digunakan untuk keinginan/permintaan.',contoh:[
+        {j:'みぎにまがると、えきがあります。',r:'Migi ni magaru to, eki ga arimasu.',a:'Kalau belok kanan, ada stasiun.'},
+        {j:'このボタンをおすと、でます。',r:'Kono botan o osu to, demasu.',a:'Kalau tekan tombol ini, akan keluar.'},
+        {j:'はるになると、さくらがさきます。',r:'Haru ni naru to, sakura ga sakimasu.',a:'Kalau sudah musim semi, bunga sakura mekar.'},
+      ]},
+      {pola:'N に なります / N く なります',romaji:'N ni narimasu / N ku narimasu',arti:'menjadi N / menjadi lebih ~',penjelasan:'なります menyatakan perubahan keadaan. Sifat-na/kata benda + に, sifat-i (ganti い dengan く) + なります.',contoh:[
+        {j:'さむくなりました。',r:'Samuku narimashita.',a:'(Cuaca) menjadi dingin.'},
+        {j:'にほんごがじょうずになりました。',r:'Nihongo ga jouzu ni narimashita.',a:'Bahasa Jepangnya menjadi lebih pandai.'},
+        {j:'こどもがおとなになりました。',r:'Kodomo ga otona ni narimashita.',a:'Anak-anak sudah menjadi dewasa.'},
+      ]},
+      {pola:'N を V ように なります',romaji:'V you ni narimasu',arti:'menjadi bisa V / mulai bisa V',penjelasan:'ように なります menyatakan perubahan kemampuan — dari tidak bisa menjadi bisa, atau perubahan kebiasaan.',contoh:[
+        {j:'にほんごがはなせるようになりました。',r:'Nihongo ga hanaseru you ni narimashita.',a:'Saya jadi bisa berbicara bahasa Jepang.'},
+        {j:'まいあさはやくおきるようになりました。',r:'Maiasa hayaku okiru you ni narimashita.',a:'Saya jadi bisa bangun pagi setiap hari.'},
+      ]},
+     ]
+    },
+    {n:24,title:'Memberi & Menerima Tindakan',desc:'Konsep memberi dan menerima dalam bentuk tindakan.',focus:'Mengungkapkan kebaikan yang dilakukan atau diterima.',poin:['～て あげます (melakukan untuk orang lain)','～て もらいます (meminta orang melakukan)','～て くれます (orang melakukan untuk saya)','Nuansa rasa terima kasih dan kebaikan'],tags:['～te agemasu','～te moraimasu','～te kuremasu'],
+     vocab:[
+      {j:'おしえます',r:'oshiemasu',a:'mengajar / memberitahu'},
+      {j:'てつだいます',r:'tetsudaimasu',a:'membantu'},
+      {j:'なおします',r:'naoshimasu',a:'memperbaiki / membetulkan'},
+      {j:'おくります',r:'okurimasu',a:'mengantar / mengirim'},
+      {j:'むかえます',r:'mukaemasu',a:'menjemput'},
+      {j:'せつめいします',r:'setsumei shimasu',a:'menjelaskan'},
+      {j:'よんでくれます',r:'yonde kuremasu',a:'memanggilkan (untuk saya)'},
+      {j:'かいてくれます',r:'kaite kuremasu',a:'menuliskan (untuk saya)'},
+      {j:'みせてくれます',r:'misete kuremasu',a:'memperlihatkan (untuk saya)'},
+      {j:'しんせつ（な）',r:'shinsetsu (na)',a:'baik hati / ramah'},
+      {j:'たすかります',r:'tasukarimasu',a:'tertolong / sangat membantu'},
+      {j:'ありがとうございます',r:'arigatou gozaimasu',a:'terima kasih (sopan)'},
+      {j:'おかげさまで',r:'okage sama de',a:'berkat bantuan Anda'},
+      {j:'すみません',r:'sumimasen',a:'permisi / maaf (minta tolong)'},
+      {j:'たのみます',r:'tanomimasu',a:'memohon / meminta tolong'},
+      {j:'おねがいします',r:'onegai shimasu',a:'tolong / mohon bantuannya'},
+      {j:'～のために',r:'~no tame ni',a:'untuk (kepentingan) ~'},
+      {j:'ために',r:'tame ni',a:'demi / untuk tujuan'},
+     ],
+     grammar:[
+      {pola:'V て あげます',romaji:'V te agemasu',arti:'melakukan V untuk orang lain (dari saya)',penjelasan:'Menyatakan kebaikan yang saya lakukan UNTUK orang lain. Hati-hati: terdengar seperti menggurui jika digunakan untuk atasan.',contoh:[
+        {j:'ともだちにえいごをおしえてあげます。',r:'Tomodachi ni eigo o oshiete agemasu.',a:'Saya mengajarkan bahasa Inggris untuk teman.'},
+        {j:'おばあさんのにもつをもってあげました。',r:'Obaasan no nimotsu o motte agemashita.',a:'Saya membawakan barang nenek.'},
+      ]},
+      {pola:'V て もらいます',romaji:'V te moraimasu',arti:'meminta / mendapat bantuan orang melakukan V',penjelasan:'Menyatakan bahwa saya meminta atau mendapat bantuan dari orang lain. Sudut pandang si penerima.',contoh:[
+        {j:'やまださんにくるまをなおしてもらいました。',r:'Yamada-san ni kuruma o naoshite moraimashita.',a:'Saya mendapat bantuan Yamada-san memperbaiki mobil.'},
+        {j:'ちちにえいごをおしえてもらいました。',r:'Chichi ni eigo o oshiete moraimashita.',a:'Saya diajari bahasa Inggris oleh ayah.'},
+        {j:'せつめいしてもらえますか。',r:'Setsumei shite moraemasu ka.',a:'Bisakah Anda menjelaskannya untuk saya?'},
+      ]},
+      {pola:'V て くれます',romaji:'V te kuremasu',arti:'orang lain melakukan V untuk saya (secara sukarela)',penjelasan:'Menyatakan kebaikan yang orang lain lakukan UNTUK SAYA secara sukarela. Mengandung rasa terima kasih.',contoh:[
+        {j:'ともだちがてつだってくれました。',r:'Tomodachi ga tetsudatte kuremashita.',a:'Teman membantu saya (sukarela).'},
+        {j:'せんせいがていねいにおしえてくれました。',r:'Sensei ga teinei ni oshiete kuremashita.',a:'Guru mengajar saya dengan teliti.'},
+        {j:'だれかタクシーをよんでくれませんか。',r:'Dareka takushii o yonde kuremasen ka.',a:'Adakah yang mau memanggilkan taksi untuk saya?'},
+      ]},
+     ]
+    },
+    {n:25,title:'Kalimat Pengandaian ～tara',desc:'Kalimat bersyarat lanjutan dengan ～tara.',focus:'Menyatakan kondisi hipotetis dan saran.',poin:['Pola: ～たら (jika/kalau/setelah)','Saran: ～たら どうですか (bagaimana kalau)','Perbedaan ～tara vs ～to vs ～ba','Penggunaan dalam percakapan nyata'],tags:['～tara','～ba','saran'],
+     vocab:[
+      {j:'もし',r:'moshi',a:'seandainya / jika (pembuka kondisi hipotetis)'},
+      {j:'いちおく',r:'ichi oku',a:'100 juta'},
+      {j:'たからくじ',r:'takarakuji',a:'lotre / undian berhadiah'},
+      {j:'あたります',r:'atarimasu',a:'menang / kena (undian)'},
+      {j:'せかいりょこう',r:'sekai ryokou',a:'perjalanan keliling dunia'},
+      {j:'いなか',r:'inaka',a:'desa / pedesaan'},
+      {j:'としょかん',r:'toshokan',a:'perpustakaan'},
+      {j:'おかし',r:'okashi',a:'kue / camilan'},
+      {j:'いいえ、まだです',r:'iie, mada desu',a:'tidak, belum'},
+      {j:'もうすこし',r:'mou sukoshi',a:'sedikit lagi'},
+      {j:'いちどやってみます',r:'ichido yatte mimasu',a:'mencoba sekali'},
+      {j:'～てみます',r:'~te mimasu',a:'mencoba melakukan ~ (coba-coba)'},
+      {j:'いいかんがえですね',r:'ii kangae desu ne',a:'ide yang bagus ya'},
+      {j:'やってみましょう',r:'yatte mimashou',a:'ayo coba!'},
+      {j:'むずかしかったら',r:'muzukashikattara',a:'kalau sulit'},
+      {j:'わからなかったら',r:'wakaranakattara',a:'kalau tidak mengerti'},
+      {j:'じかんがあったら',r:'jikan ga attara',a:'kalau ada waktu'},
+      {j:'～ばよかった',r:'~ba yokatta',a:'harusnya / seandainya (penyesalan)'},
+      {j:'ざんねん',r:'zannen',a:'sayang sekali / menyesal'},
+      {j:'しかたがない',r:'shikata ga nai',a:'tidak ada cara lain / mau bagaimana lagi'},
+     ],
+     grammar:[
+      {pola:'V たら ～',romaji:'V tara ~',arti:'kalau/jika/setelah V maka ~',penjelasan:'～たら adalah bentuk bersyarat paling umum. Dibentuk dari bentuk lampau biasa (ta) + ら. Bisa digunakan untuk kondisi nyata, hipotetis, maupun urutan waktu.',contoh:[
+        {j:'にほんへいったら、すしをたべたいです。',r:'Nihon e ittara, sushi o tabetai desu.',a:'Kalau pergi ke Jepang, saya ingin makan sushi.'},
+        {j:'しゅくだいがおわったら、あそびにいきましょう。',r:'Shukudai ga owattara, asobi ni ikimashou.',a:'Setelah PR selesai, ayo pergi bermain.'},
+        {j:'もしおかねがあったら、なにをしますか。',r:'Moshi okane ga attara, nani o shimasu ka.',a:'Seandainya punya uang, apa yang akan kamu lakukan?'},
+      ]},
+      {pola:'V たら どうですか',romaji:'V tara dou desu ka',arti:'bagaimana kalau mencoba V? (saran)',penjelasan:'Memberikan saran dengan cara yang sopan dan lembut. Lebih halus dari ください.',contoh:[
+        {j:'いちどやってみたらどうですか。',r:'Ichido yatte mitara dou desu ka.',a:'Bagaimana kalau dicoba sekali?'},
+        {j:'いしゃにみてもらったらどうですか。',r:'Isha ni mite morattara dou desu ka.',a:'Bagaimana kalau diperiksa dokter?'},
+        {j:'すこしやすんだらどうですか。',r:'Sukoshi yasundara dou desu ka.',a:'Bagaimana kalau istirahat sebentar?'},
+      ]},
+      {pola:'V て みます',romaji:'V te mimasu',arti:'mencoba melakukan V (coba-coba)',penjelasan:'みます (melihat) + bentuk-te menyatakan mencoba sesuatu untuk pertama kali atau sebagai percobaan.',contoh:[
+        {j:'このりょうりをたべてみてください。',r:'Kono ryouri o tabete mite kudasai.',a:'Tolong coba makan masakan ini.'},
+        {j:'あのみせにいってみましょう。',r:'Ano mise ni itte mimashou.',a:'Ayo kita coba pergi ke toko itu.'},
+        {j:'にほんごでかいてみます。',r:'Nihongo de kaite mimasu.',a:'Saya akan mencoba menulis dalam bahasa Jepang.'},
+      ]},
+      {pola:'V ば よかった',romaji:'V ba yokatta',arti:'seharusnya / andai saja (penyesalan)',penjelasan:'Menyatakan penyesalan atas sesuatu yang tidak dilakukan atau terjadi. Dibentuk dari bentuk-ba + よかった.',contoh:[
+        {j:'もっとべんきょうすればよかった。',r:'Motto benkyou sureba yokatta.',a:'Seharusnya belajar lebih banyak.'},
+        {j:'かさをもってくればよかった。',r:'Kasa o motte kureba yokatta.',a:'Seharusnya membawa payung.'},
+        {j:'もっとはやくいえばよかったです。',r:'Motto hayaku ieba yokatta desu.',a:'Seharusnya bilang lebih cepat.'},
+      ]},
+     ]
+    },
   ]},
 ];
 
@@ -7937,14 +9020,89 @@ function mnnFilter(idx,btn){
 
 function mnnOpenDetail(b){
   const m=document.getElementById('mnn-modal');
-  m.innerHTML=`<button class="mnn-modal-close" onclick="document.getElementById('mnn-modal-bg').classList.remove('open')">✕ Tutup</button>
+  const hasVocab=b.vocab&&b.vocab.length>0;
+  const hasGrammar=b.grammar&&b.grammar.length>0;
+
+  const vocabHTML=hasVocab?`
+<div id="mnn-tab-vocab" class="mnn-tab-panel">
+<table class="mnn-vocab-tbl">
+<thead><tr><th>Jepang</th><th>Romaji</th><th>Arti</th><th></th></tr></thead>
+<tbody>${b.vocab.map(v=>`<tr>
+  <td class="mnn-vj" onclick="speakJP('${v.j.replace(/'/g,"\\'")}')"><span class="mnn-vjp">${v.j}</span></td>
+  <td class="mnn-vr">${v.r}</td>
+  <td class="mnn-va">${v.a}</td>
+  <td><button class="mnn-spk" onclick="speakJP('${v.j.replace(/'/g,"\\'")}')">🔊</button></td>
+</tr>`).join('')}</tbody>
+</table>
+</div>`:'' ;
+
+  const grammarHTML=hasGrammar?`
+<div id="mnn-tab-grammar" class="mnn-tab-panel" style="display:none">
+${b.grammar.map(g=>`<div class="mnn-g-block">
+  <div class="mnn-g-pola">${g.pola}</div>
+  <div class="mnn-g-romaji">${g.romaji}</div>
+  <div class="mnn-g-arti">${g.arti}</div>
+  <div class="mnn-g-penj">${g.penjelasan}</div>
+  <div class="mnn-g-contoh-ttl">Contoh Kalimat</div>
+  ${g.contoh.map(c=>`<div class="mnn-g-contoh">
+    <div class="mnn-g-jp" onclick="speakJP('${c.j.replace(/'/g,"\\'")}')">
+      <span>${c.j}</span><button class="mnn-spk" onclick="speakJP('${c.j.replace(/'/g,"\\'")}');event.stopPropagation()">🔊</button>
+    </div>
+    <div class="mnn-g-rm">${c.r}</div>
+    <div class="mnn-g-ar">${c.a}</div>
+  </div>`).join('')}
+</div>`).join('')}
+</div>`:'' ;
+
+  const tabs=(hasVocab||hasGrammar)?`
+<div class="mnn-tabs-row">
+  ${hasVocab?`<button class="mnn-tab active" onclick="mnnSwitchTab(this,'mnn-tab-vocab')">📖 Kosakata (${b.vocab.length})</button>`:''}
+  ${hasGrammar?`<button class="mnn-tab${!hasVocab?' active':''}" onclick="mnnSwitchTab(this,'mnn-tab-grammar')">📐 Grammar (${b.grammar.length})</button>`:''}
+</div>`:'';
+
+  m.innerHTML=`<style>
+.mnn-tabs-row{display:flex;gap:6px;margin:12px 0 14px;flex-wrap:wrap;}
+.mnn-tab{padding:7px 16px;border-radius:99px;border:1.5px solid var(--border);font-size:12px;font-weight:700;cursor:pointer;background:var(--bg);color:var(--muted);font-family:'Inter',sans-serif;transition:all .15s;}
+.mnn-tab.active{background:var(--s1);border-color:var(--s1);color:#fff;}
+.mnn-vocab-tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.mnn-vocab-tbl thead tr{background:rgba(224,53,53,.07);}
+.mnn-vocab-tbl th{padding:8px 10px;text-align:left;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+.mnn-vocab-tbl td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.mnn-vjp{font-family:'Noto Sans JP',sans-serif;font-size:15px;font-weight:700;color:var(--fg);}
+.mnn-vr{color:var(--muted);font-size:12px;}
+.mnn-va{font-weight:600;}
+.mnn-vj{cursor:pointer;}
+.mnn-spk{background:none;border:none;cursor:pointer;font-size:16px;padding:0;line-height:1;}
+.mnn-g-block{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 15px;margin-bottom:12px;}
+.mnn-g-pola{font-family:'Noto Sans JP',sans-serif;font-size:16px;font-weight:900;color:var(--s1);margin-bottom:2px;}
+.mnn-g-romaji{font-size:12px;color:var(--muted);margin-bottom:4px;font-style:italic;}
+.mnn-g-arti{font-size:13px;font-weight:800;margin-bottom:8px;}
+.mnn-g-penj{font-size:12px;color:var(--muted);line-height:1.6;padding:8px 12px;background:rgba(224,53,53,.04);border-radius:8px;margin-bottom:10px;}
+.mnn-g-contoh-ttl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px;}
+.mnn-g-contoh{background:var(--surface);border-radius:8px;padding:10px 12px;margin-bottom:6px;}
+.mnn-g-jp{font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:3px;}
+.mnn-g-rm{font-size:11px;color:var(--muted);font-style:italic;margin-bottom:2px;}
+.mnn-g-ar{font-size:12px;font-weight:600;}
+</style>
+<button class="mnn-modal-close" onclick="document.getElementById('mnn-modal-bg').classList.remove('open')">✕ Tutup</button>
 <div class="mnn-modal-bab">Bab ${b.n}</div>
 <div class="mnn-modal-title">${b.title}</div>
 <div class="mnn-modal-focus">${b.focus}</div>
-<div class="mnn-modal-poin-ttl">Poin Pembelajaran</div>
-<ul class="mnn-modal-list">${b.poin.map(p=>`<li>${p}</li>`).join('')}</ul>
-<div class="mnn-modal-tags">${b.tags.map(t=>`<span class="mnn-modal-tag">${t}</span>`).join('')}</div>`;
+${tabs}
+${vocabHTML}
+${grammarHTML}
+${(!hasVocab&&!hasGrammar)?`<div class="mnn-modal-poin-ttl">Poin Pembelajaran</div><ul class="mnn-modal-list">${b.poin.map(p=>`<li>${p}</li>`).join('')}</ul>`:''}
+<div class="mnn-modal-tags" style="margin-top:14px">${b.tags.map(t=>`<span class="mnn-modal-tag">${t}</span>`).join('')}</div>`;
   document.getElementById('mnn-modal-bg').classList.add('open');
+}
+
+function mnnSwitchTab(btn,panelId){
+  const modal=document.getElementById('mnn-modal');
+  modal.querySelectorAll('.mnn-tab').forEach(b=>b.classList.remove('active'));
+  modal.querySelectorAll('.mnn-tab-panel').forEach(p=>p.style.display='none');
+  btn.classList.add('active');
+  const panel=document.getElementById(panelId);
+  if(panel) panel.style.display='';
 }
 
 // ══════════════════════════════════════════
